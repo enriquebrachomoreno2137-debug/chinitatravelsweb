@@ -206,6 +206,17 @@ function getAllFlights() {
   `);
 }
 
+function clearAllData() {
+  try {
+    query('DELETE FROM flights');
+    query('DELETE FROM routes');
+    query('DELETE FROM news');
+    query('DELETE FROM itineraries');
+  } catch (e) {
+    console.error('Error clearing data:', e.message);
+  }
+}
+
 function addNews(title, content, category, createdAt) {
   if (createdAt) {
     return query('INSERT INTO news (title, content, category, created_at) VALUES (?, ?, ?, ?)', [title, content, category || 'general', createdAt]);
@@ -237,5 +248,6 @@ module.exports = {
   getFlightsByRoute,
   getAllFlights,
   addNews,
-  deleteNews
+  deleteNews,
+  clearAllData
 };
