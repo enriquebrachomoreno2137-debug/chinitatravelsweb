@@ -7,8 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('newsSection').scrollIntoView({ behavior: 'smooth' });
   });
 
+  function normalizeStr(str) {
+    return str.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
   function mapCity(name) {
-    const n = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+    const n = normalizeStr(name);
     return n.includes('CARACAS') ? 'Valencia' : name;
   }
 
@@ -17,19 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let origin = document.getElementById('origin').value.trim();
     let destination = document.getElementById('destination').value.trim();
 
-    if (!origin || !destination) return;
+    if (!origin && !destination) return;
 
     let notice = '';
-    const mappedOrigin = mapCity(origin);
-    const mappedDest = mapCity(destination);
-    if (mappedOrigin !== origin || mappedDest !== destination) {
+    const mappedOrigin = origin ? mapCity(origin) : '';
+    const mappedDest = destination ? mapCity(destination) : '';
+    if ((origin && mappedOrigin !== origin) || (destination && mappedDest !== destination)) {
       notice = '<div class="redirect-notice">✈️ Vuelos con origen/destino Caracas operan desde/hacia <strong>Valencia</strong> (Aeropuerto Arturo Michelena)</div>';
-      origin = mappedOrigin;
-      destination = mappedDest;
+      if (origin) origin = mappedOrigin;
+      if (destination) destination = mappedDest;
     }
 
     try {
-      const res = await fetch(`/api/flights/search?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`);
+      const params = origin ? `origin=${encodeURIComponent(origin)}` : '';
+      if (destination) params += (params ? '&' : '') + `destination=${encodeURIComponent(destination)}`;
+      const res = await fetch(`/api/flights/search?${params}`);
       const data = await res.json();
 
       const container = document.getElementById('resultsContainer');
@@ -50,18 +56,83 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
 
-      let allFlights = [];
-      if (data.forward) allFlights = allFlights.concat(data.forward);
-      if (data.returns) allFlights = allFlights.concat(data.returns);
-
-      const routeText = `${origin} - ${destination}`;
+      const routeText = origin && destination ? `${origin} - ${destination}` : `Salidas desde ${origin}`;
       const msg = document.getElementById('whatsappMessage');
       msg.value = `Interesado en ${routeText}. Solicito información de disponibilidad.`;
       document.querySelector('.whatsapp-section').classList.add('visible');
 
-      const html = (notice ? notice : '') + (allFlights.length > 0
-        ? allFlights.map(flightCard).join('')
-        : '<div class="no-results"><p>No se encontraron vuelos para esta ruta.</p><p>Contáctanos por privado para más información.</p></div>');
+      let html = notice || '';
+
+      if (data.originOnly) {
+        const grouped = {};
+        data.forward.forEach(f => {
+          if (!grouped[f.destination]) grouped[f.destination] = [];
+          grouped[f.destination].push(f);
+        });
+        const dests = Object.keys(grouped).sort();
+        if (dests.length === 0) {
+          html += '<div class="no-results"><p>No hay vuelos desde ' + origin + '.</p></div>';
+        } else {
+          html += '<p class="suggestions-title">Todos los vuelos desde <strong>' + origin + '</strong></p>';
+          dests.forEach(dest => {
+            html += '<div class="suggestion-group"><p class="suggestion-heading">→ ' + dest + ' (' + grouped[dest].length + ' vuelo(s))</p>';
+            html += grouped[dest].map(flightCard).join('');
+            html += '</div>';
+          });
+        }
+      } else {
+        let allFlights = [];
+        if (data.forward) allFlights = allFlights.concat(data.forward);
+        if (data.returns) allFlights = allFlights.concat(data.returns);
+
+        html += allFlights.length > 0
+          ? allFlights.map(flightCard).join('')
+          : '<div class="no-results"><p>No se encontraron vuelos para esta ruta.</p><p>Contáctanos por privado para más información.</p></div>';
+
+        if (origin && destination) {
+          const [simRes, altRes] = await Promise.all([
+            fetch(`/api/flights/from/${encodeURIComponent(origin)}`),
+            fetch(`/api/flights/to/${encodeURIComponent(destination)}`)
+          ]);
+          const fromOrigin = await simRes.json();
+          const toDest = await altRes.json();
+
+          const otherDests = fromOrigin.filter(f => normalizeStr(f.destination) !== normalizeStr(destination));
+          const otherOrigins = toDest.filter(f => normalizeStr(f.origin) !== normalizeStr(origin));
+
+          if (otherDests.length > 0) {
+            const groups = {};
+            otherDests.forEach(f => {
+              if (!groups[f.destination]) groups[f.destination] = [];
+              groups[f.destination].push(f);
+            });
+            html += '<div class="suggestions"><p class="suggestions-title">También desde <strong>' + origin + '</strong></p>';
+            Object.keys(groups).sort().forEach(dest => {
+              if (!allFlights.some(f => normalizeStr(f.destination) === normalizeStr(dest))) {
+                html += '<div class="suggestion-group"><p class="suggestion-heading">→ ' + dest + '</p>';
+                html += groups[dest].map(flightCard).join('');
+                html += '</div>';
+              }
+            });
+            html += '</div>';
+          }
+
+          if (otherOrigins.length > 0) {
+            const groups = {};
+            otherOrigins.forEach(f => {
+              if (!groups[f.origin]) groups[f.origin] = [];
+              groups[f.origin].push(f);
+            });
+            html += '<div class="suggestions"><p class="suggestions-title">Alternativas para llegar a <strong>' + destination + '</strong></p>';
+            Object.keys(groups).sort().forEach(orig => {
+              html += '<div class="suggestion-group"><p class="suggestion-heading">' + orig + ' →</p>';
+              html += groups[orig].map(flightCard).join('');
+              html += '</div>';
+            });
+            html += '</div>';
+          }
+        }
+      }
 
       container.innerHTML = html;
       section.classList.remove('hidden');

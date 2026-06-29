@@ -143,6 +143,28 @@ function searchFlights(origin, destination) {
   });
 }
 
+function searchFlightsFrom(origin) {
+  const o = mapCity(origin);
+  return query(`
+    SELECT f.*, r.origin, r.destination, r.notes as route_notes
+    FROM flights f
+    JOIN routes r ON r.id = f.route_id
+    WHERE f.status = 'active' AND r.status = 'active'
+    ORDER BY r.destination, f.airline, f.departure_time
+  `).filter(f => normalizeStr(f.origin).includes(o));
+}
+
+function searchFlightsTo(destination) {
+  const d = mapCity(destination);
+  return query(`
+    SELECT f.*, r.origin, r.destination, r.notes as route_notes
+    FROM flights f
+    JOIN routes r ON r.id = f.route_id
+    WHERE f.status = 'active' AND r.status = 'active'
+    ORDER BY r.origin, f.airline, f.departure_time
+  `).filter(f => normalizeStr(f.destination).includes(d));
+}
+
 function getItineraryByCode(code) {
   const results = query('SELECT * FROM itineraries WHERE reference_code = ?', [code.toUpperCase()]);
   return results.length > 0 ? results[0] : null;
@@ -233,6 +255,8 @@ module.exports = {
   getAllRoutes,
   getRoutesWithFlights,
   searchFlights,
+  searchFlightsFrom,
+  searchFlightsTo,
   getItineraryByCode,
   getNews,
   addRoute,
