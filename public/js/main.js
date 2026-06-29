@@ -143,10 +143,77 @@ async function loadFlights(routeId, element) {
   }
 }
 
+const airlineKeywords = [
+  { name: 'Conviasa', keywords: ['conviasa'] },
+  { name: 'Aeropostal', keywords: ['aeropostal', 'alas de venezuela'] },
+  { name: 'Turpial Airlines', keywords: ['turpial'] },
+  { name: 'Rutaca Airlines', keywords: ['rutaca'] },
+  { name: 'Plus Ultra', keywords: ['plus ultra'] },
+  { name: 'Avianca', keywords: ['avianca'] },
+  { name: 'Estelar', keywords: ['estelar'] },
+  { name: 'Laser Airlines', keywords: ['laser'] }
+];
+
+function detectAirline(title) {
+  const lower = title.toLowerCase();
+  for (const a of airlineKeywords) {
+    if (a.keywords.some(k => lower.includes(k))) return a.name;
+  }
+  return null;
+}
+
+let allNews = [];
+
+function filterNews() {
+  const search = document.getElementById('newsSearch').value.toLowerCase().trim();
+  const selected = document.querySelector('.airline-tag.active');
+  const airline = selected ? selected.dataset.airline : null;
+  const container = document.getElementById('newsContainer');
+
+  const filtered = allNews.filter(n => {
+    const matchAirline = !airline || detectAirline(n.title) === airline;
+    const matchSearch = !search || n.title.toLowerCase().includes(search) || n.content.toLowerCase().includes(search);
+    return matchAirline && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p class="no-data">No hay noticias que coincidan con tu búsqueda.</p>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(n => `
+    <div class="news-card">
+      <h4>${n.title}</h4>
+      <p>${n.content}</p>
+      <small>${new Date(n.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</small>
+    </div>
+  `).join('');
+}
+
+function renderAirlineTags(news) {
+  const airlines = new Set();
+  news.forEach(n => {
+    const a = detectAirline(n.title);
+    if (a) airlines.add(a);
+  });
+  const tagsDiv = document.getElementById('airlineTags');
+  tagsDiv.innerHTML = `<button class="airline-tag active" data-airline="" onclick="selectAirline(this)">Todas</button>` +
+    [...airlines].sort().map(a =>
+      `<button class="airline-tag" data-airline="${a}" onclick="selectAirline(this)">${a}</button>`
+    ).join('');
+}
+
+function selectAirline(el) {
+  document.querySelectorAll('.airline-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterNews();
+}
+
 async function loadNews() {
   try {
     const res = await fetch('/api/news');
     const news = await res.json();
+    allNews = news;
     const container = document.getElementById('newsContainer');
 
     if (news.length === 0) {
@@ -154,13 +221,8 @@ async function loadNews() {
       return;
     }
 
-    container.innerHTML = news.map(n => `
-      <div class="news-card">
-        <h4>${n.title}</h4>
-        <p>${n.content}</p>
-        <small>${new Date(n.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</small>
-      </div>
-    `).join('');
+    renderAirlineTags(news);
+    filterNews();
   } catch (err) {
     document.getElementById('newsContainer').innerHTML = '<p class="no-data">Error al cargar noticias.</p>';
   }

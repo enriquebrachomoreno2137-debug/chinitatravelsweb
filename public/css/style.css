@@ -240,6 +240,48 @@ section { margin-bottom: 2rem; }
   margin-right: 0.3rem;
 }
 
+.news-filter {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.news-filter input {
+  padding: 0.6rem 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  width: 100%;
+  max-width: 400px;
+}
+.news-filter input:focus {
+  outline: none;
+  border-color: #1a1a2e;
+}
+.airline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.airline-tags .airline-tag {
+  background: #e9ecef;
+  color: #333;
+  border: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.airline-tags .airline-tag:hover {
+  background: #d0d7de;
+}
+.airline-tags .airline-tag.active {
+  background: #1a1a2e;
+  color: #fff;
+}
+
 .news-card {
   background: #fff;
   border-radius: 10px;

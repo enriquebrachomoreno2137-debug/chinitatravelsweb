@@ -62,6 +62,10 @@
 
     <section id="newsSection" class="news-section">
       <h3>Últimas Noticias / Información</h3>
+      <div class="news-filter">
+        <input type="text" id="newsSearch" placeholder="Buscar por aerolínea o palabra clave..." oninput="filterNews()">
+        <div id="airlineTags" class="airline-tags"></div>
+      </div>
       <div id="newsContainer"></div>
     </section>
   </main>
