@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chinita Travels - Mi Itinerario</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <h1>Chinita Travels</h1>
+        <p class="tagline">Consulta tu itinerario</p>
+      </div>
+      <nav>
+        <a href="/">Inicio</a>
+        <a href="/itinerary.html" class="active">Mi Itinerario</a>
+        <a href="/admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Consulta tu Itinerario</h2>
+      <p>Ingresa tu código de referencia para ver los detalles de tu viaje</p>
+    </section>
+
+    <section class="search-section">
+      <form id="itineraryForm" class="search-form">
+        <div class="form-group">
+          <label for="referenceCode">Código de Referencia</label>
+          <input type="text" id="referenceCode" name="code" placeholder="Ej: CHT-001, REF-ABC123..." required>
+        </div>
+        <button type="submit" class="btn-primary">Consultar</button>
+      </form>
+    </section>
+
+    <section id="itineraryResult" class="results-section hidden">
+      <div id="itineraryCard"></div>
+    </section>
+
+    <section id="itineraryError" class="results-section hidden">
+      <div class="error-card">
+        <p id="errorMessage">Itinerario no encontrado. Verifica el código e intenta de nuevo.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Chinita Travels. Consulta de vuelos - Precios solo por privado.</p>
+    </div>
+  </footer>
+
+  <script src="/js/itinerary.js"></script>
+</body>
+</html>

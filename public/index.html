@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chinita Travels - Consulta de Vuelos</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <h1>Chinita Travels</h1>
+        <p class="tagline">Información actualizada de vuelos</p>
+      </div>
+      <nav>
+        <a href="/" class="active">Inicio</a>
+        <a href="/itinerary.html">Mi Itinerario</a>
+        <a href="/admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Consulta de Vuelos</h2>
+      <p>Busca información actualizada sobre rutas y vuelos disponibles</p>
+    </section>
+
+    <section class="search-section">
+      <form id="searchForm" class="search-form">
+        <div class="form-group">
+          <label for="origin">Origen</label>
+          <input type="text" id="origin" name="origin" placeholder="Ej: Caracas, Maracaibo..." required>
+        </div>
+        <div class="form-group">
+          <label for="destination">Destino</label>
+          <input type="text" id="destination" name="destination" placeholder="Ej: Bogotá, Madrid, Miami..." required>
+        </div>
+        <button type="submit" class="btn-primary">Buscar Vuelos</button>
+      </form>
+    </section>
+
+    <section id="results" class="results-section hidden">
+      <h3>Resultados</h3>
+      <div id="resultsContainer"></div>
+    </section>
+
+    <section id="routesSection" class="routes-section">
+      <h3>Rutas Disponibles</h3>
+      <div id="routesContainer" class="routes-grid">
+        <p class="loading">Cargando rutas...</p>
+      </div>
+    </section>
+
+    <section id="newsSection" class="news-section">
+      <h3>Últimas Noticias / Información</h3>
+      <div id="newsContainer"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Chinita Travels. Consulta de vuelos - Precios solo por privado.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

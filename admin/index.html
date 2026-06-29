@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Chinita Travels</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <h1>Chinita Travels - Admin</h1>
+      </div>
+      <nav>
+        <a href="/">Inicio</a>
+        <a href="#" id="logoutBtn" class="hidden">Cerrar Sesión</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="loginSection">
+      <div class="login-box">
+        <h2>Acceso Administrativo</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" required>
+          </div>
+          <button type="submit" class="btn-primary">Ingresar</button>
+          <p id="loginError" class="error-message hidden">Credenciales inválidas</p>
+        </form>
+      </div>
+    </section>
+
+    <section id="dashboardSection" class="hidden">
+      <div class="admin-tabs">
+        <button class="tab-btn active" data-tab="routes">Rutas</button>
+        <button class="tab-btn" data-tab="flights">Vuelos</button>
+        <button class="tab-btn" data-tab="itineraries">Itinerarios</button>
+        <button class="tab-btn" data-tab="news">Noticias</button>
+      </div>
+
+      <div id="routesTab" class="tab-content active">
+        <div class="tab-header">
+          <h3>Gestión de Rutas</h3>
+          <button class="btn-primary btn-sm" onclick="showAddRouteForm()">+ Nueva Ruta</button>
+        </div>
+        <div id="routesList"></div>
+      </div>
+
+      <div id="flightsTab" class="tab-content">
+        <div class="tab-header">
+          <h3>Gestión de Vuelos</h3>
+          <button class="btn-primary btn-sm" onclick="showAddFlightForm()">+ Nuevo Vuelo</button>
+        </div>
+        <div id="flightsList"></div>
+      </div>
+
+      <div id="itinerariesTab" class="tab-content">
+        <div class="tab-header">
+          <h3>Gestión de Itinerarios</h3>
+          <button class="btn-primary btn-sm" onclick="showAddItineraryForm()">+ Nuevo Itinerario</button>
+        </div>
+        <div id="itinerariesList"></div>
+      </div>
+
+      <div id="newsTab" class="tab-content">
+        <div class="tab-header">
+          <h3>Noticias / Información</h3>
+          <button class="btn-primary btn-sm" onclick="showAddNewsForm()">+ Nueva Noticia</button>
+        </div>
+        <div id="newsList"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
