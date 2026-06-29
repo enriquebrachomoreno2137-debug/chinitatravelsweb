@@ -149,7 +149,7 @@ function getItineraryByCode(code) {
 }
 
 function getNews() {
-  return query('SELECT * FROM news WHERE is_published = 1 ORDER BY created_at DESC');
+  return query('SELECT * FROM news WHERE is_published = 1 ORDER BY created_at DESC, id DESC');
 }
 
 function addRoute(origin, destination, notes) {
@@ -206,7 +206,10 @@ function getAllFlights() {
   `);
 }
 
-function addNews(title, content, category) {
+function addNews(title, content, category, createdAt) {
+  if (createdAt) {
+    return query('INSERT INTO news (title, content, category, created_at) VALUES (?, ?, ?, ?)', [title, content, category || 'general', createdAt]);
+  }
   return query('INSERT INTO news (title, content, category) VALUES (?, ?, ?)', [title, content, category || 'general']);
 }
 
