@@ -101,6 +101,56 @@ section { margin-bottom: 2rem; }
 
 .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
 
+.whatsapp-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.2rem 2rem 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-top: 1rem;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.whatsapp-section.visible { display: block; }
+.whatsapp-label {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+  color: #075e54;
+}
+.whatsapp-form {
+  display: flex;
+  gap: 0.8rem;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.whatsapp-form textarea {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+}
+.whatsapp-form textarea:focus {
+  outline: none;
+  border-color: #25D366;
+}
+.btn-whatsapp {
+  background: #25D366;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.btn-whatsapp:hover { background: #1ebe5d; }
+
 .hidden { display: none !important; }
 
 .results-section { animation: fadeIn 0.3s ease; }

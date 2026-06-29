@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   loadRoutes();
   loadNews();
 
+  document.getElementById('navNoticias').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('newsSection').scrollIntoView({ behavior: 'smooth' });
+  });
+
   document.getElementById('searchForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const origin = document.getElementById('origin').value.trim();
@@ -35,6 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.forward) allFlights = allFlights.concat(data.forward);
       if (data.returns) allFlights = allFlights.concat(data.returns);
 
+      const routeText = `${origin} - ${destination}`;
+      const msg = document.getElementById('whatsappMessage');
+      msg.value = `Interesado en ${routeText}. Solicito información de disponibilidad.`;
+      document.querySelector('.whatsapp-section').classList.add('visible');
+
       const html = allFlights.length > 0
         ? allFlights.map(flightCard).join('')
         : '<div class="no-results"><p>No se encontraron vuelos para esta ruta.</p><p>Contáctanos por privado para más información.</p></div>';
@@ -49,6 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+function sendWhatsApp() {
+  const msg = document.getElementById('whatsappMessage').value.trim();
+  if (!msg) return;
+  const url = `https://wa.me/584246902591?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
 
 async function loadRoutes() {
   try {
