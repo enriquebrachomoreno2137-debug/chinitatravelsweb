@@ -7,12 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('newsSection').scrollIntoView({ behavior: 'smooth' });
   });
 
+  function mapCity(name) {
+    const n = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+    return n.includes('CARACAS') ? 'Valencia' : name;
+  }
+
   document.getElementById('searchForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const origin = document.getElementById('origin').value.trim();
-    const destination = document.getElementById('destination').value.trim();
+    let origin = document.getElementById('origin').value.trim();
+    let destination = document.getElementById('destination').value.trim();
 
     if (!origin || !destination) return;
+
+    let notice = '';
+    const mappedOrigin = mapCity(origin);
+    const mappedDest = mapCity(destination);
+    if (mappedOrigin !== origin || mappedDest !== destination) {
+      notice = '<div class="redirect-notice">✈️ Vuelos con origen/destino Caracas operan desde/hacia <strong>Valencia</strong> (Aeropuerto Arturo Michelena)</div>';
+      origin = mappedOrigin;
+      destination = mappedDest;
+    }
 
     try {
       const res = await fetch(`/api/flights/search?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`);
@@ -45,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
       msg.value = `Interesado en ${routeText}. Solicito información de disponibilidad.`;
       document.querySelector('.whatsapp-section').classList.add('visible');
 
-      const html = allFlights.length > 0
+      const html = (notice ? notice : '') + (allFlights.length > 0
         ? allFlights.map(flightCard).join('')
-        : '<div class="no-results"><p>No se encontraron vuelos para esta ruta.</p><p>Contáctanos por privado para más información.</p></div>';
+        : '<div class="no-results"><p>No se encontraron vuelos para esta ruta.</p><p>Contáctanos por privado para más información.</p></div>');
 
       container.innerHTML = html;
       section.classList.remove('hidden');

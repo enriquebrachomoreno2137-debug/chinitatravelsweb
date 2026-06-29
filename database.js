@@ -121,9 +121,15 @@ function normalizeStr(str) {
   return str.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+function mapCity(name) {
+  const n = normalizeStr(name);
+  if (n.includes('CARACAS')) return 'VALENCIA';
+  return n;
+}
+
 function searchFlights(origin, destination) {
-  const o = normalizeStr(origin);
-  const d = normalizeStr(destination);
+  const o = mapCity(origin);
+  const d = mapCity(destination);
   return query(`
     SELECT f.*, r.origin, r.destination, r.notes as route_notes
     FROM flights f

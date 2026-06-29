@@ -137,6 +137,15 @@ section { margin-bottom: 2rem; }
   outline: none;
   border-color: #25D366;
 }
+.redirect-notice {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #856404;
+}
 .btn-whatsapp {
   background: #25D366;
   color: #fff;
