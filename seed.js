@@ -60,12 +60,12 @@ function seedDatabase(db) {
   n('Rutaca Airlines - Plan de contingencia 28 de junio',
     'Rutaca Airlines ha activado un plan de contingencia realizando vuelos a través de aeropuertos alternos.\n\nDirectrices:\n• Reprogramación sin costo\n• Boleto válido por 1 año\n\nWhatsApp: 0424-9148669 / 0414-3659083\nCorreo: soporteagencias@flyrutaca.com',
     'importante', '2026-06-28 16:00:00');
-  n('Turpial Airlines - Vuela a Bogotá',
-    'Turpial Airlines te invita a volar a Bogotá.\n\nDomingo 5 de julio:\nValencia → Bogotá | 17:00 - 17:30\nBogotá → Valencia | 18:30 - 21:00\n\nCupos limitados. ¡Reserva ahora!',
-    'general', '2026-06-28 14:00:00');
-  n('Turpial Airlines - Vuela a San Antonio del Táchira',
-    'Turpial Airlines te invita a volar a San Antonio del Táchira.\n\nSábado 4 de julio:\nValencia → San Antonio del Táchira | 16:00 - 17:00\nSan Antonio del Táchira → Valencia | 18:00 - 19:00',
-    'general', '2026-06-28 12:00:00');
+  n('Turpial Airlines - Vuelo especial Valencia - San Antonio del Táchira (4 de julio)',
+    'Vuelo especial\nFrecuencia: Sábado 4 de julio\nValencia - San Antonio del Táchira\nSan Antonio del Táchira - Valencia\n\nReservas a través de nuestros canales oficiales.',
+    'importante', '2026-06-30 20:00:00');
+  n('Turpial Airlines - Vuelo especial Valencia - Bogotá (5 de julio)',
+    'Vuelo especial\nFrecuencia: Domingo 5 de julio\nValencia - Bogotá\nBogotá - Valencia\n\nReservas a través de nuestros canales oficiales.',
+    'importante', '2026-06-30 20:00:00');
   n('Aeropostal Alas de Venezuela - Vuelos especiales 28 de junio',
     'Aeropostal Alas de Venezuela ha reestructurado de manera temporal sus operaciones para garantizar el traslado de todos nuestros usuarios.\n\nFlexibilidades:\n• Reprogramación sin penalidades ni diferencias de tarifa.\n• Boleto válido por 1 año.\n\nImportante: Pasajeros Caracas-Porlamar-Caracas pueden volar desde/hacia Valencia sin costo adicional.\n\nOficinas:\n• Porlamar: Hotel Puerta del Sol\n• Valencia: Aeropuerto Arturo Michelena',
     'importante', '2026-06-28 10:00:00');
