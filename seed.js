@@ -17,14 +17,18 @@ function seedDatabase(db) {
   n('Avior Airlines - Suspensión de operaciones y alternativas para pasajeros (25 de junio)',
     'Jueves, 25 de junio de 2026.\n\nUna vez más, expresamos nuestra solidaridad y acompañamiento a nuestros pasajeros, colaboradores y sus familias ante estos momentos de adversidad.\n\nPor instrucciones del Instituto Nacional de Aeronáutica Civil (INAC) las operaciones aéreas desde y hacia Caracas, a través del Aeropuerto Internacional de Maiquetía se mantienen suspendidas.\n\nReafirmamos nuestro compromiso y conscientes de los inconvenientes que esta medida pueda generar, ponemos a disposición las siguientes alternativas para los pasajeros afectados entre el 24 de junio y el 02 de julio de 2026:\n\n• Cambio de fecha y ruta sin penalidad: Reprograme su viaje manteniendo el tipo de ruta original (nacional o internacional), ajustando fecha y hora según disponibilidad.\n• Sin cobros adicionales, válido para cualquier fecha dentro de los 365 días de vigencia de su boleto.\n• Boleto abierto: Si lo prefiere, puede mantener su boleto abierto durante 365 días a partir de la fecha de emisión, para reprogramarlo luego según disponibilidad del vuelo seleccionado.\n• Boletos emitidos por agencias de viaje: Si su boleto fue adquirido a través de una agencia de viaje, deberá contactar directamente a su asesor para gestionar cualquier modificación.\n\nAgradecemos su comprensión y les invitamos a mantenerse atentos a nuestros canales oficiales, donde compartiremos oportunamente cualquier actualización relacionada con la reanudación de los vuelos y las reprogramaciones correspondientes.\n\nAnte cualquier duda les invitamos a contactarnos a través de nuestros canales de atención:\n• 0501-AVIOR-00\n• +1 407 214 4866\n\nTe acompañamos en este momento y estamos para servirte',
     'importante', '2026-06-25 14:00:00');
-  n('Avior Airlines - Plan de contingencia rutas nacionales (desde 3 de julio)',
-    'Plan de Contingencia - Vuelos Nacionales\nItinerarios a partir del viernes 03 de julio de 2026\n\nBarcelona a Maracaibo con escala en Barquisimeto:\n\n• Barcelona - Barquisimeto: 07:00 - 08:00\n• Barquisimeto - Maracaibo: 09:00 - 09:40\n• Maracaibo - Barquisimeto: 11:00 - 11:40\n• Barquisimeto - Barcelona: 12:40 - 13:40\n\nReafirmamos nuestro compromiso, ante cualquier duda contáctenos a través de nuestros canales de atención:\n• 0501-AVIOR-00\n• +1 (407) 214-4866\n\nComo parte de la familia venezolana, te acompañamos en este momento y estamos para servirte',
-    'importante', '2026-06-30 10:00:00');
+  n('Avior Airlines - Nuevas frecuencias desde Barcelona (nacional e internacional) desde 3 julio',
+    'Martes, 30 de junio de 2026.\n\nEn Avior Airlines, al mantenerse suspendidas las operaciones desde y hacia Caracas a través del Aeropuerto Internacional de Maiquetía, se han habilitado temporalmente nuevas frecuencias desde el Aeropuerto Internacional de Barcelona (Anzoátegui).\n\nVuelos nacionales desde el 3 de julio:\n• Barcelona - Barquisimeto: 07:00-08:00\n• Barquisimeto - Maracaibo: 09:00-09:40\n• Maracaibo - Barquisimeto: 11:00-11:40\n• Barquisimeto - Barcelona: 12:40-13:40\n\nVuelos internacionales (sujeto a autorización autoridades colombianas):\n• Barcelona - Bogotá: 17:00-18:10\n• Bogotá - Barcelona: 19:30-22:40\n• Barcelona - Medellín: 17:00-18:10\n• Medellín - Barcelona: 19:30-22:40\n\nContacto: 0501-AVIOR-00 / +1 (407) 214-4866\nAviorair.com',
+    'importante', '2026-06-30 12:00:00');
 
   r('Barcelona', 'Barquisimeto', 'Ruta Avior Airlines.');
   r('Barquisimeto', 'Barcelona', 'Ruta Avior Airlines.');
   r('Barquisimeto', 'Maracaibo', 'Ruta Avior Airlines.');
   r('Maracaibo', 'Barquisimeto', 'Ruta Avior Airlines.');
+  r('Barcelona', 'Bogotá', 'Ruta internacional Avior Airlines.');
+  r('Bogotá', 'Barcelona', 'Ruta internacional Avior Airlines.');
+  r('Barcelona', 'Medellín', 'Ruta internacional Avior Airlines.');
+  r('Medellín', 'Barcelona', 'Ruta internacional Avior Airlines.');
 
   n('Estelar - Plan de contingencia Valencia',
     'Para garantizar la movilidad de nuestros pasajeros ante la situación que está atravesando el país, hemos habilitado un plan de contingencia con la finalidad de garantizar la conectividad para algunos de nuestros destinos a través del Aeropuerto Arturo Michelena en la ciudad de Valencia (VLN) con salidas y llegadas hacia Santo Domingo del Táchira (STD), Maracaibo (MAR) y Porlamar (PMV).\n\nNota: Debido a las condiciones antes mencionadas, los itinerarios pueden sufrir algunas modificaciones.\n\nOpciones disponibles:\n1. Reprogramación de fecha sin costo adicional.\n2. Cambio de ruta hacia otros destinos sin cobro de penalidad (puede aplicar diferencia de tarifa).\n3. Validez de un año.\n4. Bono de crédito.\n\nContacto:\n• WhatsApp: +58 414 378 3527\n• Correo: calidad.servicio@flyestelar.com\n• Call Center: 0501 3783527',
@@ -151,6 +155,10 @@ function seedDatabase(db) {
   makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'VIERNES 3 DE JULIO', 'Plan de contingencia. Sujeto a autorización.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia. Sujeto a autorización.');
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'VIERNES 3 DE JULIO', 'Plan de contingencia. Sujeto a autorización.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia. Sujeto a autorización.');
 }
 
 module.exports = { seedDatabase };
