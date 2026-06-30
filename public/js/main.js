@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const params = origin ? `origin=${encodeURIComponent(origin)}` : '';
+      let params = origin ? `origin=${encodeURIComponent(origin)}` : '';
       if (destination) params += (params ? '&' : '') + `destination=${encodeURIComponent(destination)}`;
       const res = await fetch(`/api/flights/search?${params}`);
       const data = await res.json();
