@@ -82,14 +82,6 @@ function seedDatabase(db) {
     if (rid) f(rid, airline, fn, dep, arr, freq, notes);
   };
 
-  makeF('Puerto Ordaz', 'Boa Vista', 'Rutaca Airlines', '', '9:00', '10:10', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
-  makeF('Boa Vista', 'Puerto Ordaz', 'Rutaca Airlines', '', '12:45', '13:55', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
-  makeF('Puerto Ordaz', 'Porlamar', 'Rutaca Airlines', '', '15:40', '16:30', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
-  makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '17:30', '18:30', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
-  makeF('Valencia', 'Punta Cana', 'Rutaca Airlines', '', '10:00', '11:30', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
-  makeF('Punta Cana', 'La Habana', 'Rutaca Airlines', '', '12:30', '14:50', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
-  makeF('La Habana', 'Punta Cana', 'Rutaca Airlines', '', '15:40', '18:00', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
-  makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '19:00', '20:30', 'Lunes 29 de junio', 'Vuelo especial contingencia.');
 
   makeF('Valencia', 'San Antonio del Táchira', 'Turpial Airlines', '', '16:00', '17:00', 'Sábado 4 de julio', 'Vuelo promocional.');
   makeF('San Antonio del Táchira', 'Valencia', 'Turpial Airlines', '', '18:00', '19:00', 'Sábado 4 de julio', 'Vuelo promocional.');
