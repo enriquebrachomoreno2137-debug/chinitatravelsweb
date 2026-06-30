@@ -36,6 +36,15 @@ function seedDatabase(db) {
   r('Barcelona', 'Medellín', 'Ruta internacional Avior Airlines.');
   r('Medellín', 'Barcelona', 'Ruta internacional Avior Airlines.');
 
+  n('Estelar Latinoamérica - Plan de contingencia ruta Madrid-Valencia (desde 1 julio)',
+    'INFORMACIÓN IMPORTANTE\n\nPara garantizar la movilidad de nuestros pasajeros ante la situación que está atravesando el país, hemos habilitado un plan de contingencia con la finalidad de garantizar la conectividad para algunos de nuestros destinos a través de un aeropuerto alterno.\n\nEl vuelo de Estelar Latinoamérica ES895 y ES894, en la ruta MADRID-CARACAS-MADRID, estará operando a partir del 1 de julio desde el Aeropuerto Internacional Arturo Michelena en la ciudad de Valencia (VLN) y hasta el Aeropuerto Adolfo Suárez en la Ciudad de Madrid, España (MAD).\n\nItinerario de contingencia:\n\nMAD → VLN | Salida 14:40 | Llegada 19:00\nVLN → MAD | Salida 22:00 | Llegada 13:15 (+1 día)\n\nFrecuencias: MIÉRCOLES y VIERNES\n\nContacto:\n• WhatsApp: +58 414 378 3527\n• Correo: calidad.servicio@flyestelar.com\n• Call Center: 0501 3783527\n\nOpciones disponibles:\n1. Reprogramación de fecha sin costo adicional.\n2. Cambio de ruta hacia otros destinos sin cobro de penalidad (puede aplicar diferencia de tarifa).\n3. Validez de un año.\n4. Bono de crédito.',
+    'importante', '2026-06-30 18:00:00');
+  n('Estelar Latinoamérica - Traslado terrestre gratuito Valencia-Caracas',
+    'ANUNCIO IMPORTANTE\n\nComo parte del plan de contingencia en relación a las operaciones internacionales, hemos habilitado la opción de traslado vía terrestre de nuestros pasajeros desde el Aeropuerto Arturo Michelena en la ciudad de Valencia y hasta la ciudad de Caracas, calle Londres, Torre Aerolíneas Estelar, Las Mercedes.\n\nAquellos pasajeros del vuelo ES894 en la ruta MAD-VLN, pueden utilizar el servicio de forma gratuita.\n\nEstamos trabajando de manera constante para ofrecer a nuestros pasajeros opciones que les permitan continuar con sus itinerarios de viajes.\n\nReservas: 04242364555 / www.flyestelar.com / 0501-3783527',
+    'importante', '2026-06-30 18:30:00');
+  n('Estelar Latinoamérica - Itinerario Madrid-Valencia (miércoles y viernes)',
+    'MADRID → VALENCIA\nSalida: 14:40 | Llegada: 19:00\nMIÉRCOLES - VIERNES\n\nVALENCIA → MADRID\nSalida: 22:00 | Llegada: 13:15 (+1 día)\nMIÉRCOLES - VIERNES\n\nReservas: 04242364555 / www.flyestelar.com / 0501-3783527',
+    'importante', '2026-06-30 19:00:00');
   n('Estelar - Plan de contingencia Valencia',
     'Para garantizar la movilidad de nuestros pasajeros ante la situación que está atravesando el país, hemos habilitado un plan de contingencia con la finalidad de garantizar la conectividad para algunos de nuestros destinos a través del Aeropuerto Arturo Michelena en la ciudad de Valencia (VLN) con salidas y llegadas hacia Santo Domingo del Táchira (STD), Maracaibo (MAR) y Porlamar (PMV).\n\nNota: Debido a las condiciones antes mencionadas, los itinerarios pueden sufrir algunas modificaciones.\n\nOpciones disponibles:\n1. Reprogramación de fecha sin costo adicional.\n2. Cambio de ruta hacia otros destinos sin cobro de penalidad (puede aplicar diferencia de tarifa).\n3. Validez de un año.\n4. Bono de crédito.\n\nContacto:\n• WhatsApp: +58 414 378 3527\n• Correo: calidad.servicio@flyestelar.com\n• Call Center: 0501 3783527',
     'importante', '2026-06-29 14:30:00');
@@ -157,6 +166,8 @@ function seedDatabase(db) {
   makeF('Valencia', 'Porlamar', 'Estelar', '', '16:10', '17:10', 'VIERNES - DOMINGO', 'Itinerario contingencia.');
   makeF('Porlamar', 'Valencia', 'Estelar', '', '18:10', '19:10', 'VIERNES - DOMINGO', 'Itinerario contingencia.');
 
+  makeF('Madrid', 'Valencia', 'Estelar Latinoamérica', 'ES894', '14:40', '19:00', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
+  makeF('Valencia', 'Madrid', 'Estelar Latinoamérica', 'ES895', '22:00', '13:15 (+1 día)', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
   makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
