@@ -60,9 +60,15 @@ function seedDatabase(db) {
   n('Rutaca Airlines - Retiro de equipajes vuelo 300 Caracas-Porlamar',
     'Informamos a los pasajeros del vuelo 300 de Caracas - Porlamar, cancelado tras los sismos ocurridos el pasado 24 de junio, que pueden proceder al retiro de sus equipajes.\n\nOficinas de Rutaca Airlines en el Aeropuerto Internacional Arturo Michelena de Valencia.\n\nHorario de atenci\u00f3n: De lunes a domingo de 8:30 a.m. a 4:30 p.m.\n\nPresentar su pase de abordar (boarding pass) y documento de identidad.',
     'importante', '2026-06-30 21:00:00');
-  n('Rutaca Airlines - Plan de contingencia 29 de junio',
-    'Estimados Usuarios:\n\nCon el firme compromiso de garantizar la movilidad de sus pasajeros, RUTACA AIRLINES ha activado un plan de contingencia, por lo que estaremos realizando algunos vuelos para mantener la conectividad, desde el Aeropuerto Alterno Arturo Michelena, en la ciudad de Valencia. Itinerario del lunes 29/06/2026.\n\nCanales de Soporte Agencias:\n• Correo electrónico: soporteagencias@flyrutaca.com\n• Contactos de WhatsApp: 0424-9148669 / 0414-3659083\n\nRecomendamos verificar el estado del itinerario de su pasajero a través de estos medios o mediante su sistema de reservación antes de que se dirijan al aeropuerto. RUTACA Airlines agradece profundamente la comprensión y su colaboración.',
-    'importante', '2026-06-29 12:00:00');
+  n('Rutaca Airlines - Activación parcial de operaciones desde Valencia (1 julio)',
+    'Rutaca Airlines informa a todos nuestros pasajeros que hemos activado parcialmente nuestras operaciones desde nuestra base alterna Aeropuerto Internacional Arturo Michelena de Valencia.\n\nEstamos desplegando rutas y fortaleciendo frecuencias para garantizar la conectividad en cada tramo programado.\n\nRutaca Airlines reafirma su compromiso con la seguridad, puntualidad y calidad en cada una de nuestras operaciones.',
+    'importante', '2026-07-01 18:00:00');
+  n('Rutaca Airlines - Itinerarios nacionales desde Valencia',
+    'Itinerarios nacionales de Rutaca Airlines a partir del 1 de julio:\n\n1 DE JULIO:\nValencia → Santo Domingo del Táchira | MIÉ 9:30-10:30\nSanto Domingo del Táchira → Valencia | MIÉ 11:30-12:30\n\nDESDE 1 JULIO:\nValencia → Porlamar | MIÉ-DOM 18:00-19:00\nPorlamar → Valencia | LUN-JUE 17:30-18:10\n\nDESDE 2 JULIO:\nValencia → Porlamar | JUE-DOM 8:30-9:30\nPorlamar → Valencia | DOM 16:10-17:10 | JUE 17:30-18:30\nValencia → Puerto Ordaz | MAR-JUE-SÁB 18:00-19:00\nPuerto Ordaz → Valencia | MIÉ-VIE-DOM 7:00-8:00\nPorlamar → Puerto Ordaz | LUN-JUE 7:00-7:50\nPuerto Ordaz → Porlamar | LUN-JUE 15:40-16:30\nValencia → Maracaibo | MAR-JUE-DOM 19:00-20:00\nMaracaibo → Valencia | LUN-MIÉ-VIE 6:00-7:00\n\nDESDE 3 JULIO:\nValencia → Porlamar | VIE 13:40-14:40\nPorlamar → Valencia | VIE 15:40-16:40\nValencia → Santo Domingo del Táchira | LUN-MAR-VIE-SÁB 9:30-10:30\nSanto Domingo del Táchira → Valencia | MAR-VIE-SÁB 11:30-12:30 | LUN 12:00-13:00\nValencia → Maturín | MIÉ-VIE 8:30-9:30\nMaturín → Valencia | MIÉ-VIE 10:30-11:30\nValencia → Barcelona | LUN-MIÉ-VIE-DOM 17:30-18:20\nBarcelona → Puerto Ordaz | LUN-MIÉ-VIE-DOM 19:20-20:00\n\nDESDE 4 JULIO:\nPuerto Ordaz → Barcelona | LUN-MAR-JUE-SÁB 6:00-6:40\nBarcelona → Puerto Ordaz | LUN-MAR-JUE-SÁB 7:30-8:10\nValencia → Porlamar | MAR-SÁB 13:40-14:40\nPorlamar → Valencia | MAR-SÁB 15:40-16:40\n\nCall Center: 0500-RUTACA-1 / 0500-788222-1 (7am-7pm)\nWhatsApp: 0424-8225451 / 0414-6245800 / 0414-8609908 / 0414-7000000 / 0424-8225428',
+    'importante', '2026-07-01 19:00:00');
+  n('Rutaca Airlines - Itinerarios internacionales desde Valencia',
+    'Itinerarios internacionales de Rutaca Airlines:\n\nDESDE 2 JULIO:\nPuerto Ordaz → Boa Vista | LUN-JUE 9:00-10:10\nBoa Vista → Puerto Ordaz | LUN-JUE 12:45-13:55\nPorlamar → Puerto España | JUE-DOM 11:30-12:10\nPuerto España → Porlamar | JUE-DOM 13:40-14:20\n\nDESDE 3 JULIO:\nValencia → Santiago de Cuba | VIE 10:00-12:15\nSantiago de Cuba → Valencia | VIE 13:30-17:30\n\nDESDE 6 JULIO:\nValencia → La Habana | LUN 10:00-14:50\nLa Habana → Valencia | LUN 15:40-20:30\n\nDESDE 9 JULIO:\nValencia → Punta Cana | JUE-DOM 10:00-11:30\nPunta Cana → Valencia | JUE-DOM 13:30-14:50\n\nContacto: 0500-RUTACA-1 / 0500-788222-1\nWhatsApp: 0424-8225451 / 0414-6245800 / 0414-8609908 / 0414-7000000 / 0424-8225428\nHorario atención: 7:00 am a 7:00 pm',
+    'importante', '2026-07-01 20:00:00');
   n('Avianca habilita temporalmente operación entre Bogotá y Valencia',
     'Avianca habilitó, de manera temporal, la venta de vuelos entre Bogotá y Valencia inicialmente hasta el próximo 10 de julio con tarifas especiales, periodo que podrá ser extendido dependiendo de la evolución de la contingencia en el Aeropuerto Internacional Simón Bolívar de Maiquetía.\n\nEsta medida permitirá mantener la conectividad aérea entre Colombia y Venezuela mientras se reestablecen las operaciones en Maiquetía, así como continuar transportando rescatistas, médicos y personal de atención de emergencias y ayuda humanitaria.\n\nAvianca ofrecerá dos frecuencias diarias, operadas en aviones de la flota A320.\n\nLos tiquetes están disponibles a la venta con tarifas especiales a través de avianca.com, la aplicación móvil, el Contact Center, puntos de venta físicos y agencias de viajes.\n\nComo parte de sus acciones para apoyar a Venezuela, Avianca continuará facilitando el traslado de rescatistas, personal médico y carga humanitaria, en coordinación con aliados como la Cruz Roja Colombiana y la Patrulla Aérea Civil Colombiana.',
     'importante', '2026-06-28 18:00:00');
@@ -121,6 +127,9 @@ function seedDatabase(db) {
 
   for (const [o, d] of [['Puerto Ordaz','Boa Vista'],['Boa Vista','Puerto Ordaz'],['Valencia','Punta Cana'],['Punta Cana','La Habana'],['La Habana','Punta Cana'],['Punta Cana','Valencia']]) {
     r(o, d, 'Ruta internacional Rutaca Airlines.');
+  }
+  for (const [o, d] of [['Porlamar','Puerto Ordaz'],['Puerto Ordaz','Valencia'],['Puerto Ordaz','Barcelona'],['Barcelona','Puerto Ordaz'],['Barcelona','Valencia'],['Valencia','Barcelona'],['Valencia','Santiago de Cuba'],['Santiago de Cuba','Valencia'],['Valencia','La Habana'],['La Habana','Valencia']]) {
+    r(o, d, 'Ruta Rutaca Airlines.');
   }
 
   for (const [o, d] of [['Madrid','Valencia'],['Valencia','Madrid'],['Tenerife','Valencia'],['Valencia','Tenerife']]) {
@@ -192,6 +201,46 @@ function seedDatabase(db) {
   makeF('Porlamar', 'Valencia', 'Conviasa', 'V0350', '10:50', '11:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
   makeF('Porlamar', 'Valencia', 'Conviasa', 'V01007', '15:50', '16:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
   makeF('Maturín', 'Valencia', 'Conviasa', 'V0037', '14:50', '15:40', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Valencia', 'Santo Domingo del Táchira', 'Rutaca Airlines', '', '09:30', '10:30', '1 JULIO (MIÉ)', 'Plan de contingencia.');
+  makeF('Santo Domingo del Táchira', 'Valencia', 'Rutaca Airlines', '', '11:30', '12:30', '1 JULIO (MIÉ)', 'Plan de contingencia.');
+  makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '18:00', '19:00', 'MIÉ-DOM', 'Itinerario desde 1 julio.');
+  makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '17:30', '18:10', 'LUN-JUE', 'Itinerario desde 1 julio.');
+  makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '08:30', '09:30', 'JUE-DOM', 'Itinerario desde 2 julio.');
+  makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '16:10', '17:10', 'DOM', 'Itinerario desde 2 julio.');
+  makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '17:30', '18:30', 'JUE', 'Itinerario desde 2 julio.');
+  makeF('Valencia', 'Puerto Ordaz', 'Rutaca Airlines', '', '18:00', '19:00', 'MAR-JUE-SÁB', 'Itinerario desde 2 julio.');
+  makeF('Puerto Ordaz', 'Valencia', 'Rutaca Airlines', '', '07:00', '08:00', 'MIÉ-VIE-DOM', 'Itinerario desde 2 julio.');
+  makeF('Porlamar', 'Puerto Ordaz', 'Rutaca Airlines', '', '07:00', '07:50', 'LUN-JUE', 'Itinerario desde 2 julio.');
+  makeF('Puerto Ordaz', 'Porlamar', 'Rutaca Airlines', '', '15:40', '16:30', 'LUN-JUE', 'Itinerario desde 2 julio.');
+  makeF('Valencia', 'Maracaibo', 'Rutaca Airlines', '', '19:00', '20:00', 'MAR-JUE-DOM', 'Itinerario desde 2 julio.');
+  makeF('Maracaibo', 'Valencia', 'Rutaca Airlines', '', '06:00', '07:00', 'LUN-MIÉ-VIE', 'Itinerario desde 2 julio.');
+  makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '13:40', '14:40', 'VIE', 'Itinerario desde 3 julio.');
+  makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '15:40', '16:40', 'VIE', 'Itinerario desde 3 julio.');
+  makeF('Valencia', 'Santo Domingo del Táchira', 'Rutaca Airlines', '', '09:30', '10:30', 'LUN-MAR-VIE-SÁB', 'Itinerario desde 3 julio.');
+  makeF('Santo Domingo del Táchira', 'Valencia', 'Rutaca Airlines', '', '11:30', '12:30', 'MAR-VIE-SÁB', 'Itinerario desde 3 julio.');
+  makeF('Santo Domingo del Táchira', 'Valencia', 'Rutaca Airlines', '', '12:00', '13:00', 'LUN', 'Itinerario desde 3 julio.');
+  makeF('Valencia', 'Maturín', 'Rutaca Airlines', '', '08:30', '09:30', 'MIÉ-VIE', 'Itinerario desde 3 julio.');
+  makeF('Maturín', 'Valencia', 'Rutaca Airlines', '', '10:30', '11:30', 'MIÉ-VIE', 'Itinerario desde 3 julio.');
+  makeF('Valencia', 'Barcelona', 'Rutaca Airlines', '', '17:30', '18:20', 'LUN-MIÉ-VIE-DOM', 'Itinerario desde 3 julio.');
+  makeF('Barcelona', 'Puerto Ordaz', 'Rutaca Airlines', '', '19:20', '20:00', 'LUN-MIÉ-VIE-DOM', 'Itinerario desde 3 julio.');
+  makeF('Puerto Ordaz', 'Barcelona', 'Rutaca Airlines', '', '06:00', '06:40', 'LUN-MAR-JUE-SÁB', 'Itinerario desde 4 julio.');
+  makeF('Barcelona', 'Puerto Ordaz', 'Rutaca Airlines', '', '07:30', '08:10', 'LUN-MAR-JUE-SÁB', 'Itinerario desde 4 julio.');
+  makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '13:40', '14:40', 'MAR-SÁB', 'Itinerario desde 4 julio.');
+  makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '15:40', '16:40', 'MAR-SÁB', 'Itinerario desde 4 julio.');
+  makeF('Valencia', 'Barcelona', 'Rutaca Airlines', '', '17:30', '18:20', '9 JULIO (JUE)', 'Únicamente 9 julio.');
+  makeF('Barcelona', 'Puerto Ordaz', 'Rutaca Airlines', '', '19:20', '20:00', '9 JULIO (JUE)', 'Únicamente 9 julio.');
+  makeF('Puerto Ordaz', 'Barcelona', 'Rutaca Airlines', '', '06:00', '06:40', '10 JULIO (VIE)', 'Únicamente 10 julio.');
+  makeF('Barcelona', 'Valencia', 'Rutaca Airlines', '', '07:30', '08:10', '10 JULIO (VIE)', 'Únicamente 10 julio.');
+  makeF('Puerto Ordaz', 'Boa Vista', 'Rutaca Airlines', '', '09:00', '10:10', 'LUN-JUE', 'Itinerario internacional desde 2 julio.');
+  makeF('Boa Vista', 'Puerto Ordaz', 'Rutaca Airlines', '', '12:45', '13:55', 'LUN-JUE', 'Itinerario internacional desde 2 julio.');
+  makeF('Porlamar', 'Puerto España', 'Rutaca Airlines', '', '11:30', '12:10', 'JUE-DOM', 'Itinerario internacional desde 2 julio.');
+  makeF('Puerto España', 'Porlamar', 'Rutaca Airlines', '', '13:40', '14:20', 'JUE-DOM', 'Itinerario internacional desde 2 julio.');
+  makeF('Valencia', 'Santiago de Cuba', 'Rutaca Airlines', '', '10:00', '12:15', 'VIE', 'Itinerario internacional desde 3 julio.');
+  makeF('Santiago de Cuba', 'Valencia', 'Rutaca Airlines', '', '13:30', '17:30', 'VIE', 'Itinerario internacional desde 3 julio.');
+  makeF('Valencia', 'La Habana', 'Rutaca Airlines', '', '10:00', '14:50', 'LUN', 'Itinerario internacional desde 6 julio.');
+  makeF('La Habana', 'Valencia', 'Rutaca Airlines', '', '15:40', '20:30', 'LUN', 'Itinerario internacional desde 6 julio.');
+  makeF('Valencia', 'Punta Cana', 'Rutaca Airlines', '', '10:00', '11:30', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
+  makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '14:50', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
   makeF('Maracaibo', 'Barquisimeto', 'Venezolana', 'V1242', '08:00', '08:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
