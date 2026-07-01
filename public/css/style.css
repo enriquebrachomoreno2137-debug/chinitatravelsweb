@@ -394,7 +394,7 @@ footer {
 
 @media (max-width: 600px) {
   .header-content { flex-direction: column; text-align: center; }
-  .logo-img { height: 90px; }
+  .logo-img { height: 120px; }
   .search-form { flex-direction: column; }
   .form-group { min-width: 100%; }
   .routes-grid { grid-template-columns: 1fr; }
