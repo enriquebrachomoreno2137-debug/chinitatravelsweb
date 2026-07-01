@@ -37,7 +37,12 @@
           <label for="destination">Destino <small style="font-weight:400;color:#888;">(opcional)</small></label>
           <input type="text" id="destination" name="destination" placeholder="Ej: Bogotá, Madrid, Miami...">
         </div>
-        <button type="submit" class="btn-primary">Buscar Vuelos</button>
+        <div class="form-group">
+          <label for="airlineInput">Aerolínea <small style="font-weight:400;color:#888;">(opcional)</small></label>
+          <input type="text" id="airlineInput" name="airline" placeholder="Ej: Laser, Avianca, Conviasa..." list="airlineList" autocomplete="off">
+          <datalist id="airlineList"></datalist>
+        </div>
+        <button type="submit" class="btn-primary">Buscar</button>
       </form>
       <div class="whatsapp-section">
         <p class="whatsapp-label">📱 Consulta disponibilidad al WhatsApp</p>
@@ -51,16 +56,6 @@
     <section id="results" class="results-section hidden">
       <h3>Resultados</h3>
       <div id="resultsContainer"></div>
-    </section>
-
-    <section id="airlineFlightsSection" class="airline-flights-section">
-      <h3>Itinerarios por Aerolínea</h3>
-      <div class="airline-flights-filter">
-        <div id="airlineFlightTags" class="airline-tags"></div>
-      </div>
-      <div id="airlineFlightsResults" class="airline-flights-results">
-        <p class="text-muted">Seleccione una aerolínea para ver sus itinerarios</p>
-      </div>
     </section>
 
     <section id="routesSection" class="routes-section">

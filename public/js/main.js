@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   loadRoutes();
   loadNews();
-  loadAllFlightsForAirline();
+  loadAirlines();
 
   document.getElementById('navNoticias').addEventListener('click', (e) => {
     e.preventDefault();
@@ -21,8 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     let origin = document.getElementById('origin').value.trim();
     let destination = document.getElementById('destination').value.trim();
+    let airline = document.getElementById('airlineInput').value.trim();
 
-    if (!origin && !destination) return;
+    if (!origin && !destination && !airline) return;
 
     let notice = '';
     const mappedOrigin = origin ? mapCity(origin) : '';
@@ -34,10 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      let params = origin ? `origin=${encodeURIComponent(origin)}` : '';
-      if (destination) params += (params ? '&' : '') + `destination=${encodeURIComponent(destination)}`;
+      const params = new URLSearchParams();
+      if (origin) params.set('origin', origin);
+      if (destination) params.set('destination', destination);
+      if (airline) params.set('airline', airline);
       const res = await fetch(`/api/flights/search?${params}`);
       const data = await res.json();
+      const flights = data.flights || [];
 
       const container = document.getElementById('resultsContainer');
       const section = document.getElementById('results');
@@ -57,40 +61,53 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
 
-      const routeText = origin && destination ? `${origin} - ${destination}` : `Salidas desde ${origin}`;
+      const routeText = airline ? airline : (origin && destination ? `${origin} - ${destination}` : `Salidas desde ${origin}`);
       const msg = document.getElementById('whatsappMessage');
       msg.value = `Interesado en ${routeText}. Solicito información de disponibilidad.`;
       document.querySelector('.whatsapp-section').classList.add('visible');
 
       let html = notice || '';
 
-      if (data.originOnly) {
+      // ── Show flights ──
+      if (data.originOnly && flights.length > 0) {
         const grouped = {};
-        data.forward.forEach(f => {
+        flights.forEach(f => {
           if (!grouped[f.destination]) grouped[f.destination] = [];
           grouped[f.destination].push(f);
         });
-        const dests = Object.keys(grouped).sort();
-        if (dests.length === 0) {
-          html += '<div class="no-results"><p>No hay vuelos desde ' + origin + '.</p></div>';
-        } else {
-          html += '<p class="suggestions-title">Todos los vuelos desde <strong>' + origin + '</strong></p>';
-          dests.forEach(dest => {
-            html += '<div class="suggestion-group"><p class="suggestion-heading">→ ' + dest + ' (' + grouped[dest].length + ' vuelo(s))</p>';
-            html += grouped[dest].map(flightCard).join('');
-            html += '</div>';
-          });
+        html += '<p class="suggestions-title">Todos los vuelos desde <strong>' + origin + '</strong></p>';
+        Object.keys(grouped).sort().forEach(dest => {
+          html += '<div class="suggestion-group"><p class="suggestion-heading">→ ' + dest + ' (' + grouped[dest].length + ')</p>';
+          html += grouped[dest].map(flightCard).join('');
+          html += '</div>';
+        });
+      } else if (flights.length > 0) {
+        html += flights.map(flightCard).join('');
+      }
+
+      // ── Show news filtered by airline ──
+      if (airline && allNews.length > 0) {
+        const newsFiltered = allNews.filter(n => detectAirline(n.title) && normalizeStr(detectAirline(n.title)).includes(normalizeStr(airline)));
+        if (newsFiltered.length > 0) {
+          html += '<div class="suggestions"><p class="suggestions-title">Comunicados / Noticias de ' + airline + '</p>';
+          html += newsFiltered.map(n => `
+            <div class="news-card">
+              <h4>${n.title}</h4>
+              <p>${n.content}</p>
+              <small>${new Date(n.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</small>
+            </div>
+          `).join('');
+          html += '</div>';
         }
-      } else {
-        let allFlights = [];
-        if (data.forward) allFlights = allFlights.concat(data.forward);
-        if (data.returns) allFlights = allFlights.concat(data.returns);
+      }
 
-        html += allFlights.length > 0
-          ? allFlights.map(flightCard).join('')
-          : '<div class="no-results"><p>No se encontraron vuelos para esta ruta.</p><p>Contáctanos por privado para más información.</p></div>';
+      // ── Alternatives when no direct flights ──
+      if (flights.length === 0) {
+        html += '<div class="no-results"><p>No se encontraron vuelos exactos.</p></div>';
 
-        if (origin && destination) {
+        if (origin && !destination && !airline) {
+          // only origin, no results at all
+        } else if (origin && destination && !airline) {
           const [simRes, altRes] = await Promise.all([
             fetch(`/api/flights/from/${encodeURIComponent(origin)}`),
             fetch(`/api/flights/to/${encodeURIComponent(destination)}`)
@@ -109,11 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             html += '<div class="suggestions"><p class="suggestions-title">También desde <strong>' + origin + '</strong></p>';
             Object.keys(groups).sort().forEach(dest => {
-              if (!allFlights.some(f => normalizeStr(f.destination) === normalizeStr(dest))) {
-                html += '<div class="suggestion-group"><p class="suggestion-heading">→ ' + dest + '</p>';
-                html += groups[dest].map(flightCard).join('');
-                html += '</div>';
-              }
+              html += '<div class="suggestion-group"><p class="suggestion-heading">→ ' + dest + '</p>';
+              html += groups[dest].map(flightCard).join('');
+              html += '</div>';
             });
             html += '</div>';
           }
@@ -132,6 +147,68 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             html += '</div>';
           }
+        } else if (airline) {
+          // Show all flights for this airline as alternative
+          const altRes = await fetch(`/api/flights/airline/${encodeURIComponent(airline)}`);
+          const altFlights = await altRes.json();
+          if (altFlights.length > 0) {
+            const grouped = {};
+            altFlights.forEach(f => {
+              const key = f.origin + ' → ' + f.destination;
+              if (!grouped[key]) grouped[key] = [];
+              grouped[key].push(f);
+            });
+            html += '<div class="suggestions"><p class="suggestions-title">Alternativas: Todos los vuelos de <strong>' + airline + '</strong></p>';
+            Object.entries(grouped).sort().forEach(([route, fls]) => {
+              html += '<div class="suggestion-group"><p class="suggestion-heading">' + route + '</p>';
+              html += fls.map(flightCard).join('');
+              html += '</div>';
+            });
+            html += '</div>';
+          }
+        }
+      } else if (origin && destination && !airline && flights.length > 0) {
+        // Show alternatives alongside results
+        const [simRes, altRes] = await Promise.all([
+          fetch(`/api/flights/from/${encodeURIComponent(origin)}`),
+          fetch(`/api/flights/to/${encodeURIComponent(destination)}`)
+        ]);
+        const fromOrigin = await simRes.json();
+        const toDest = await altRes.json();
+
+        const otherDests = fromOrigin.filter(f => normalizeStr(f.destination) !== normalizeStr(destination));
+        const otherOrigins = toDest.filter(f => normalizeStr(f.origin) !== normalizeStr(origin));
+
+        if (otherDests.length > 0) {
+          const groups = {};
+          otherDests.forEach(f => {
+            if (!groups[f.destination]) groups[f.destination] = [];
+            groups[f.destination].push(f);
+          });
+          html += '<div class="suggestions"><p class="suggestions-title">También desde <strong>' + origin + '</strong></p>';
+          Object.keys(groups).sort().forEach(dest => {
+            if (!flights.some(f => normalizeStr(f.destination) === normalizeStr(dest))) {
+              html += '<div class="suggestion-group"><p class="suggestion-heading">→ ' + dest + '</p>';
+              html += groups[dest].map(flightCard).join('');
+              html += '</div>';
+            }
+          });
+          html += '</div>';
+        }
+
+        if (otherOrigins.length > 0) {
+          const groups = {};
+          otherOrigins.forEach(f => {
+            if (!groups[f.origin]) groups[f.origin] = [];
+            groups[f.origin].push(f);
+          });
+          html += '<div class="suggestions"><p class="suggestions-title">Alternativas para llegar a <strong>' + destination + '</strong></p>';
+          Object.keys(groups).sort().forEach(orig => {
+            html += '<div class="suggestion-group"><p class="suggestion-heading">' + orig + ' →</p>';
+            html += groups[orig].map(flightCard).join('');
+            html += '</div>';
+          });
+          html += '</div>';
         }
       }
 
@@ -140,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
       section.scrollIntoView({ behavior: 'smooth' });
 
     } catch (err) {
-      document.getElementById('resultsContainer').innerHTML = '<div class="no-results"><p>Error al buscar vuelos. Intenta de nuevo.</p></div>';
+      document.getElementById('resultsContainer').innerHTML = '<div class="no-results"><p>Error al buscar. Intenta de nuevo.</p></div>';
       document.getElementById('results').classList.remove('hidden');
     }
   });
@@ -215,62 +292,13 @@ async function loadFlights(routeId, element) {
   }
 }
 
-// ── Flight airline tags ──────────────────────────
-let allFlightsForAirline = [];
-
-async function loadAllFlightsForAirline() {
+async function loadAirlines() {
   try {
-    const res = await fetch('/api/flights/all');
-    const raw = await res.json();
-    allFlightsForAirline = raw;
-    renderAirlineFlightTags();
-  } catch (e) { console.error('Error loading flights:', e); }
-}
-
-let airlineFlightsActive = false;
-let currentAirlineFlight = '';
-
-function renderAirlineFlightTags() {
-  const airlines = [...new Set(allFlightsForAirline.map(f => f.airline).filter(Boolean).sort())];
-  const div = document.getElementById('airlineFlightTags');
-  if (!div) return;
-  div.innerHTML = `<button class="airline-tag${!airlineFlightsActive ? ' active' : ''}" data-airline="" onclick="selectAirlineFlight(this)">Todas</button>` +
-    airlines.map(a => `<button class="airline-tag${airlineFlightsActive && currentAirlineFlight === a ? ' active' : ''}" data-airline="${a}" onclick="selectAirlineFlight(this)">${a}</button>`).join('');
-}
-
-function selectAirlineFlight(el) {
-  document.querySelectorAll('#airlineFlightTags .airline-tag').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  airlineFlightsActive = !!el.dataset.airline;
-  currentAirlineFlight = el.dataset.airline || '';
-  renderFlightsByAirline(currentAirlineFlight);
-}
-
-function renderFlightsByAirline(airline) {
-  const container = document.getElementById('airlineFlightsResults');
-  if (!container) return;
-  const flights = airline ? allFlightsForAirline.filter(f => f.airline === airline) : [];
-  if (!airline || flights.length === 0) {
-    container.innerHTML = airline ? '<p class="text-muted">Sin resultados</p>' : '<p class="text-muted">Seleccione una aerolínea para ver sus itinerarios</p>';
-    return;
-  }
-  const grouped = {};
-  flights.forEach(f => {
-    const key = f.origin + ' ↔ ' + f.destination;
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(f);
-  });
-  container.innerHTML = Object.entries(grouped).sort().map(([route, fls]) => `
-    <div class="route-group">
-      <h4 class="route-title">${route}</h4>
-      ${fls.map(f => `
-        <div class="flight-item">
-          <span class="flight-number">${f.flight_number || ''}</span>
-          <span class="flight-time">${f.departure_time || ''}${f.departure_time && f.arrival_time ? ' – ' : ''}${f.arrival_time || ''}</span>
-          <span class="flight-freq">${f.frequency || ''}</span>
-          ${f.notes ? `<span class="flight-notes">${f.notes}</span>` : ''}
-        </div>`).join('')}
-    </div>`).join('');
+    const res = await fetch('/api/airlines');
+    const airlines = await res.json();
+    const list = document.getElementById('airlineList');
+    list.innerHTML = airlines.map(a => `<option value="${a}">`).join('');
+  } catch (e) { console.error('Error loading airlines:', e); }
 }
 
 const airlineKeywords = [

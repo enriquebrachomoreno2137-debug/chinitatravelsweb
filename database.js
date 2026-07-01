@@ -224,6 +224,34 @@ function searchFlightsByAirline(airline) {
   `).filter(f => normalizeStr(f.airline).includes(normalizeStr(airline)));
 }
 
+function searchFlightsCombined(origin, destination, airline) {
+  const o = origin ? mapCity(origin) : null;
+  const d = destination ? mapCity(destination) : null;
+  const a = airline ? normalizeStr(airline) : null;
+  return query(`
+    SELECT f.*, r.origin, r.destination
+    FROM flights f
+    JOIN routes r ON r.id = f.route_id
+    WHERE f.status = 'active' AND r.status = 'active'
+    ORDER BY r.origin, r.destination, f.airline, f.departure_time
+  `).filter(f => {
+    if (o && !normalizeStr(f.origin).includes(o)) return false;
+    if (d && !normalizeStr(f.destination).includes(d)) return false;
+    if (a && !normalizeStr(f.airline).includes(a)) return false;
+    return true;
+  });
+}
+
+function getAirlines() {
+  return query(`
+    SELECT DISTINCT f.airline
+    FROM flights f
+    JOIN routes r ON r.id = f.route_id
+    WHERE f.status = 'active' AND r.status = 'active'
+    ORDER BY f.airline
+  `).map(r => r.airline).filter(Boolean);
+}
+
 function getFlightsByRoute(routeId) {
   return query('SELECT * FROM flights WHERE route_id = ? AND status = ? ORDER BY airline', [routeId, 'active']);
 }
@@ -266,6 +294,8 @@ module.exports = {
   getRoutesWithFlights,
   searchFlights,
   searchFlightsByAirline,
+  searchFlightsCombined,
+  getAirlines,
   searchFlightsFrom,
   searchFlightsTo,
   getItineraryByCode,

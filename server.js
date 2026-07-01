@@ -71,17 +71,19 @@ app.get('/api/routes/:id/flights', (req, res) => {
 
 app.get('/api/flights/search', (req, res) => {
   try {
-    const { origin, destination } = req.query;
-    if (!origin && !destination) {
-      return res.status(400).json({ error: 'Origen o destino requerido' });
+    const { origin, destination, airline } = req.query;
+    if (!origin && !destination && !airline) {
+      return res.status(400).json({ error: 'Origen, destino o aerolínea requerido' });
     }
-    if (!destination) {
-      const flights = db.searchFlightsFrom(origin);
-      return res.json({ forward: flights, returns: [], originOnly: true });
+    const flights = db.searchFlightsCombined(origin, destination, airline);
+    if (!destination && !airline && origin) {
+      return res.json({ flights, originOnly: true });
     }
-    const forward = db.searchFlights(origin, destination);
-    const returns = db.searchFlights(destination, origin);
-    res.json({ forward, returns });
+    if ((origin && destination) || airline) {
+      const returns = origin && destination ? db.searchFlights(destination, origin) : [];
+      return res.json({ flights, returns, originOnly: false });
+    }
+    res.json({ flights, returns: [], originOnly: false });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -118,6 +120,15 @@ app.get('/api/flights/airline/:airline', (req, res) => {
   try {
     const flights = db.searchFlightsByAirline(req.params.airline);
     res.json(flights);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/airlines', (req, res) => {
+  try {
+    const airlines = db.getAirlines();
+    res.json(airlines);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
