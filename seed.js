@@ -5,6 +5,9 @@ function seedDatabase(db) {
   const f = (...args) => db.addFlight(...args);
   const n = (...args) => db.addNews(...args);
 
+  n('LATAM Airlines - Extensión de flexibilidad por evento sísmico en Caracas',
+    'EXTENSIÓN DE FLEXIBILIDAD - Evento sísmico en Caracas (CCS), Venezuela\n\nClientes que viajan desde/hacia/a través de Caracas\nFecha de vuelo original: entre 26 de junio y 31 de julio de 2026\n\nOpciones sin penalización:\n• Cambio de fecha/vuelo/ruta alternativa: sin penalización, 1 año después de fecha original\n• Cambio de origen/destino: sin penalización (aplica diferencia tarifaria). Cambios a Cúcuta, Riohacha y Valencia (VLN) sin penalización y sin diferencia de tarifa\n• Reembolso: sin penalización, hasta 1 año después de fecha original\n\nCódigo: CCS24JUL26\nOSI: CAMBIO DE VOLUNTARIADO DEBIDO A: CCS24JUL26',
+    'importante', '2026-06-29 20:00:00');
   n('Air Europa - Operativa Madrid-Valencia por cierre de Maiquetía',
     'Debido al cierre temporal del Aeropuerto Internacional Simón Bolívar de Maiquetía (CCS) como consecuencia de los terremotos registrados en la zona, se actualiza la operativa entre Madrid - Venezuela - Madrid.\n\nVuelos 30JUN / 02JUL / 04JUL: OPERATIVA HACIA/DESDE VALENCIA:\nUX071 MAD-VLN → 15:30-19:05\nUX072 VLN-MAD → 21:05-12:10 (+1 día)\n\nOpciones para quienes no acepten cambio de aeropuerto:\n• Cambio de fecha sin coste (hasta 31 agosto 2026)\n• Cambio de ruta hacia Medellín, Bogotá o Panamá\n• Vale reembolsable\n• Reembolso\n\nActualmente no existe estimación sobre reapertura de CCS.\n\nContacto: CC Parque Aragua / 0414-4505376',
     'importante', '2026-06-29 18:00:00');
