@@ -5,6 +5,9 @@ function seedDatabase(db) {
   const f = (...args) => db.addFlight(...args);
   const n = (...args) => db.addNews(...args);
 
+  n('Sasca Airlines - Suspensión de vuelos Caracas-Los Roques',
+    'Debido a los recientes acontecimientos en Venezuela, nuestros vuelos Caracas - Los Roques y Los Roques - Caracas, estarán cancelados hasta nuevo aviso.\n\nEl Aeropuerto Nacional de Maiquetía no se encuentra operativo, por ello nuestras operaciones como aerolínea se mantienen a la espera de las instrucciones de las autoridades competentes para su restablecimiento.\n\nPasajeros afectados: reprogramación sin costo, boleto válido por 1 año.\n\nContacto: @sascaa / +58412-3391705',
+    'importante', '2026-07-01 22:00:00');
   n('LATAM Airlines - Extensión de flexibilidad por evento sísmico en Caracas',
     'EXTENSIÓN DE FLEXIBILIDAD - Evento sísmico en Caracas (CCS), Venezuela\n\nClientes que viajan desde/hacia/a través de Caracas\nFecha de vuelo original: entre 26 de junio y 31 de julio de 2026\n\nOpciones sin penalización:\n• Cambio de fecha/vuelo/ruta alternativa: sin penalización, 1 año después de fecha original\n• Cambio de origen/destino: sin penalización (aplica diferencia tarifaria). Cambios a Cúcuta, Riohacha y Valencia (VLN) sin penalización y sin diferencia de tarifa\n• Reembolso: sin penalización, hasta 1 año después de fecha original\n\nCódigo: CCS24JUL26\nOSI: CAMBIO DE VOLUNTARIADO DEBIDO A: CCS24JUL26',
     'importante', '2026-06-29 20:00:00');
