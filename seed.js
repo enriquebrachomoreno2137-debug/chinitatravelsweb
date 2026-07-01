@@ -268,14 +268,14 @@ function seedDatabase(db) {
   makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Panamá', 'Barquisimeto', 'Venezolana', 'V423', '12:00', '15:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
-  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'Desde 3 JUL', 'Plan de contingencia.');
-  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'Desde 3 JUL', 'Plan de contingencia.');
-  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'Desde 3 JUL', 'Plan de contingencia.');
-  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'Desde 3 JUL', 'Plan de contingencia.');
-  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'Desde 3 JUL', 'Plan de contingencia. Sujeto a autorización.');
-  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'Desde 3 JUL', 'Plan de contingencia. Sujeto a autorización.');
-  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'Desde 3 JUL', 'Plan de contingencia. Sujeto a autorización.');
-  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'Desde 3 JUL', 'Plan de contingencia. Sujeto a autorización.');
+  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
+  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
+  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
+  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'L-M-V', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'L-M-V', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
 }
 
 module.exports = { seedDatabase };
