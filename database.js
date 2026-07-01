@@ -214,6 +214,16 @@ function getAllItineraries() {
   return query('SELECT * FROM itineraries ORDER BY created_at DESC');
 }
 
+function searchFlightsByAirline(airline) {
+  return query(`
+    SELECT f.*, r.origin, r.destination
+    FROM flights f
+    JOIN routes r ON r.id = f.route_id
+    WHERE f.status = 'active' AND r.status = 'active'
+    ORDER BY r.origin, r.destination, f.departure_time
+  `).filter(f => normalizeStr(f.airline).includes(normalizeStr(airline)));
+}
+
 function getFlightsByRoute(routeId) {
   return query('SELECT * FROM flights WHERE route_id = ? AND status = ? ORDER BY airline', [routeId, 'active']);
 }
@@ -255,6 +265,7 @@ module.exports = {
   getAllRoutes,
   getRoutesWithFlights,
   searchFlights,
+  searchFlightsByAirline,
   searchFlightsFrom,
   searchFlightsTo,
   getItineraryByCode,

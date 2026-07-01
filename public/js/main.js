@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   loadRoutes();
   loadNews();
+  loadAllFlightsForAirline();
 
   document.getElementById('navNoticias').addEventListener('click', (e) => {
     e.preventDefault();
@@ -212,6 +213,64 @@ async function loadFlights(routeId, element) {
   } catch (err) {
     flightsDiv.innerHTML = '<p class="no-data">Error al cargar vuelos</p>';
   }
+}
+
+// ── Flight airline tags ──────────────────────────
+let allFlightsForAirline = [];
+
+async function loadAllFlightsForAirline() {
+  try {
+    const res = await fetch('/api/flights/all');
+    const raw = await res.json();
+    allFlightsForAirline = raw;
+    renderAirlineFlightTags();
+  } catch (e) { console.error('Error loading flights:', e); }
+}
+
+let airlineFlightsActive = false;
+let currentAirlineFlight = '';
+
+function renderAirlineFlightTags() {
+  const airlines = [...new Set(allFlightsForAirline.map(f => f.airline).filter(Boolean).sort())];
+  const div = document.getElementById('airlineFlightTags');
+  if (!div) return;
+  div.innerHTML = `<button class="airline-tag${!airlineFlightsActive ? ' active' : ''}" data-airline="" onclick="selectAirlineFlight(this)">Todas</button>` +
+    airlines.map(a => `<button class="airline-tag${airlineFlightsActive && currentAirlineFlight === a ? ' active' : ''}" data-airline="${a}" onclick="selectAirlineFlight(this)">${a}</button>`).join('');
+}
+
+function selectAirlineFlight(el) {
+  document.querySelectorAll('#airlineFlightTags .airline-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  airlineFlightsActive = !!el.dataset.airline;
+  currentAirlineFlight = el.dataset.airline || '';
+  renderFlightsByAirline(currentAirlineFlight);
+}
+
+function renderFlightsByAirline(airline) {
+  const container = document.getElementById('airlineFlightsResults');
+  if (!container) return;
+  const flights = airline ? allFlightsForAirline.filter(f => f.airline === airline) : [];
+  if (!airline || flights.length === 0) {
+    container.innerHTML = airline ? '<p class="text-muted">Sin resultados</p>' : '<p class="text-muted">Seleccione una aerolínea para ver sus itinerarios</p>';
+    return;
+  }
+  const grouped = {};
+  flights.forEach(f => {
+    const key = f.origin + ' ↔ ' + f.destination;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(f);
+  });
+  container.innerHTML = Object.entries(grouped).sort().map(([route, fls]) => `
+    <div class="route-group">
+      <h4 class="route-title">${route}</h4>
+      ${fls.map(f => `
+        <div class="flight-item">
+          <span class="flight-number">${f.flight_number || ''}</span>
+          <span class="flight-time">${f.departure_time || ''}${f.departure_time && f.arrival_time ? ' – ' : ''}${f.arrival_time || ''}</span>
+          <span class="flight-freq">${f.frequency || ''}</span>
+          ${f.notes ? `<span class="flight-notes">${f.notes}</span>` : ''}
+        </div>`).join('')}
+    </div>`).join('');
 }
 
 const airlineKeywords = [

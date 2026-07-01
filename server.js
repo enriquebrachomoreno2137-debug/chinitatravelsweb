@@ -105,6 +105,24 @@ app.get('/api/flights/to/:destination', (req, res) => {
   }
 });
 
+app.get('/api/flights/all', (req, res) => {
+  try {
+    const flights = db.getAllFlights();
+    res.json(flights);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/flights/airline/:airline', (req, res) => {
+  try {
+    const flights = db.searchFlightsByAirline(req.params.airline);
+    res.json(flights);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.get('/api/itinerary/:code', (req, res) => {
   try {
     const itinerary = db.getItineraryByCode(req.params.code);
