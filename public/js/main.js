@@ -228,7 +228,8 @@ const airlineKeywords = [
   { name: 'Avior Airlines', keywords: ['avior'] },
   { name: 'LATAM', keywords: ['latam'] },
   { name: 'Sasca Airlines', keywords: ['sasca'] },
-  { name: 'Aerocaribe', keywords: ['aerocaribe'] }
+  { name: 'Aerocaribe', keywords: ['aerocaribe'] },
+  { name: 'Copa Airlines', keywords: ['copa'] }
 ];
 
 function detectAirline(title) {

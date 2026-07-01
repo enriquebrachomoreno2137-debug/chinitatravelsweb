@@ -11,6 +11,9 @@ function seedDatabase(db) {
   n('Sasca Airlines - Suspensión de vuelos Caracas-Los Roques',
     'Debido a los recientes acontecimientos en Venezuela, nuestros vuelos Caracas - Los Roques y Los Roques - Caracas, estarán cancelados hasta nuevo aviso.\n\nEl Aeropuerto Nacional de Maiquetía no se encuentra operativo, por ello nuestras operaciones como aerolínea se mantienen a la espera de las instrucciones de las autoridades competentes para su restablecimiento.\n\nPasajeros afectados: reprogramación sin costo, boleto válido por 1 año.\n\nContacto: @sascaa / +58412-3391705',
     'importante', '2026-07-01 22:00:00');
+  n('Copa Airlines - Vuelos adicionales desde/hacia Valencia hasta 15 julio',
+    'Extenderemos la operación de vuelos adicionales desde y hacia Valencia hasta el 15 de julio de 2026, como alternativa para los pasajeros que requieran movilizarse entre Panamá y Venezuela.\n\nOperación regular:\nCM250 | PTY→VLN | 11:43-14:53\nCM251 | VLN→PTY | 16:03-17:21\n\nOperaciones adicionales:\nCM603 | PTY→VLN | 09:03-12:13\nCM605 | VLN→PTY | 13:43-15:01\nCM447 | PTY→VLN | 13:33-16:43\nCM437 | VLN→PTY | 18:03-19:21\n\nVuelos desde/hacia Caracas continúan suspendidos. Cambios o reembolsos sin costo.\n\nVerifique en copa.com',
+    'importante', '2026-07-01 22:00:00');
   n('LATAM Airlines - Extensión de flexibilidad por evento sísmico en Caracas',
     'EXTENSIÓN DE FLEXIBILIDAD - Evento sísmico en Caracas (CCS), Venezuela\n\nClientes que viajan desde/hacia/a través de Caracas\nFecha de vuelo original: entre 26 de junio y 31 de julio de 2026\n\nOpciones sin penalización:\n• Cambio de fecha/vuelo/ruta alternativa: sin penalización, 1 año después de fecha original\n• Cambio de origen/destino: sin penalización (aplica diferencia tarifaria). Cambios a Cúcuta, Riohacha y Valencia (VLN) sin penalización y sin diferencia de tarifa\n• Reembolso: sin penalización, hasta 1 año después de fecha original\n\nCódigo: CCS24JUL26\nOSI: CAMBIO DE VOLUNTARIADO DEBIDO A: CCS24JUL26',
     'importante', '2026-06-29 20:00:00');
@@ -161,6 +164,8 @@ function seedDatabase(db) {
   r('Valencia', 'Bogotá', 'Ruta Avianca.');
   r('Barquisimeto', 'Panamá', 'Ruta internacional Venezolana.');
   r('Panamá', 'Barquisimeto', 'Ruta internacional Venezolana.');
+  r('Valencia', 'Panamá', 'Ruta internacional Copa Airlines.');
+  r('Panamá', 'Valencia', 'Ruta internacional Copa Airlines.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -264,6 +269,12 @@ function seedDatabase(db) {
   makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '14:50', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
   makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
   makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
+  makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM250', '11:43', '14:53', 'Diaria', 'Operación regular.');
+  makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM251', '16:03', '17:21', 'Diaria', 'Operación regular.');
+  makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM603', '09:03', '12:13', 'Hasta 15 JUL', 'Vuelo adicional.');
+  makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM605', '13:43', '15:01', 'Hasta 15 JUL', 'Vuelo adicional.');
+  makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM447', '13:33', '16:43', 'Hasta 15 JUL', 'Vuelo adicional.');
+  makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM437', '18:03', '19:21', 'Hasta 15 JUL', 'Vuelo adicional.');
   makeF('Maracaibo', 'Barquisimeto', 'Venezolana', 'V1242', '08:00', '08:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
