@@ -27,6 +27,7 @@ header {
 }
 
 .logo h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
+.logo-img { height: 50px; width: auto; }
 .logo .tagline { font-size: 0.85rem; opacity: 0.8; }
 
 nav { display: flex; gap: 0.5rem; }
