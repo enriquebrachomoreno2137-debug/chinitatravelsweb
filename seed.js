@@ -72,6 +72,9 @@ function seedDatabase(db) {
   n('Aeropostal Alas de Venezuela - Vuelos especiales 28 de junio',
     'Aeropostal Alas de Venezuela ha reestructurado de manera temporal sus operaciones para garantizar el traslado de todos nuestros usuarios.\n\nFlexibilidades:\n• Reprogramación sin penalidades ni diferencias de tarifa.\n• Boleto válido por 1 año.\n\nImportante: Pasajeros Caracas-Porlamar-Caracas pueden volar desde/hacia Valencia sin costo adicional.\n\nOficinas:\n• Porlamar: Hotel Puerta del Sol\n• Valencia: Aeropuerto Arturo Michelena',
     'importante', '2026-06-28 10:00:00');
+  n('Venezolana - Vuelo contingencia Barquisimeto-Panamá (3 julio)',
+    'Comprometidos con garantizar el traslado y la conectividad de nuestros pasajeros, ejecutaremos un vuelo de contingencia el próximo viernes 3 de julio del 2026.\n\nMARACAIBO - BARQUISIMETO:\nV1242 | Maracaibo → Barquisimeto | 08:00-08:30\nV1241 | Barquisimeto → Maracaibo | 17:00-17:30\n\nBARQUISIMETO - PANAMÁ:\nV422 | Barquisimeto → Panamá | 10:00-11:00\nV423 | Panamá → Barquisimeto | 12:00-15:00\n\nContacto:\nWhatsApp: +58 424 639 02 81\nTeléfono: 0212 819 06 00\nCall Center: callcenter@venezolana.aero\nWeb: www.venezolana.aero',
+    'importante', '2026-07-01 12:00:00');
   n('Conviasa - Reestructuración total de operaciones hacia Valencia (1 de julio)',
     'El Consorcio Venezolano de Industrias Aeronáuticas y Servicios Aéreos (Conviasa) informa a todos sus pasajeros y al público en general que, debido a las contingencias de fuerza mayor ocasionadas por los sismos registrados el pasado 24 de junio, y con el fin de garantizar la máxima seguridad en nuestras operaciones, se ha dispuesto la reestructuración temporal de todos nuestros vuelos.\n\nA partir de este miércoles 01 de julio de 2026, todas las operaciones aéreas comerciales programadas con origen y destino al Aeropuerto Internacional "Simón Bolívar" de Maiquetía, serán trasladadas y servidas de manera excepcional en el Aeropuerto Internacional Arturo Michelena de la ciudad de Valencia, estado Carabobo.\n\nItinerario de contingencia:\n\nV01000 | Valencia → Porlamar | 07:25-08:25\nV02254 | Valencia → Porlamar | 11:45-12:55\nV0351 | Valencia → Porlamar | 12:50-13:50\nV02254 | Porlamar → Valencia | 09:25-10:40\nV0350 | Porlamar → Valencia | 10:50-11:50\nV01007 | Porlamar → Valencia | 15:50-16:50\nV0037 | Maturín → Valencia | 14:50-15:40\n\nCheck-in: presentarse en mostradores de Valencia con mínimo 2 horas de anticipación.',
     'importante', '2026-07-01 08:00:00');
@@ -120,6 +123,8 @@ function seedDatabase(db) {
 
   r('Bogotá', 'Valencia', 'Ruta Avianca.');
   r('Valencia', 'Bogotá', 'Ruta Avianca.');
+  r('Barquisimeto', 'Panamá', 'Ruta internacional Venezolana.');
+  r('Panamá', 'Barquisimeto', 'Ruta internacional Venezolana.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -181,6 +186,10 @@ function seedDatabase(db) {
   makeF('Porlamar', 'Valencia', 'Conviasa', 'V0350', '10:50', '11:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
   makeF('Porlamar', 'Valencia', 'Conviasa', 'V01007', '15:50', '16:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
   makeF('Maturín', 'Valencia', 'Conviasa', 'V0037', '14:50', '15:40', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Maracaibo', 'Barquisimeto', 'Venezolana', 'V1242', '08:00', '08:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
+  makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
+  makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
+  makeF('Panamá', 'Barquisimeto', 'Venezolana', 'V423', '12:00', '15:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
