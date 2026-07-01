@@ -166,6 +166,8 @@ function seedDatabase(db) {
   r('Panamá', 'Barquisimeto', 'Ruta internacional Venezolana.');
   r('Valencia', 'Panamá', 'Ruta internacional Copa Airlines.');
   r('Panamá', 'Valencia', 'Ruta internacional Copa Airlines.');
+  r('Maracaibo', 'Panamá', 'Ruta internacional Copa Airlines.');
+  r('Panamá', 'Maracaibo', 'Ruta internacional Copa Airlines.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -275,6 +277,8 @@ function seedDatabase(db) {
   makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM605', '13:43', '15:01', 'Hasta 15 JUL', 'Vuelo adicional.');
   makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM447', '13:33', '16:43', 'Hasta 15 JUL', 'Vuelo adicional.');
   makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM437', '18:03', '19:21', 'Hasta 15 JUL', 'Vuelo adicional.');
+  makeF('Maracaibo', 'Panamá', 'Copa Airlines', 'CM713', '15:58', '16:46', 'L-M-M-J-V-D (no S)', 'Operación regular.');
+  makeF('Panamá', 'Maracaibo', 'Copa Airlines', 'CM703', '12:04', '12:52', 'L-M-M-J-V-D (no S)', 'Operación regular.');
   makeF('Maracaibo', 'Barquisimeto', 'Venezolana', 'V1242', '08:00', '08:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
