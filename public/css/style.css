@@ -27,8 +27,8 @@ header {
 }
 
 .logo h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
-.logo-img { height: 60px; width: auto; display: block; }
-.logo .tagline { font-size: 0.85rem; opacity: 0.8; }
+.logo { text-align: center; }
+.logo-img { height: 70px; width: auto; display: inline-block; }
 
 nav { display: flex; gap: 0.5rem; }
 nav a {
@@ -394,7 +394,12 @@ footer {
 
 @media (max-width: 600px) {
   .header-content { flex-direction: column; text-align: center; }
+  .logo-img { height: 90px; }
   .search-form { flex-direction: column; }
   .form-group { min-width: 100%; }
   .routes-grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 601px) {
+  .logo { text-align: left; }
 }
