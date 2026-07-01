@@ -5,6 +5,9 @@ function seedDatabase(db) {
   const f = (...args) => db.addFlight(...args);
   const n = (...args) => db.addNews(...args);
 
+  n('Aerocaribe - Políticas de flexibilidad por contingencia',
+    'Ante las adversidades que la naturaleza nos ofrece, en AEROCARIBE reafirmamos nuestro compromiso con el país.\n\nPolíticas de flexibilidad:\n• Boletos emitidos con fecha de viaje entre 24/06/2026 y 30/07/2026: cambio sin costo, válido dentro de 365 días de vigencia.\n• Boletos adquiridos a través de agencia de viaje: contactar con su asesor.\n\nContacto: @aerocaribevzla / aerocaribe.aero / +58 (416) 623.74.84',
+    'importante', '2026-06-30 18:00:00');
   n('Sasca Airlines - Suspensión de vuelos Caracas-Los Roques',
     'Debido a los recientes acontecimientos en Venezuela, nuestros vuelos Caracas - Los Roques y Los Roques - Caracas, estarán cancelados hasta nuevo aviso.\n\nEl Aeropuerto Nacional de Maiquetía no se encuentra operativo, por ello nuestras operaciones como aerolínea se mantienen a la espera de las instrucciones de las autoridades competentes para su restablecimiento.\n\nPasajeros afectados: reprogramación sin costo, boleto válido por 1 año.\n\nContacto: @sascaa / +58412-3391705',
     'importante', '2026-07-01 22:00:00');
