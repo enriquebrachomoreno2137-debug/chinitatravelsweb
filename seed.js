@@ -32,6 +32,9 @@ function seedDatabase(db) {
   n('Laser Airlines - Flexibilización para pasajeros afectados',
     'En virtud de los recientes acontecimientos como consecuencia del sismo registrado el día 24 de junio, informamos a la colectividad que nuestras operaciones nacionales e internacionales desde y hacia el aeropuerto internacional Simón Bolívar se mantienen a la espera de las instrucciones de las autoridades competentes para su restablecimiento, con el fin de garantizar un pronto y seguro reinicio de los vuelos.\n\nEntre tanto, hemos activado una política de flexibilización para los pasajeros afectados en los vuelos suspendidos:\n\n1. Todos los pasajeros afectados podrán reprogramar su viaje en la misma ruta, sin costo adicional, sujeto a disponibilidad.\n2. Cambio de ruta / destino hacia rutas disponibles de Laser Airlines, sin cobro de penalidad (aplica diferencia de tarifa si la hubiese).\n3. Si el pasajero desiste de su viaje, el boleto tendrá 1 año de validez.\n4. Nota de crédito.\n\nPara información adicional puede comunicarse con su agencia de viajes o con nuestros canales oficiales de atención.\n\nDirección Comercial Caracas, 25 de junio de 2026',
     'importante', '2026-06-29 15:00:00');
+  n('LASER Airlines - Nueva ruta Barcelona-Miami desde 2 julio',
+    'LASER Airlines informa a sus clientes y aliados comerciales que debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto Internacional General José Antonio Anzoátegui, a partir del jueves 02 de julio de 2026.\n\nG6 200 | MIA → BLA | 07:30-11:00\nG6 201 | BLA → MIA | 12:45-16:15\n\nPresentarse con al menos 3 horas de anticipación.\n\nContacto: 0412.266.26.37 / 0501 LASER 00 / 0501 52737 00',
+    'importante', '2026-07-01 23:00:00');
   n('LASER Airlines - Recuperación equipajes bodega vuelos 906 CCS-PMV y 970 CCS-BLA (24 junio)',
     'Comunicado #2\n\nMotivado a la cancelación de los vuelos 906 y 970 del pasado 24 de junio por las causas de fuerza mayor ya conocidas, les informamos que hemos recuperado los equipajes de bodega (o facturado) que se encontraban resguardados en la aeronave.\n\nA partir del miércoles 01 de julio se estará realizando la entrega de dichos equipajes en nuestras instalaciones administrativas.\n\nHorario: MIÉRCOLES A VIERNES: 08:30 A.M. A 12:00 PM. Y DE 01:00 PM. A 04:30 PM.\n\nRequisitos: Cédula de Identidad o Pasaporte (copia o imagen) / Ticket de Bag Tag\n\nSi retira un tercero: carta de autorización firmada por el titular + copias de cédulas de ambos.\n\nDirección: Calle California de Las Mercedes, Torre Laser (al lado del GYM 398).',
     'importante', '2026-07-01 16:00:00');
@@ -168,6 +171,8 @@ function seedDatabase(db) {
   r('Panamá', 'Valencia', 'Ruta internacional Copa Airlines.');
   r('Maracaibo', 'Panamá', 'Ruta internacional Copa Airlines.');
   r('Panamá', 'Maracaibo', 'Ruta internacional Copa Airlines.');
+  r('Barcelona', 'Miami', 'Ruta internacional LASER Airlines.');
+  r('Miami', 'Barcelona', 'Ruta internacional LASER Airlines.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -291,6 +296,8 @@ function seedDatabase(db) {
   makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'L-M-V', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
   makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
   makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
+  makeF('Miami', 'Barcelona', 'LASER Airlines', 'G6 200', '07:30', '11:00', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
+  makeF('Barcelona', 'Miami', 'LASER Airlines', 'G6 201', '12:45', '16:15', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
 }
 
 module.exports = { seedDatabase };
