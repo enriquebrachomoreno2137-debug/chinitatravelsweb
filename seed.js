@@ -5,6 +5,9 @@ function seedDatabase(db) {
   const f = (...args) => db.addFlight(...args);
   const n = (...args) => db.addNews(...args);
 
+  n('Air Europa - Operativa Madrid-Valencia por cierre de Maiquetía',
+    'Debido al cierre temporal del Aeropuerto Internacional Simón Bolívar de Maiquetía (CCS) como consecuencia de los terremotos registrados en la zona, se actualiza la operativa entre Madrid - Venezuela - Madrid.\n\nVuelos 30JUN / 02JUL / 04JUL: OPERATIVA HACIA/DESDE VALENCIA:\nUX071 MAD-VLN → 15:30-19:05\nUX072 VLN-MAD → 21:05-12:10 (+1 día)\n\nOpciones para quienes no acepten cambio de aeropuerto:\n• Cambio de fecha sin coste (hasta 31 agosto 2026)\n• Cambio de ruta hacia Medellín, Bogotá o Panamá\n• Vale reembolsable\n• Reembolso\n\nActualmente no existe estimación sobre reapertura de CCS.\n\nContacto: CC Parque Aragua / 0414-4505376',
+    'importante', '2026-07-01 22:00:00');
   n('Aeropostal Alas de Venezuela - Nuevo itinerario temporal Valencia-Porlamar',
     'Estimados pasajeros,\n\nEn Aeropostal Alas de Venezuela, nuestra prioridad es garantizar la conectividad y el bienestar de nuestros usuarios. Ante las actuales medidas de contingencia operacional, nos complace informarles que hemos reestructurado de manera temporal nuestro itinerario para ofrecer una mayor disponibilidad y flexibilidad en sus viajes.\n\nA partir de la presente fecha, reforzamos nuestro compromiso de servicio operando nuestra ruta Valencia – Porlamar y Porlamar – Valencia.\n\nItinerario:\n\nVALENCIA - PORLAMAR\nSalida 12:00 pm | Llegada 01:00 pm\n\nPORLAMAR - VALENCIA\nSalida 02:00 pm | Llegada 03:00 pm\n\nDOMINGO:\nVALENCIA - PORLAMAR\nSalida 02:00 pm | Llegada 03:00 pm\n\nPORLAMAR - VALENCIA\nSalida 04:00 pm | Llegada 05:00 pm\n\nOficinas:\n• Porlamar (Nueva Esparta): Hotel Puerta del Sol, Calle Los Pinos entre Av. 4 de mayo y Av. Rómulo Betancourt.\n• Valencia (Carabobo): Aeropuerto Internacional Arturo Michelena, Av. Iribarren Borges.\n\nContacto: 0500-2846637 / +58-4227153913 / @aeropostal_ve',
     'importante', '2026-06-30 14:00:00');
@@ -241,6 +244,8 @@ function seedDatabase(db) {
   makeF('La Habana', 'Valencia', 'Rutaca Airlines', '', '15:40', '20:30', 'LUN', 'Itinerario internacional desde 6 julio.');
   makeF('Valencia', 'Punta Cana', 'Rutaca Airlines', '', '10:00', '11:30', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
   makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '14:50', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
+  makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
+  makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
   makeF('Maracaibo', 'Barquisimeto', 'Venezolana', 'V1242', '08:00', '08:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
   makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');

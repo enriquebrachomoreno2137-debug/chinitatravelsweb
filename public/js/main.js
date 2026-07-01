@@ -223,7 +223,8 @@ const airlineKeywords = [
   { name: 'Avianca', keywords: ['avianca'] },
   { name: 'Estelar', keywords: ['estelar'] },
   { name: 'Laser Airlines', keywords: ['laser'] },
-  { name: 'Venezolana', keywords: ['venezolana'] }
+  { name: 'Venezolana', keywords: ['venezolana'] },
+  { name: 'Air Europa', keywords: ['air europa'] }
 ];
 
 function detectAirline(title) {
