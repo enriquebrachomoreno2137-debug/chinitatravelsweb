@@ -72,6 +72,9 @@ function seedDatabase(db) {
   n('Aeropostal Alas de Venezuela - Vuelos especiales 28 de junio',
     'Aeropostal Alas de Venezuela ha reestructurado de manera temporal sus operaciones para garantizar el traslado de todos nuestros usuarios.\n\nFlexibilidades:\n• Reprogramación sin penalidades ni diferencias de tarifa.\n• Boleto válido por 1 año.\n\nImportante: Pasajeros Caracas-Porlamar-Caracas pueden volar desde/hacia Valencia sin costo adicional.\n\nOficinas:\n• Porlamar: Hotel Puerta del Sol\n• Valencia: Aeropuerto Arturo Michelena',
     'importante', '2026-06-28 10:00:00');
+  n('Conviasa - Reestructuración total de operaciones hacia Valencia (1 de julio)',
+    'El Consorcio Venezolano de Industrias Aeronáuticas y Servicios Aéreos (Conviasa) informa a todos sus pasajeros y al público en general que, debido a las contingencias de fuerza mayor ocasionadas por los sismos registrados el pasado 24 de junio, y con el fin de garantizar la máxima seguridad en nuestras operaciones, se ha dispuesto la reestructuración temporal de todos nuestros vuelos.\n\nA partir de este miércoles 01 de julio de 2026, todas las operaciones aéreas comerciales programadas con origen y destino al Aeropuerto Internacional "Simón Bolívar" de Maiquetía, serán trasladadas y servidas de manera excepcional en el Aeropuerto Internacional Arturo Michelena de la ciudad de Valencia, estado Carabobo.\n\nItinerario de contingencia:\n\nV01000 | Valencia → Porlamar | 07:25-08:25\nV02254 | Valencia → Porlamar | 11:45-12:55\nV0351 | Valencia → Porlamar | 12:50-13:50\nV02254 | Porlamar → Valencia | 09:25-10:40\nV0350 | Porlamar → Valencia | 10:50-11:50\nV01007 | Porlamar → Valencia | 15:50-16:50\nV0037 | Maturín → Valencia | 14:50-15:40\n\nCheck-in: presentarse en mostradores de Valencia con mínimo 2 horas de anticipación.',
+    'importante', '2026-07-01 08:00:00');
   n('Comunicado Oficial Conviasa - Reprogramación de Vuelos por eventos sísmicos',
     'Conviasa informa a todos sus usuarios y al público en general que, con motivo de los eventos sísmicos registrados el pasado miércoles 24 de junio y con el firme compromiso de garantizar la seguridad de nuestros pasajeros, se han tomado medidas de contingencia para la reprogramación de nuestros vuelos.\n\n1. Reprogramación de Vuelos: Todos los pasajeros que tenían viajes programados para los días 27 y 28 de junio han sido debidamente reprogramados para salir el día domingo 28 de junio.\n\n2. Cambio de Ruta (Porlamar - Caracas): Debido a la suspensión temporal de operaciones en el Aeropuerto Internacional de Maiquetía "Simón Bolívar", los pasajeros con boletos emitidos para Porlamar - Caracas serán trasladados excepcionalmente a través de la ruta Porlamar - Valencia.\n\nInstagram: @conviasa_ve\n\nCaracas, 27 de junio de 2026',
     'importante', '2026-06-27 10:00:00');
@@ -94,7 +97,7 @@ function seedDatabase(db) {
     'Barquisimeto','Porlamar', 'Porlamar','San Antonio del Táchira',
     'San Antonio del Táchira','Porlamar', 'Porlamar','El Vigía', 'El Vigía','Porlamar',
     'Porlamar','Valencia', 'Valencia','Puerto Ordaz', 'Puerto Ordaz','Porlamar',
-    'Porlamar','Maracaibo', 'Maracaibo','Porlamar', 'Valencia','Porlamar'
+    'Porlamar','Maracaibo', 'Maracaibo','Porlamar', 'Valencia','Porlamar', 'Maturín','Valencia', 'Valencia','Maturín'
   ];
   for (let i = 0; i < cvRoutes.length; i += 2) {
     r(cvRoutes[i], cvRoutes[i+1], 'Ruta reprogramada por contingencia sísmica.');
@@ -171,6 +174,13 @@ function seedDatabase(db) {
 
   makeF('Madrid', 'Valencia', 'Estelar Latinoamérica', 'ES894', '14:40', '19:00', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
   makeF('Valencia', 'Madrid', 'Estelar Latinoamérica', 'ES895', '22:00', '13:15 (+1 día)', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
+  makeF('Valencia', 'Porlamar', 'Conviasa', 'V01000', '07:25', '08:25', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Valencia', 'Porlamar', 'Conviasa', 'V02254', '11:45', '12:55', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Valencia', 'Porlamar', 'Conviasa', 'V0351', '12:50', '13:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Porlamar', 'Valencia', 'Conviasa', 'V02254', '09:25', '10:40', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Porlamar', 'Valencia', 'Conviasa', 'V0350', '10:50', '11:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Porlamar', 'Valencia', 'Conviasa', 'V01007', '15:50', '16:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
+  makeF('Maturín', 'Valencia', 'Conviasa', 'V0037', '14:50', '15:40', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
   makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
   makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'VIERNES 3 DE JULIO', 'Plan de contingencia.');
