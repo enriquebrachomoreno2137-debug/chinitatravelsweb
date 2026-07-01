@@ -63,6 +63,9 @@ function seedDatabase(db) {
   n('Rutaca Airlines - Retiro de equipajes vuelo 300 Caracas-Porlamar',
     'Informamos a los pasajeros del vuelo 300 de Caracas - Porlamar, cancelado tras los sismos ocurridos el pasado 24 de junio, que pueden proceder al retiro de sus equipajes.\n\nOficinas de Rutaca Airlines en el Aeropuerto Internacional Arturo Michelena de Valencia.\n\nHorario de atenci\u00f3n: De lunes a domingo de 8:30 a.m. a 4:30 p.m.\n\nPresentar su pase de abordar (boarding pass) y documento de identidad.',
     'importante', '2026-06-30 21:00:00');
+  n('Rutaca Airlines - Retiro equipajes vuelos 306 CCS-Pto Ordaz y 345 CCS-Maturín',
+    'Informamos a los pasajeros de los vuelos cancelados tras el sismo ocurrido el pasado 24 de junio, que pueden proceder a contactarnos para el retiro de sus equipajes.\n\nVuelo 306: Caracas - Puerto Ordaz\nVuelo 345: Caracas - Maturín\n\nContacto: calidaddeservicio@flyrutaca.com\n\nPresentar ticket de equipaje y documento de identidad. Si retira un tercero: autorización firmada + copias de cédulas de ambos.',
+    'importante', '2026-07-01 23:00:00');
   n('Rutaca Airlines - Activación parcial de operaciones desde Valencia (1 julio)',
     'Rutaca Airlines informa a todos nuestros pasajeros que hemos activado parcialmente nuestras operaciones desde nuestra base alterna Aeropuerto Internacional Arturo Michelena de Valencia.\n\nEstamos desplegando rutas y fortaleciendo frecuencias para garantizar la conectividad en cada tramo programado.\n\nRutaca Airlines reafirma su compromiso con la seguridad, puntualidad y calidad en cada una de nuestras operaciones.',
     'importante', '2026-07-01 18:00:00');
