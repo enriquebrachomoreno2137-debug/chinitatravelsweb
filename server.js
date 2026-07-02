@@ -21,6 +21,20 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
+// Visit tracking middleware
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api/') && !req.path.startsWith('/admin')) {
+    const crypto = require('crypto');
+    const ip = req.ip || req.connection.remoteAddress || '';
+    const ua = req.headers['user-agent'] || '';
+    const ipHash = crypto.createHash('md5').update(ip).digest('hex').slice(0, 8);
+    let deviceType = 'Desktop';
+    if (/mobile|android|iphone|ipad|ipod/i.test(ua)) deviceType = /ipad/i.test(ua) ? 'Tablet' : 'Mobile';
+    db.recordVisit(ipHash, deviceType, ua);
+  }
+  next();
+});
+
 function requireAdmin(req, res, next) {
   if (req.session && req.session.isAdmin) return next();
   if (req.path.startsWith('/api/admin') && !req.path.includes('/login')) {
@@ -285,6 +299,15 @@ app.delete('/api/admin/news/:id', (req, res) => {
   try {
     db.deleteNews(req.params.id);
     res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/admin/stats', (req, res) => {
+  try {
+    const stats = db.getStats();
+    res.json(stats);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

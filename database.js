@@ -288,6 +288,21 @@ function deleteNews(id) {
   return query('DELETE FROM news WHERE id = ?', [id]);
 }
 
+function recordVisit(ipHash, deviceType, userAgent) {
+  return query('INSERT INTO visits (ip_hash, device_type, user_agent) VALUES (?, ?, ?)', [ipHash, deviceType, userAgent || '']);
+}
+
+function getStats() {
+  const total = query('SELECT COUNT(*) as total FROM visits')[0].total;
+  const unique = query('SELECT COUNT(DISTINCT ip_hash) as unique FROM visits')[0].unique;
+  const devices = query(`
+    SELECT device_type, COUNT(*) as count, ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM visits), 1) as pct
+    FROM visits WHERE device_type != '' GROUP BY device_type ORDER BY count DESC
+  `);
+  const recent = query('SELECT * FROM visits ORDER BY created_at DESC LIMIT 10');
+  return { total, unique, devices, recent };
+}
+
 module.exports = {
   initDatabase,
   getAllRoutes,
@@ -314,5 +329,7 @@ module.exports = {
   getAllFlights,
   addNews,
   deleteNews,
-  clearAllData
+  clearAllData,
+  recordVisit,
+  getStats
 };
