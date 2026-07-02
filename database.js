@@ -288,11 +288,20 @@ function deleteNews(id) {
   return query('DELETE FROM news WHERE id = ?', [id]);
 }
 
+function ensureVisitsTable() {
+  try { query('SELECT COUNT(*) FROM visits'); } catch (e) {
+    db.run(`CREATE TABLE IF NOT EXISTS visits (id INTEGER PRIMARY KEY AUTOINCREMENT, ip_hash TEXT, device_type TEXT, user_agent TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`);
+    saveDb();
+  }
+}
+
 function recordVisit(ipHash, deviceType, userAgent) {
+  ensureVisitsTable();
   return query('INSERT INTO visits (ip_hash, device_type, user_agent) VALUES (?, ?, ?)', [ipHash, deviceType, userAgent || '']);
 }
 
 function getStats() {
+  ensureVisitsTable();
   const total = query('SELECT COUNT(*) as total FROM visits')[0].total;
   const unique = query('SELECT COUNT(DISTINCT ip_hash) as unique FROM visits')[0].unique;
   const devices = query(`
