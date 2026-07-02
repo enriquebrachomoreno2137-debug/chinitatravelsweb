@@ -18,10 +18,7 @@ app.use(session({
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
 }));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/admin', express.static(path.join(__dirname, 'admin')));
-
-// Visit tracking middleware
+// Visit tracking middleware (before static so it runs for page views)
 app.use((req, res, next) => {
   if (!req.path.startsWith('/api/') && !req.path.startsWith('/admin')) {
     const crypto = require('crypto');
@@ -30,10 +27,13 @@ app.use((req, res, next) => {
     const ipHash = crypto.createHash('md5').update(ip).digest('hex').slice(0, 8);
     let deviceType = 'Desktop';
     if (/mobile|android|iphone|ipad|ipod/i.test(ua)) deviceType = /ipad/i.test(ua) ? 'Tablet' : 'Mobile';
-    db.recordVisit(ipHash, deviceType, ua);
+    try { db.recordVisit(ipHash, deviceType, ua); } catch (e) { /* ignore */ }
   }
   next();
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 function requireAdmin(req, res, next) {
   if (req.session && req.session.isAdmin) return next();
