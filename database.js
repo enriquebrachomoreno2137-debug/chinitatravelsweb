@@ -303,7 +303,7 @@ function recordVisit(ipHash, deviceType, userAgent) {
 function getStats() {
   ensureVisitsTable();
   const total = query('SELECT COUNT(*) as total FROM visits')[0].total;
-  const unique = query('SELECT COUNT(DISTINCT ip_hash) as unique FROM visits')[0].unique;
+  const unique = query('SELECT COUNT(DISTINCT ip_hash) as cnt FROM visits')[0].cnt;
   const devices = query(`
     SELECT device_type, COUNT(*) as count, ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM visits), 1) as pct
     FROM visits WHERE device_type != '' GROUP BY device_type ORDER BY count DESC
