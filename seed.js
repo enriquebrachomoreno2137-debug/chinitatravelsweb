@@ -328,6 +328,9 @@ function seedDatabase(db) {
   n('Estelar - Retiro de equipaje vuelos 24 de junio (Las Mercedes)',
     'Equipaje disponible para retiro desde el 3 de julio en la oficina comercial Torre Estelar, Las Mercedes, Caracas.\n\nHorario: 08:00 AM - 05:00 PM.\n\nVuelos:\nES8302 San Antonio del Táchira - Caracas (24 jun)\nES823 Caracas - Puerto Ordaz (24 jun)\n\nRequisitos: titular debe acudir personalmente con cédula de identidad. Terceros requieren carta de autorización firmada + copias de cédulas.',
     'importante', '2026-07-03 16:30:00');
+n('Iberia - Flexibilización por terremoto en Venezuela (25 de junio)',
+    'NOTA: Vuelos afectados A/desde Caracas (CCS).\n\nBilletes emitidos hasta: 25 de junio de 2026.\nFechas de vuelo original: 25 de junio al 25 de julio de 2026.\nNuevas fechas de vuelo: hasta 15 de agosto de 2026.\n\nCambio de origen/destino: permitido a/desde BOG y PTY. Costes de aeropuerto por cuenta del cliente.\n\nAcople permitido: misma clase del billete original o la más baja disponible en la misma cabina.\nReembolsos: permitidos (forma de pago original o Bono).\nBilletes en redención: Sí.\n\n1 cambio involuntario permitido. Aplica a cualquier vuelo afectado del itinerario, ida o vuelta, haya o no empezado el viaje.\n\nClientes Iberia Express con billete 075/060 también aplican. Para vuelos cancelados aplicar normativa general estándar.',
+    'importante', '2026-06-25 12:00:00');
 }
 
 module.exports = { seedDatabase };
