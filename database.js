@@ -277,6 +277,10 @@ function clearAllData() {
   }
 }
 
+function clearAllDataIncludingVisits() {
+  clearAllData();
+  try { query('DELETE FROM visits'); } catch (e) {}
+
 function addNews(title, content, category, createdAt) {
   if (createdAt) {
     return query('INSERT INTO news (title, content, category, created_at) VALUES (?, ?, ?, ?)', [title, content, category || 'general', createdAt]);
@@ -339,6 +343,7 @@ module.exports = {
   addNews,
   deleteNews,
   clearAllData,
+  clearAllDataIncludingVisits,
   recordVisit,
   getStats
 };

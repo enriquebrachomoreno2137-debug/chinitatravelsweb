@@ -1,5 +1,5 @@
 function seedDatabase(db) {
-  db.clearAllData();
+  db.clearAllDataIncludingVisits();
 
   const r = (...args) => db.addRoute(...args);
   const f = (...args) => db.addFlight(...args);
