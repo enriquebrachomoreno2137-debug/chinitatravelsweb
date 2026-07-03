@@ -284,10 +284,14 @@ function seedDatabase(db) {
   makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM437', '18:03', '19:21', 'Hasta 15 JUL', 'Vuelo adicional.');
   makeF('Maracaibo', 'Panamá', 'Copa Airlines', 'CM713', '15:58', '16:46', 'L-M-M-J-V-D (no S)', 'Operación regular.');
   makeF('Panamá', 'Maracaibo', 'Copa Airlines', 'CM703', '12:04', '12:52', 'L-M-M-J-V-D (no S)', 'Operación regular.');
-  makeF('Maracaibo', 'Barquisimeto', 'Venezolana', 'V1242', '08:00', '08:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
-  makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
-  makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
-  makeF('Panamá', 'Barquisimeto', 'Venezolana', 'V423', '12:00', '15:00', 'VIERNES 3 DE JULIO', 'Vuelo de contingencia.');
+  makeF('Maracaibo', 'Barquisimeto', 'Venezolana', 'V1242', '08:00', '08:30', 'L M J V D', 'Plan de contingencia desde 6 jul.');
+  makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'L M J V D', 'Plan de contingencia desde 6 jul.');
+  makeF('Barquisimeto', 'Porlamar', 'Venezolana', 'V1341', '11:00', '12:00', 'L-J-D', 'Plan de contingencia desde 6 jul.');
+  makeF('Porlamar', 'Barquisimeto', 'Venezolana', 'V1342', '13:00', '14:00', 'L-J-D', 'Plan de contingencia desde 6 jul.');
+  makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'Mar-Vie', 'Plan de contingencia desde 6 jul.');
+  makeF('Panamá', 'Barquisimeto', 'Venezolana', 'V423', '12:00', '15:00', 'Mar-Vie', 'Plan de contingencia desde 6 jul.');
+  makeF('Barquisimeto', 'Panamá', 'Estelar Latinoamérica', 'ES8402', '10:00', '11:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
+  makeF('Panamá', 'Barquisimeto', 'Estelar Latinoamérica', 'ES8403', '12:00', '15:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
   makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
   makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
   makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
@@ -298,6 +302,32 @@ function seedDatabase(db) {
   makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
   makeF('Miami', 'Barcelona', 'LASER Airlines', 'G6 200', '07:30', '11:00', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Miami', 'LASER Airlines', 'G6 201', '12:45', '16:15', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
+
+  // ── Nuevos comunicados 3 de julio ──
+  n('Turpial Airlines - Vuelo especial Valencia ↔ San Antonio del Táchira (4 julio)',
+    'Frecuencia: Sábado 4 de julio de 2026.\n\nRuta: Valencia - San Antonio del Táchira / San Antonio del Táchira - Valencia.\n\nVuelo especial/chárter habilitado ante la contingencia. Contacte a su agencia de viajes o a Turpial Airlines para disponibilidad y reserva.',
+    'importante', '2026-07-03 20:00:00');
+  n('Turpial Airlines - Vuelo especial Valencia ↔ Bogotá (5 julio)',
+    'Frecuencia: Domingo 5 de julio de 2026.\n\nRuta: Valencia - Bogotá / Bogotá - Valencia.\n\nVuelo especial/chárter habilitado ante la contingencia de Maiquetía. Contacte a su agencia de viajes o a Turpial Airlines para disponibilidad y reserva.',
+    'importante', '2026-07-03 20:30:00');
+  n('Laser Airlines - Ruta alternativa Miami desde Barcelona (desde 2 julio)',
+    'A partir del jueves 2 de julio de 2026, Laser Airlines habilita ruta alternativa hacia Miami desde el Aeropuerto Internacional General José Antonio Anzoátegui (Barcelona).\n\nItinerario diario:\nG6 200 | Miami → Barcelona: 07:30 - 11:00\nG6 201 | Barcelona → Miami: 12:45 - 16:15\n\nEquipaje:\nTurista: 1 maleta 32 kg + equipaje de mano 8 kg\nEjecutiva: 2 maletas 23 kg + equipaje de mano 8 kg\n\nPasajeros con reservas afectadas (25 jun - 1 jul): reprogramación sin costo, cambio de ruta, boleto válido 1 año o nota de crédito.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
+    'importante', '2026-07-02 10:00:00');
+  n('Laser Airlines - Comunicado oficial (2 julio): reactivación ruta Miami y proceso de inspección',
+    'Debido a los eventos sísmicos del 24 de junio, Laser Airlines sufrió pérdidas humanas irreparables. El personal técnico ha logrado acceder a Maiquetía para inspeccionar y certificar las aeronaves.\n\nSe reactivó el vuelo diario a Miami desde Barcelona (BLA) con el siguiente itinerario:\nMiami → Barcelona: 07:30 - 11:00\nBarcelona → Miami: 12:45 - 16:15\n\nLa aerolínea trabaja para restablecer Madrid, Bogotá, Santo Domingo, Curazao y todos los destinos nacionales. Próximamente informarán fechas.\n\nLaser Airlines extiende sus condolencias a las familias afectadas y agradece la comprensión de sus usuarios.',
+    'importante', '2026-07-02 14:00:00');
+  n('Venezolana - Atención al público Caracas (desde 6 julio) y centro de acopio',
+    'A partir del 6 de julio de 2026, Venezolana retoma atención al público en su oficina del Centro Seguros Sudamérica, El Rosal, Caracas.\n\nHorario: Lunes a viernes de 8:00 AM a 5:00 PM.\n\nServicios: reprogramación, venta de boletos y centro de acopio para recibir donaciones para los afectados por la contingencia sísmica.\n\nUbicación: AV. Francisco de Miranda, Centro Seguros Sudamérica, P.B. Locales 4 y 5, El Rosal, Caracas.\n\nContacto:\nWhatsApp: +58 424 6390281\nCentral: 0212 819 06 00\nEmail: callcenter@venezolana.aero',
+    'importante', '2026-07-03 12:00:00');
+  n('Venezolana - Plan de contingencia desde Barquisimeto (desde 6 julio)',
+    'Venezolana operará vuelos desde el Aeropuerto Internacional Jacinto Lara de Barquisimeto a partir del 6 de julio de 2026:\n\nMaracaibo ↔ Barquisimeto (Vuelos 1242/1241)\nV1242 Maracaibo 8:00 → Barquisimeto 8:30 | LM-JV-D\nV1241 Barquisimeto 17:00 → Maracaibo 17:30 | LM-JV-D\n\nBarquisimeto ↔ Porlamar (Vuelos 1341/1342)\nV1341 Barquisimeto 11:00 → Porlamar 12:00 | L-J-D\nV1342 Porlamar 13:00 → Barquisimeto 14:00\n\nBarquisimeto ↔ Panamá (Vuelos 422/423)\nV422 Barquisimeto 10:00 → Panamá 11:00 | Mar y Vie\nV423 Panamá 12:00 → Barquisimeto 15:00 | Mar y Vie\n\nContacto: +58 424 639 02 81 / 0212 819 06 00 / callcenter@venezolana.aero\n\nVerifique su itinerario antes de ir al aeropuerto.',
+    'importante', '2026-07-03 14:00:00');
+  n('Estelar - Plan de contingencia Barquisimeto ↔ Panamá (desde 3 julio)',
+    'Estelar Latinoamérica habilita plan de contingencia para los vuelos ES8402 y ES8403 (ruta Caracas-Panamá) desde el Aeropuerto Jacinto Lara de Barquisimeto (BRM).\n\nItinerario desde 3 julio:\nBRM → PTY: 10:00 - 11:00\nPTY → BRM: 12:00 - 15:00\n\nAplica para pasajeros con vuelos del 3, 7 y 10 de julio.\n\nOpciones: reprogramación sin costo, cambio de ruta, validez 1 año o bono de crédito.\n\nContacto: WhatsApp +58 414 378 3527 / 0501 3783527 / calidad.servicio@flyestelar.com',
+    'importante', '2026-07-03 16:00:00');
+  n('Estelar - Retiro de equipaje vuelos 24 de junio (Las Mercedes)',
+    'Equipaje disponible para retiro desde el 3 de julio en la oficina comercial Torre Estelar, Las Mercedes, Caracas.\n\nHorario: 08:00 AM - 05:00 PM.\n\nVuelos:\nES8302 San Antonio del Táchira - Caracas (24 jun)\nES823 Caracas - Puerto Ordaz (24 jun)\n\nRequisitos: titular debe acudir personalmente con cédula de identidad. Terceros requieren carta de autorización firmada + copias de cédulas.',
+    'importante', '2026-07-03 16:30:00');
 }
 
 module.exports = { seedDatabase };
