@@ -280,6 +280,7 @@ function clearAllData() {
 function clearAllDataIncludingVisits() {
   clearAllData();
   try { query('DELETE FROM visits'); } catch (e) {}
+}
 
 function addNews(title, content, category, createdAt) {
   if (createdAt) {
