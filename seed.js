@@ -423,8 +423,8 @@ function seedDatabase(db) {
   makeF('La Habana', 'Valencia', 'Rutaca Airlines', '', '15:40', '20:30', 'LUN', 'Itinerario internacional desde 6 julio.');
   makeF('Valencia', 'Punta Cana', 'Rutaca Airlines', '', '10:00', '11:30', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
   makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '15:00', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
-  makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
-  makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
+  makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '7, 9, 11 y 12 JUL', 'Operativa por cierre de CCS.');
+  makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '7, 9, 11 y 12 JUL', 'Operativa por cierre de CCS.');
   makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM250', '11:43', '14:53', 'Diaria', 'Operación regular.');
   makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM251', '16:03', '17:21', 'Diaria', 'Operación regular.');
   makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM603', '09:03', '12:13', 'Hasta 15 JUL', 'Vuelo adicional.');
@@ -486,6 +486,9 @@ n('Iberia - Flexibilización por terremoto en Venezuela (25 de junio)',
 n('Conviasa - Reprogramación total de rutas y contingencia por terremoto (6 de julio)',
     'El Consorcio Venezolano de Industrias Aeronáuticas y Servicios Aéreos S.A. (Conviasa), informa a todos sus usuarios sobre la reprogramación de sus rutas nacionales e internacionales por los eventos sísmicos del 24 de junio y la suspensión temporal de operaciones en Maiquetía.\n\n1. Todas las operaciones nacionales desde Maiquetía han sido trasladadas al Aeropuerto Internacional "Arturo Michelena", Valencia, estado Carabobo.\n\n2. Pasajeros con destinos Barcelona, Puerto Ayacucho, Las Piedras, Barquisimeto, Barinas, Los Roques: abordarán y desembarcarán en el Aeropuerto "Los Tacariguas", Base Aérea Mariscal Sucre de Maracay, estado Aragua.\n\n3. Rutas internacionales México (Cancún y Santa Lucía) y La Habana (Cuba): reprogramadas desde Valencia.\n\n4. Vuelos desde Porlamar siguen operando normalmente.\n\nItinerario completo disponible en la página. Canales oficiales:\n• Redes: @conviasa_ve\n• Web: www.conviasa.aero\n• Email: callcenter@conviasa.aero',
     'importante', '2026-07-06 08:00:00');
+n('Air Europa - Nuevos vuelos Madrid-Valencia (VLN) 7, 9, 11 y 12 de julio',
+    'Debido al cierre temporal de Maiquetía (CCS) y tras la obtención de los permisos necesarios, Air Europa actualiza su operativa entre Madrid y Venezuela.\n\nVUELOS CONFIRMADOS 7, 9, 11 y 12 JULIO (vía Valencia VLN):\nUX071 | MAD→VLN | 15:30-19:05\nUX072 | VLN→MAD | 21:05-12:10 (+1 día)\n\nLos pasajeros que acepten viajar vía Valencia no requieren gestionar nada adicional. Recibirán email con itinerario actualizado.\n\nVUELO 10 JULIO: CANCELADO (Madrid-Caracas).\n\nOpciones para quienes no acepten cambio de aeropuerto:\n• Cambio de fecha sin coste hasta 31 agosto 2026\n• Cambio de ruta sin coste a Medellín, Bogotá o Panamá\n• Vale reembolsable\n• Reembolso (vía GDS)\n\nVUELOS 13-31 JULIO: Flexibilización con Dynamic Waiver 3INVE25JUN para cambios de fecha, ruta y emisión de Vale.\n\nAir Europa sigue trabajando en la operativa futura. Se informará novedades.',
+    'importante', '2026-07-06 12:00:00');
 }
 
 module.exports = { seedDatabase };
