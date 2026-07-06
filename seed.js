@@ -482,6 +482,12 @@ n('Aeropostal Alas de Venezuela - Comunicado oficial (2 de julio)',
 n('LATAM Airlines - Actualización flexibilidad por evento sísmico Caracas (3 de julio)',
     'ACTUALIZACIÓN FLEXIBILIDAD - Evento sísmico en Caracas (CCS), Venezuela.\n\nPasajeros desde/hacia/vía Caracas.\nFecha de vuelo original: entre 26 junio 2026 al 31 julio 2026.\n\nOpciones SIN multa (elegir una):\n\n1. Cambio de fecha/vuelo/retouring: sin multa, misma cabina, hasta 1 año desde fecha original.\n\n2. Cambio de origen/destino: sin multa, sujeta a diferencia tarifaria. Cambio a Cúcuta (CUC), Riohacha (RCH) y Barcelona (BLA) sin multa y sin diferencia de tarifa.\n\n3. Devolución: sin multa, hasta 1 año desde fecha de vuelo original.\n\nCódigo: CCS24JUL26\nOSI: INVCL CHG DUE TO: CCS24JUL26\n\nNota: LATAM opera temporalmente desde Barcelona (BLA) como aeropuerto alterno por cierre de Maiquetía.',
     'importante', '2026-07-03 14:00:00');
+n('Avior Airlines - Nuevas frecuencias desde Barcelona por contingencia (29 de junio)',
+    'Avior Airlines habilita temporalmente nuevas frecuencias desde el Aeropuerto Internacional de Barcelona (BLA) para reforzar la conexión nacional e internacional.\n\nA partir del viernes 3 de julio de 2026:\n\nVUELOS NACIONALES:\nBarcelona → Barquisimeto: 07:00-08:00 | L-M-V\nBarquisimeto → Maracaibo: 09:00-09:40 | L-M-V\nMaracaibo → Barquisimeto: 11:00-11:40 | L-M-V\nBarquisimeto → Barcelona: 12:40-13:40 | L-M-V\n\nVUELOS INTERNACIONALES (sujeto a autorización Colombia):\nBarcelona → Bogotá: 17:00-18:10 | L-M-V\nBogotá → Barcelona: 19:30-22:40 | L-M-V\nBarcelona → Medellín: 17:00-18:10 | M-S\nMedellín → Barcelona: 19:30-22:40 | M-S\n\nContacto: 0501 AVIOR 00 / www.aviorair.com',
+    'importante', '2026-06-29 12:00:00');
+n('American Airlines - Política de excepción por terremoto Caracas (actualizado 1 julio)',
+    'American Airlines ha implementado una política de excepción especial por el terremoto de Caracas, Venezuela.\n\nCódigos afectados: CCS\nBoletos emitidos hasta: 23 de junio de 2026\nFechas de viaje afectadas: 25 junio - 11 julio 2026 (extendido)\nNuevas fechas de viaje: hasta 14 julio 2026\n\nCambio de origen/destino: No permitido. Radio de 300 millas permitido.\nCambio de Connection City: Permitido\nCambio coterminal: Permitido\n\nCódigo en endoso: TNADVE/24JUN26A\n\nAplica para vuelos operados por American Airlines y JB, y socios Aer Lingus, British Airways, Finnair, Iberia, Japan Airlines, Qantas.',
+    'importante', '2026-07-01 12:00:00');
 }
 
 module.exports = { seedDatabase };
