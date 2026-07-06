@@ -433,6 +433,12 @@ function seedDatabase(db) {
   makeF('Miami', 'Barcelona', 'LASER Airlines', 'G6 200', '07:30', '11:00', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Miami', 'LASER Airlines', 'G6 201', '12:45', '16:15', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
 
+  // ── TURPIAL AIRLINES Valencia ↔ Punta Cana (julio-septiembre 2026) ──
+  makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '14:00', '15:30', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
+  makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '16:30', '18:00', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
+  makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '15:00', '16:30', 'DOMINGO (19 jul - 27 sep)', 'Ruta temporal.');
+  makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '17:30', '19:00', 'DOMINGO (19 jul - 27 sep)', 'Ruta temporal.');
+
   // ── Nuevos comunicados 3 de julio ──
   n('Turpial Airlines - Vuelo especial Valencia ↔ San Antonio del Táchira (4 julio)',
     'Frecuencia: Sábado 4 de julio de 2026.\n\nRuta: Valencia - San Antonio del Táchira / San Antonio del Táchira - Valencia.\n\nVuelo especial/chárter habilitado ante la contingencia. Contacte a su agencia de viajes o a Turpial Airlines para disponibilidad y reserva.',
