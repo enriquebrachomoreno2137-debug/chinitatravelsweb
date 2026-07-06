@@ -37,7 +37,7 @@ header.scrolled {
 }
 
 .logo h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
-.logo { text-align: center; }
+.logo { text-align: left; }
 .logo-img { height: 70px; width: auto; display: inline-block; transition: height .25s; }
 header.scrolled .logo-img { height: 40px; }
 
@@ -425,13 +425,13 @@ footer {
 .float-top:hover { transform: scale(1.08); }
 
 @media (max-width: 600px) {
-  .header-content { flex-direction: column; text-align: center; }
-  .logo-img { height: 120px; }
+  .header-content { flex-wrap: nowrap; gap: .5rem; }
+  .logo-img { height: 50px; }
+  header.scrolled .logo-img { height: 34px; }
+  header { padding: .5rem 0; }
+  header.scrolled { padding: .25rem 0; }
+  nav a { padding: .3rem .5rem; font-size: .85rem; }
   .search-form { flex-direction: column; }
   .form-group { min-width: 100%; }
   .routes-grid { grid-template-columns: 1fr; }
-}
-
-@media (min-width: 601px) {
-  .logo { text-align: left; }
 }
