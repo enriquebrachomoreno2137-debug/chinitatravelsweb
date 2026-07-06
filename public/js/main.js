@@ -316,7 +316,8 @@ const airlineKeywords = [
   { name: 'LATAM', keywords: ['latam'] },
   { name: 'Sasca Airlines', keywords: ['sasca'] },
   { name: 'Aerocaribe', keywords: ['aerocaribe'] },
-  { name: 'Copa Airlines', keywords: ['copa'] }
+  { name: 'Copa Airlines', keywords: ['copa'] },
+  { name: 'Iberia', keywords: ['iberia'] }
 ];
 
 function detectAirline(title) {
