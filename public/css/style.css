@@ -10,12 +10,22 @@ body {
 }
 
 .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+.hidden { display: none !important; }
 
 header {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   color: #fff;
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: padding .25s, box-shadow .25s;
+}
+
+header.scrolled {
+  padding: .4rem 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 
 .header-content {
@@ -28,7 +38,8 @@ header {
 
 .logo h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
 .logo { text-align: center; }
-.logo-img { height: 70px; width: auto; display: inline-block; }
+.logo-img { height: 70px; width: auto; display: inline-block; transition: height .25s; }
+header.scrolled .logo-img { height: 40px; }
 
 nav { display: flex; gap: 0.5rem; }
 nav a {

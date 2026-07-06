@@ -3,9 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNews();
   loadAirlines();
 
+  document.getElementById('navInicio').addEventListener('click', (e) => {
+    e.preventDefault();
+    showPage('inicio');
+  });
+
   document.getElementById('navNoticias').addEventListener('click', (e) => {
     e.preventDefault();
-    document.getElementById('newsSection').scrollIntoView({ behavior: 'smooth' });
+    showPage('noticias');
+  });
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 60);
+    document.getElementById('btnTop').classList.toggle('show', window.scrollY > 300);
   });
 
   function normalizeStr(str) {
@@ -68,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let html = notice || '';
 
-      // ── Show flights ──
       if (data.originOnly && flights.length > 0) {
         const grouped = {};
         flights.forEach(f => {
@@ -85,9 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
         html += flights.map(flightCard).join('');
       }
 
-      // ── Show news filtered by airline ──
       if (airline && allNews.length > 0) {
-        const newsFiltered = allNews.filter(n => detectAirline(n.title) && normalizeStr(detectAirline(n.title)).includes(normalizeStr(airline)));
+        const al = normalizeStr(airline);
+        const newsFiltered = allNews.filter(n => {
+          const detected = detectAirline(n.title);
+          return detected && normalizeStr(detected).includes(al);
+        });
         if (newsFiltered.length > 0) {
           html += '<div class="suggestions"><p class="suggestions-title">Comunicados / Noticias de ' + airline + '</p>';
           html += newsFiltered.map(n => `
@@ -101,13 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // ── Alternatives when no direct flights ──
-      if (flights.length === 0) {
+      if (flights.length === 0 && !airline) {
         html += '<div class="no-results"><p>No se encontraron vuelos exactos.</p></div>';
 
-        if (origin && !destination && !airline) {
-          // only origin, no results at all
-        } else if (origin && destination && !airline) {
+        if (origin && destination && !airline) {
           const [simRes, altRes] = await Promise.all([
             fetch(`/api/flights/from/${encodeURIComponent(origin)}`),
             fetch(`/api/flights/to/${encodeURIComponent(destination)}`)
@@ -148,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
             html += '</div>';
           }
         } else if (airline) {
-          // Show all flights for this airline as alternative
           const altRes = await fetch(`/api/flights/airline/${encodeURIComponent(airline)}`);
           const altFlights = await altRes.json();
           if (altFlights.length > 0) {
@@ -168,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       } else if (origin && destination && !airline && flights.length > 0) {
-        // Show alternatives alongside results
         const [simRes, altRes] = await Promise.all([
           fetch(`/api/flights/from/${encodeURIComponent(origin)}`),
           fetch(`/api/flights/to/${encodeURIComponent(destination)}`)
@@ -214,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       container.innerHTML = html;
       section.classList.remove('hidden');
-      section.scrollIntoView({ behavior: 'smooth' });
 
     } catch (err) {
       document.getElementById('resultsContainer').innerHTML = '<div class="no-results"><p>Error al buscar. Intenta de nuevo.</p></div>';
@@ -222,6 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+function showPage(page) {
+  document.querySelectorAll('#pageInicio, #pageNoticias').forEach(el => el.classList.add('hidden'));
+  document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1)).classList.remove('hidden');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('nav' + page.charAt(0).toUpperCase() + page.slice(1)).classList.add('active');
+  scrollTo(0, 0);
+}
 
 function sendWhatsApp() {
   const msg = document.getElementById('whatsappMessage').value.trim();
