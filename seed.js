@@ -204,6 +204,14 @@ function seedDatabase(db) {
   r('Valencia', 'Maracaibo', 'Ruta Estelar Airlines.');
   r('Maracaibo', 'Valencia', 'Ruta Estelar Airlines.');
 
+  // ── TURPIAL AIRLINES RUTAS NACIONALES ──
+  r('Valencia', 'Puerto Ordaz', 'Ruta Turpial Airlines.');
+  r('Puerto Ordaz', 'Valencia', 'Ruta Turpial Airlines.');
+  r('Valencia', 'San Antonio del Táchira', 'Ruta Turpial Airlines.');
+  r('San Antonio del Táchira', 'Valencia', 'Ruta Turpial Airlines.');
+  r('Valencia', 'Porlamar', 'Ruta Turpial Airlines.');
+  r('Porlamar', 'Valencia', 'Ruta Turpial Airlines.');
+
   const allRoutes = db.getAllRoutes();
   const g = (o, d) => { const x = allRoutes.find(x => x.origin === o.toUpperCase() && x.destination === d.toUpperCase()); return x ? x.id : null; };
 
@@ -228,6 +236,16 @@ function seedDatabase(db) {
   makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'LU MA MI JU VI', 'Nuevo itinerario temporal.');
   makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'DOMINGO', 'Nuevo itinerario temporal.');
   makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '16:00', '17:00', 'DOMINGO', 'Nuevo itinerario temporal.');
+
+  // ── TURPIAL AIRLINES FLIGHTS ──
+  makeF('Valencia', 'Puerto Ordaz', 'Turpial Airlines', '', '08:00', '09:15', 'LUNES - VIERNES', 'Itinerario nacional.');
+  makeF('Puerto Ordaz', 'Valencia', 'Turpial Airlines', '', '10:15', '11:30', 'LUNES - VIERNES', 'Itinerario nacional.');
+  makeF('Valencia', 'Maracaibo', 'Turpial Airlines', '', '12:30', '13:30', 'LUNES - VIERNES', 'Itinerario nacional.');
+  makeF('Maracaibo', 'Valencia', 'Turpial Airlines', '', '14:30', '15:30', 'LUNES - VIERNES', 'Itinerario nacional.');
+  makeF('Valencia', 'San Antonio del Táchira', 'Turpial Airlines', '', '16:30', '17:30', 'LUNES - VIERNES', 'Itinerario nacional.');
+  makeF('San Antonio del Táchira', 'Valencia', 'Turpial Airlines', '', '18:30', '19:30', 'LUNES - VIERNES', 'Itinerario nacional.');
+  makeF('Valencia', 'Porlamar', 'Turpial Airlines', '', '14:30', '15:30', 'JUEVES - DOMINGO', 'Itinerario nacional.');
+  makeF('Porlamar', 'Valencia', 'Turpial Airlines', '', '16:30', '17:30', 'JUEVES - DOMINGO', 'Itinerario nacional.');
 
   makeF('Valencia', 'Santo Domingo del Táchira', 'Estelar', '', '12:10', '13:10', 'LU MA JU VI SA DO', 'Itinerario contingencia.');
   makeF('Santo Domingo del Táchira', 'Valencia', 'Estelar', '', '14:10', '15:10', 'LU MA JU VI SA DO', 'Itinerario contingencia.');
@@ -440,6 +458,9 @@ function seedDatabase(db) {
   makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '17:30', '19:00', 'DOMINGO (19 jul - 27 sep)', 'Ruta temporal.');
 
   // ── Nuevos comunicados 3 de julio ──
+  n('Turpial Airlines - Itinerario nacional desde Valencia (julio 2026)',
+    'Turpial Airlines informa sus nuevos itinerarios nacionales desde el Aeropuerto Arturo Michelena de Valencia:\n\nLUNES Y VIERNES:\nValencia → Puerto Ordaz: 08:00-09:15\nPuerto Ordaz → Valencia: 10:15-11:30\nValencia → Maracaibo: 12:30-13:30\nMaracaibo → Valencia: 14:30-15:30\nValencia → San Antonio del Táchira: 16:30-17:30\nSan Antonio del Táchira → Valencia: 18:30-19:30\n\nJUEVES Y DOMINGO:\nValencia → Porlamar: 14:30-15:30\nPorlamar → Valencia: 16:30-17:30\n\nVuelos especiales/chárter disponibles. Contacte a su agencia de viajes o a Turpial Airlines para disponibilidad y reservas.',
+    'importante', '2026-07-06 14:00:00');
   n('Turpial Airlines - Vuelo especial Valencia ↔ San Antonio del Táchira (4 julio)',
     'Frecuencia: Sábado 4 de julio de 2026.\n\nRuta: Valencia - San Antonio del Táchira / San Antonio del Táchira - Valencia.\n\nVuelo especial/chárter habilitado ante la contingencia. Contacte a su agencia de viajes o a Turpial Airlines para disponibilidad y reserva.',
     'importante', '2026-07-03 20:00:00');
