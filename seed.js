@@ -422,7 +422,7 @@ function seedDatabase(db) {
   makeF('Valencia', 'La Habana', 'Rutaca Airlines', '', '10:00', '14:50', 'LUN', 'Itinerario internacional desde 6 julio.');
   makeF('La Habana', 'Valencia', 'Rutaca Airlines', '', '15:40', '20:30', 'LUN', 'Itinerario internacional desde 6 julio.');
   makeF('Valencia', 'Punta Cana', 'Rutaca Airlines', '', '10:00', '11:30', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
-  makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '14:50', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
+  makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '15:00', 'JUE-DOM', 'Itinerario internacional desde 9 julio.');
   makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
   makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '30JUN/02JUL/04JUL', 'Operativa por cierre de CCS.');
   makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM250', '11:43', '14:53', 'Diaria', 'Operación regular.');
