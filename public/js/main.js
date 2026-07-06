@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', () => {
     document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 60);
-    document.getElementById('btnTop').classList.toggle('show', window.scrollY > 300);
   });
 
   function normalizeStr(str) {
