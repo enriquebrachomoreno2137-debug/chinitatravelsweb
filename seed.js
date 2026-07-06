@@ -479,6 +479,9 @@ n('Air Europa - Nuevos vuelos Madrid-Valencia (VLN) 7, 9, 11 y 12 de julio',
 n('Aeropostal Alas de Venezuela - Comunicado oficial (2 de julio)',
     'Desde Aeropostal Alas de Venezuela C.A., nos unimos al profundo dolor que embarga a nuestro país tras los difíciles acontecimientos sísmicos ocurridos recientemente. Lamentamos profundamente la pérdida de vidas humanas.\n\nAnte esta emergencia, reafirmamos nuestro compromiso de acompañar a la nación en su proceso de recuperación, trabajando junto al Ministerio del Poder Popular para el Transporte.\n\nNuestro personal despliega todo su esfuerzo y capacidades logísticas para brindar el apoyo necesario en las operaciones aéreas de contingencia.\n\nITINERARIO VALENCIA - PORLAMAR:\nLUNES A VIERNES:\nValencia → Porlamar: 12:00 PM - 01:00 PM\nPorlamar → Valencia: 02:00 PM - 03:00 PM\n\nDOMINGO:\nValencia → Porlamar: 02:00 PM - 03:00 PM\nPorlamar → Valencia: 04:00 PM - 05:00 PM\n\nContacto: +58 422-715-39-13 / @aeropostal_ve',
     'importante', '2026-07-02 10:00:00');
+n('LATAM Airlines - Actualización flexibilidad por evento sísmico Caracas (3 de julio)',
+    'ACTUALIZACIÓN FLEXIBILIDAD - Evento sísmico en Caracas (CCS), Venezuela.\n\nPasajeros desde/hacia/vía Caracas.\nFecha de vuelo original: entre 26 junio 2026 al 31 julio 2026.\n\nOpciones SIN multa (elegir una):\n\n1. Cambio de fecha/vuelo/retouring: sin multa, misma cabina, hasta 1 año desde fecha original.\n\n2. Cambio de origen/destino: sin multa, sujeta a diferencia tarifaria. Cambio a Cúcuta (CUC), Riohacha (RCH) y Barcelona (BLA) sin multa y sin diferencia de tarifa.\n\n3. Devolución: sin multa, hasta 1 año desde fecha de vuelo original.\n\nCódigo: CCS24JUL26\nOSI: INVCL CHG DUE TO: CCS24JUL26\n\nNota: LATAM opera temporalmente desde Barcelona (BLA) como aeropuerto alterno por cierre de Maiquetía.',
+    'importante', '2026-07-03 14:00:00');
 }
 
 module.exports = { seedDatabase };
