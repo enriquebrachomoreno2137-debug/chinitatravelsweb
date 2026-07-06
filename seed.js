@@ -224,8 +224,8 @@ function seedDatabase(db) {
   makeF('Valencia', 'Bogotá', 'Avianca', '', '12:27', '13:10', 'Diaria', 'Vuelo temporal por contingencia. Válido hasta 10 de julio.');
   makeF('Valencia', 'Bogotá', 'Avianca', '', '04:17', '05:00', 'Diaria', 'Vuelo temporal por contingencia. Válido hasta 10 de julio.');
 
-  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '12:00', '13:00', 'LU MA JU VI', 'Nuevo itinerario temporal.');
-  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'LU MA JU VI', 'Nuevo itinerario temporal.');
+  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '12:00', '13:00', 'LU MA MI JU VI', 'Nuevo itinerario temporal.');
+  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'LU MA MI JU VI', 'Nuevo itinerario temporal.');
   makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'DOMINGO', 'Nuevo itinerario temporal.');
   makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '16:00', '17:00', 'DOMINGO', 'Nuevo itinerario temporal.');
 
@@ -476,6 +476,9 @@ n('Conviasa - Reprogramación total de rutas y contingencia por terremoto (6 de 
 n('Air Europa - Nuevos vuelos Madrid-Valencia (VLN) 7, 9, 11 y 12 de julio',
     'Debido al cierre temporal de Maiquetía (CCS) y tras la obtención de los permisos necesarios, Air Europa actualiza su operativa entre Madrid y Venezuela.\n\nVUELOS CONFIRMADOS 7, 9, 11 y 12 JULIO (vía Valencia VLN):\nUX071 | MAD→VLN | 15:30-19:05\nUX072 | VLN→MAD | 21:05-12:10 (+1 día)\n\nLos pasajeros que acepten viajar vía Valencia no requieren gestionar nada adicional. Recibirán email con itinerario actualizado.\n\nVUELO 10 JULIO: CANCELADO (Madrid-Caracas).\n\nOpciones para quienes no acepten cambio de aeropuerto:\n• Cambio de fecha sin coste hasta 31 agosto 2026\n• Cambio de ruta sin coste a Medellín, Bogotá o Panamá\n• Vale reembolsable\n• Reembolso (vía GDS)\n\nVUELOS 13-31 JULIO: Flexibilización con Dynamic Waiver 3INVE25JUN para cambios de fecha, ruta y emisión de Vale.\n\nAir Europa sigue trabajando en la operativa futura. Se informará novedades.',
     'importante', '2026-07-06 12:00:00');
+n('Aeropostal Alas de Venezuela - Comunicado oficial (2 de julio)',
+    'Desde Aeropostal Alas de Venezuela C.A., nos unimos al profundo dolor que embarga a nuestro país tras los difíciles acontecimientos sísmicos ocurridos recientemente. Lamentamos profundamente la pérdida de vidas humanas.\n\nAnte esta emergencia, reafirmamos nuestro compromiso de acompañar a la nación en su proceso de recuperación, trabajando junto al Ministerio del Poder Popular para el Transporte.\n\nNuestro personal despliega todo su esfuerzo y capacidades logísticas para brindar el apoyo necesario en las operaciones aéreas de contingencia.\n\nITINERARIO VALENCIA - PORLAMAR:\nLUNES A VIERNES:\nValencia → Porlamar: 12:00 PM - 01:00 PM\nPorlamar → Valencia: 02:00 PM - 03:00 PM\n\nDOMINGO:\nValencia → Porlamar: 02:00 PM - 03:00 PM\nPorlamar → Valencia: 04:00 PM - 05:00 PM\n\nContacto: +58 422-715-39-13 / @aeropostal_ve',
+    'importante', '2026-07-02 10:00:00');
 }
 
 module.exports = { seedDatabase };
