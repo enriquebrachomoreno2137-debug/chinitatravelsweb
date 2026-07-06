@@ -198,6 +198,8 @@ function seedDatabase(db) {
   r('Panamá', 'Maracaibo', 'Ruta internacional Copa Airlines.');
   r('Barcelona', 'Miami', 'Ruta internacional LASER Airlines.');
   r('Miami', 'Barcelona', 'Ruta internacional LASER Airlines.');
+  r('Barcelona', 'Santo Domingo', 'Ruta internacional LASER Airlines.');
+  r('Santo Domingo', 'Barcelona', 'Ruta internacional LASER Airlines.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -450,6 +452,8 @@ function seedDatabase(db) {
   makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
   makeF('Miami', 'Barcelona', 'LASER Airlines', 'G6 200', '07:30', '11:00', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Miami', 'LASER Airlines', 'G6 201', '12:45', '16:15', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
+  makeF('Barcelona', 'Santo Domingo', 'LASER Airlines', 'QL2968', '10:00', '11:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
+  makeF('Santo Domingo', 'Barcelona', 'LASER Airlines', 'QL2969', '13:20', '14:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
 
   // ── TURPIAL AIRLINES Valencia ↔ Punta Cana (julio-septiembre 2026) ──
   makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '14:00', '15:30', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
@@ -470,6 +474,9 @@ function seedDatabase(db) {
   n('Laser Airlines - Ruta alternativa Miami desde Barcelona (desde 2 julio)',
     'A partir del jueves 2 de julio de 2026, Laser Airlines habilita ruta alternativa hacia Miami desde el Aeropuerto Internacional General José Antonio Anzoátegui (Barcelona).\n\nItinerario diario:\nG6 200 | Miami → Barcelona: 07:30 - 11:00\nG6 201 | Barcelona → Miami: 12:45 - 16:15\n\nEquipaje:\nTurista: 1 maleta 32 kg + equipaje de mano 8 kg\nEjecutiva: 2 maletas 23 kg + equipaje de mano 8 kg\n\nPasajeros con reservas afectadas (25 jun - 1 jul): reprogramación sin costo, cambio de ruta, boleto válido 1 año o nota de crédito.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
     'importante', '2026-07-02 10:00:00');
+  n('LASER Airlines - Nueva ruta Barcelona ↔ Santo Domingo desde 8 de julio',
+    'LASER Airlines informa a sus clientes y aliados comerciales que, debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto habilitado: Aeropuerto Internacional General José Antonio Anzoátegui (BLA)\n\nA partir del próximo miércoles 8 de julio de 2026.\n\nItinerario disponible (miércoles y domingos):\nQL2968 | BLA → SDQ | 10:00 - 11:50\nQL2969 | SDQ → BLA | 13:20 - 14:50\n\nLos pasajeros con reservas confirmadas deberán presentarse en el aeropuerto con al menos tres horas de antelación a la salida de su vuelo, a partir de la fecha señalada.',
+    'importante', '2026-07-06 14:00:00');
   n('Laser Airlines - Comunicado oficial (2 julio): reactivación ruta Miami y proceso de inspección',
     'Debido a los eventos sísmicos del 24 de junio, Laser Airlines sufrió pérdidas humanas irreparables. El personal técnico ha logrado acceder a Maiquetía para inspeccionar y certificar las aeronaves.\n\nSe reactivó el vuelo diario a Miami desde Barcelona (BLA) con el siguiente itinerario:\nMiami → Barcelona: 07:30 - 11:00\nBarcelona → Miami: 12:45 - 16:15\n\nLa aerolínea trabaja para restablecer Madrid, Bogotá, Santo Domingo, Curazao y todos los destinos nacionales. Próximamente informarán fechas.\n\nLaser Airlines extiende sus condolencias a las familias afectadas y agradece la comprensión de sus usuarios.',
     'importante', '2026-07-02 14:00:00');
