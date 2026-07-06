@@ -56,7 +56,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (airline) params.set('airline', airline);
       const res = await fetch(`/api/flights/search?${params}`);
       const data = await res.json();
-      const flights = data.flights || [];
+      let flights = data.flights || [];
+
+      const dateVal = document.getElementById('travelDate').value;
+      const dayIdx = dateVal ? new Date(dateVal).getDay() : -1;
+      if (dateVal) {
+        const dayNames = ['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
+        const dayAbbr = ['DO','LU','MA','MI','JU','VI','SA'];
+        flights = flights.filter(f => {
+          if (!f.frequency) return true;
+          const freq = normalizeStr(f.frequency);
+          if (freq.includes('DIARIA') || freq.includes('TODOS')) return true;
+          return freq.includes(dayNames[dayIdx]) || freq.includes(dayAbbr[dayIdx]);
+        });
+      }
+      const dateText = dateVal ? ` para el ${new Date(dateVal).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}` : '';
 
       const container = document.getElementById('resultsContainer');
       const section = document.getElementById('results');
@@ -77,8 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       const routeText = airline ? airline : (origin && destination ? `${origin} - ${destination}` : `Salidas desde ${origin}`);
-      const dateVal = document.getElementById('travelDate').value;
-      const dateText = dateVal ? ` para el ${new Date(dateVal).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}` : '';
       const msg = document.getElementById('whatsappMessage');
       msg.value = `Interesado en ${routeText}${dateText}. Solicito información de disponibilidad.`;
       document.querySelector('.whatsapp-section').classList.add('visible');
