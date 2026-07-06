@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage('noticias');
   });
 
+  document.getElementById('swapBtn').addEventListener('click', () => {
+    const o = document.getElementById('origin');
+    const d = document.getElementById('destination');
+    const tmp = o.value; o.value = d.value; d.value = tmp;
+  });
+
   window.addEventListener('scroll', () => {
     document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 60);
   });
@@ -71,8 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       const routeText = airline ? airline : (origin && destination ? `${origin} - ${destination}` : `Salidas desde ${origin}`);
+      const dateVal = document.getElementById('travelDate').value;
+      const dateText = dateVal ? ` para el ${new Date(dateVal).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}` : '';
       const msg = document.getElementById('whatsappMessage');
-      msg.value = `Interesado en ${routeText}. Solicito información de disponibilidad.`;
+      msg.value = `Interesado en ${routeText}${dateText}. Solicito información de disponibilidad.`;
       document.querySelector('.whatsapp-section').classList.add('visible');
 
       let html = notice || '';
