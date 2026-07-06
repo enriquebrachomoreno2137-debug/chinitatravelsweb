@@ -177,10 +177,6 @@ function seedDatabase(db) {
   r('Porlamar', 'Puerto España', 'Ruta internacional temporal.');
   r('Puerto España', 'Porlamar', 'Ruta internacional temporal.');
 
-  for (const [o, d] of [['Valencia','San Antonio del Táchira'],['San Antonio del Táchira','Valencia'],['Valencia','Bogotá'],['Bogotá','Valencia']]) {
-    r(o, d, 'Ruta Turpial Airlines.');
-  }
-
   for (const [o, d] of [['Puerto Ordaz','Boa Vista'],['Boa Vista','Puerto Ordaz'],['Valencia','Punta Cana'],['Punta Cana','La Habana'],['La Habana','Punta Cana'],['Punta Cana','Valencia']]) {
     r(o, d, 'Ruta internacional Rutaca Airlines.');
   }
@@ -217,11 +213,6 @@ function seedDatabase(db) {
   };
 
 
-  makeF('Valencia', 'San Antonio del Táchira', 'Turpial Airlines', '', '16:00', '17:00', 'Sábado 4 de julio', 'Vuelo promocional.');
-  makeF('San Antonio del Táchira', 'Valencia', 'Turpial Airlines', '', '18:00', '19:00', 'Sábado 4 de julio', 'Vuelo promocional.');
-  makeF('Valencia', 'Bogotá', 'Turpial Airlines', '', '17:00', '17:30', 'Domingo 5 de julio', 'Cupos limitados.');
-  makeF('Bogotá', 'Valencia', 'Turpial Airlines', '', '18:30', '21:00', 'Domingo 5 de julio', 'Cupos limitados.');
-
   makeF('Madrid', 'Valencia', 'Plus Ultra Líneas Aéreas', 'PU701', '13:00', '16:30', '30 jun, 2, 4, 7, 9 y 11 de julio', 'Vuelo reprogramado por contingencia.');
   makeF('Valencia', 'Madrid', 'Plus Ultra Líneas Aéreas', 'PU702', '10:00', '01:00 (+1 día)', '1 de julio', 'Vuelo reprogramado por contingencia.');
   makeF('Valencia', 'Madrid', 'Plus Ultra Líneas Aéreas', 'PU702', '19:00', '09:55 (+1 día)', '2, 5, 7, 9 y 12 de julio', 'Vuelo reprogramado por contingencia.');
@@ -256,14 +247,6 @@ function seedDatabase(db) {
 
   makeF('Madrid', 'Valencia', 'Estelar Latinoamérica', 'ES894', '14:40', '19:00', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
   makeF('Valencia', 'Madrid', 'Estelar Latinoamérica', 'ES895', '22:00', '13:15 (+1 día)', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
-  makeF('Valencia', 'Porlamar', 'Conviasa', 'V01000', '07:25', '08:25', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
-  makeF('Valencia', 'Porlamar', 'Conviasa', 'V02254', '11:45', '12:55', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
-  makeF('Valencia', 'Porlamar', 'Conviasa', 'V0351', '12:50', '13:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
-  makeF('Porlamar', 'Valencia', 'Conviasa', 'V02254', '09:25', '10:40', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
-  makeF('Porlamar', 'Valencia', 'Conviasa', 'V0350', '10:50', '11:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
-  makeF('Porlamar', 'Valencia', 'Conviasa', 'V01007', '15:50', '16:50', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
-  makeF('Maturín', 'Valencia', 'Conviasa', 'V0037', '14:50', '15:40', 'DIARIO', 'Reestructuración temporal desde 1 julio.');
-
   // ── CONVIASA ITINERARIO COMPLETO Julio 2026 ──
   const cvF = (o, d, num, dep, arr, freq) => makeF(o, d, 'Conviasa', num, dep, arr, freq, 'Itinerario julio 2026.');
   cvF('Valencia','Cumaná','V0 058','07:30','08:10','LU');
@@ -383,8 +366,6 @@ function seedDatabase(db) {
   cvF('Bridgetown','Porlamar','V0 4935','12:30','13:20','MI');
   cvF('Valencia','Cancún','V0 3736','21:30','00:00','LU, VI');
   cvF('Cancún','Valencia','V0 3739','01:30','06:00','MA, SA');
-  makeF('Valencia', 'Santo Domingo del Táchira', 'Rutaca Airlines', '', '09:30', '10:30', '1 JULIO (MIÉ)', 'Plan de contingencia.');
-  makeF('Santo Domingo del Táchira', 'Valencia', 'Rutaca Airlines', '', '11:30', '12:30', '1 JULIO (MIÉ)', 'Plan de contingencia.');
   makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '18:00', '19:00', 'MIÉ-DOM', 'Itinerario desde 1 julio.');
   makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '17:30', '18:10', 'LUN-JUE', 'Itinerario desde 1 julio.');
   makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '08:30', '09:30', 'JUE-DOM', 'Itinerario desde 2 julio.');
