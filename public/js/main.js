@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let flights = data.flights || [];
 
       const dateVal = document.getElementById('travelDate').value;
-      const dayIdx = dateVal ? new Date(dateVal).getDay() : -1;
+      const dayIdx = dateVal ? new Date(dateVal + 'T12:00:00').getDay() : -1;
       if (dateVal) {
         const dayNames = ['DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
         const dayAbbr = ['DO','LU','MA','MI','JU','VI','SA'];
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return freq.includes(dayNames[dayIdx]) || freq.includes(dayAbbr[dayIdx]);
         });
       }
-      const dateText = dateVal ? ` para el ${new Date(dateVal).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}` : '';
+      const dateText = dateVal ? ` para el ${new Date(dateVal + 'T12:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}` : '';
 
       const container = document.getElementById('resultsContainer');
       const section = document.getElementById('results');
