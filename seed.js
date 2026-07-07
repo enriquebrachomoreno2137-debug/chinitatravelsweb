@@ -200,6 +200,8 @@ function seedDatabase(db) {
   r('Miami', 'Barcelona', 'Ruta internacional LASER Airlines.');
   r('Barcelona', 'Santo Domingo', 'Ruta internacional LASER Airlines.');
   r('Santo Domingo', 'Barcelona', 'Ruta internacional LASER Airlines.');
+  r('Madrid', 'Barcelona', 'Ruta internacional LASER Airlines.');
+  r('Barcelona', 'Madrid', 'Ruta internacional LASER Airlines.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -455,12 +457,43 @@ function seedDatabase(db) {
   makeF('Barcelona', 'Santo Domingo', 'LASER Airlines', 'QL2968', '10:00', '11:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
   makeF('Santo Domingo', 'Barcelona', 'LASER Airlines', 'QL2969', '13:20', '14:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
 
+  // ── LASER AIRLINES Madrid vía Barcelona (8 JUL) ──
+  makeF('Madrid', 'Barcelona', 'LASER Airlines', 'QL2921', '10:55', '14:10', 'LUN-MIÉ-VIE-SÁB (desde 8 JUL)', 'Protocolo contingencia ruta Madrid.');
+  makeF('Barcelona', 'Madrid', 'LASER Airlines', 'QL2920', '17:00', '08:35 (+1 día)', 'LUN-MIÉ-VIE-SÁB (desde 8 JUL)', 'Protocolo contingencia ruta Madrid.');
+
+  // ── LASER AIRLINES Bogotá vía Barcelona (9 JUL) ──
+  makeF('Barcelona', 'Bogotá', 'LASER Airlines', 'QL2980', '09:00', '10:00', 'MAR-JUE-SÁB (desde 9 JUL)', 'Nueva ruta por cierre CCS.');
+  makeF('Bogotá', 'Barcelona', 'LASER Airlines', 'QL2981', '11:30', '14:30', 'MAR-JUE-SÁB (desde 9 JUL)', 'Nueva ruta por cierre CCS.');
+
+  // ── IBERIA Madrid-Valencia (desde 9 JUL) ──
+  makeF('Madrid', 'Valencia', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Protocolo contingencia. Escala técnica SDQ en regreso.');
+  makeF('Valencia', 'Madrid', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Protocolo contingencia. Escala técnica en Santo Domingo.');
+
   // ── TURPIAL AIRLINES Valencia ↔ Punta Cana (julio-septiembre 2026) ──
   makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '14:00', '15:30', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
   makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '16:30', '18:00', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
   makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '15:00', '16:30', 'DOMINGO (19 jul - 27 sep)', 'Ruta temporal.');
   makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '17:30', '19:00', 'DOMINGO (19 jul - 27 sep)', 'Ruta temporal.');
 
+  // ── Comunicados 7 de julio ──
+  n('LASER Airlines - Nueva ruta Madrid vía Barcelona (BLA) desde 8 de julio',
+    'LASER Airlines informa a sus clientes y aliados comerciales que, debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto habilitado: Aeropuerto Internacional General José Antonio Anzoátegui (BLA)\n\nA partir del próximo miércoles 8 de julio de 2026.\n\nItinerario disponible (lunes, miércoles, viernes y sábados):\nQL2921 | MAD → BLA | 10:55 - 14:10\nQL2920 | BLA → MAD | 17:00 - 08:35 (+1 día)\n\nPasajeros con reservas confirmadas deben presentarse con al menos 3 horas de antelación.\n\nEquipaje Turista: 2 maletas 23 kg + 1 mano 10 kg\nEquipaje Ejecutiva: 3 maletas 23 kg + 1 mano 10 kg\n\nPasajeros afectados (24 jun - 7 jul): reprogramación sin costo, cambio de ruta, boleto 1 año o nota de crédito.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
+    'importante', '2026-07-07 08:00:00');
+  n('LASER Airlines - Nueva ruta Bogotá vía Barcelona (BLA) desde 9 de julio',
+    'LASER Airlines informa a sus clientes y aliados comerciales que, debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto habilitado: Aeropuerto Internacional General José Antonio Anzoátegui (BLA)\n\nA partir del próximo jueves 9 de julio de 2026.\n\nItinerario disponible (martes, jueves y sábados):\nQL2980 | BLA → BOG | 09:00 - 10:00\nQL2981 | BOG → BLA | 11:30 - 14:30\n\nPasajeros con reservas confirmadas deben presentarse con al menos 3 horas de antelación.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
+    'importante', '2026-07-07 08:30:00');
+  n('Aerocaribe - Actualización políticas de flexibilidad por contingencia (7 julio)',
+    'Ante las adversidades que la naturaleza nos presenta, en AEROCARIBE reafirmamos nuestro compromiso con el país.\n\nPolíticas de flexibilidad:\n• Boletos emitidos con fecha de viaje entre el 24/06/2026 y el 30/07/2026: cambio sin costo, válido para cualquier fecha dentro de los 365 días de vigencia.\n• Boletos adquiridos a través de agencia de viaje: contactar con su asesor para gestionar la modificación de fechas.',
+    'importante', '2026-07-07 10:00:00');
+  n('Venezolana - Itinerarios contingencia nacional e internacional (7 julio)',
+    'Venezolana informa sus itinerarios de contingencia:\n\nINTERNACIONAL:\nBarquisimeto ↔ Panamá\nV422 BRM→PTY 10:00-11:00 | Martes y Viernes\nV423 PTY→BRM 12:00-15:00 | Martes y Viernes\n\nNACIONAL:\nMaracaibo ↔ Barquisimeto\nV1242 MAR→BRM 08:00-08:30 | L M - J V - D\nV1241 BRM→MAR 17:00-17:30 | L M - J V - D\n\nBarquisimeto ↔ Porlamar\nV1341 BRM→PMV 11:00-12:00 | L - - J - - D\nV1342 PMV→BRM 13:00-14:00 | L - - J - - D\n\nContacto: +58 424 6390281 / 0212 819 06 00 / callcenter@venezolana.aero',
+    'importante', '2026-07-07 10:30:00');
+  n('Iberia - Protocolo de contingencia Madrid-Valencia desde 9 de julio',
+    'Iberia informa su protocolo de contingencia para vuelos entre España y Venezuela a partir del 9 de julio de 2026.\n\nFrecuencias: JUEVES y DOMINGOS, 2 veces por semana.\n\nRuta de ida: Madrid → Valencia (VLN) - Aeropuerto Arturo Michelena, directo.\nRuta de regreso: Valencia (VLN) → Madrid con escala técnica en Santo Domingo (SDQ).\n\nTodos los pasajeros con boletos emitidos pueden solicitar el cambio.\n\nAsesorías: @AEROTRAVELVZLA\nContacto: 0424-5350241',
+    'importante', '2026-07-07 11:00:00');
+  n('Blue Sky Viajes - Política de cambio por contingencia (7 julio)',
+    'Blue Sky Viajes informa a sus clientes:\n\n• Cambio de fecha y ruta sin cargo.\n• Salidas por Bogotá, Panamá, Cancún (México) sin cargo.\n• Prórroga hasta el 30 de septiembre.\n• Reembolso según aplique.\n\nContacto: (0212) 5762698\nInstagram: @blueskyviajes\nEmail: reservas2bluesky@gmail.com',
+    'importante', '2026-07-07 12:00:00');
   // ── Nuevos comunicados 3 de julio ──
   n('Turpial Airlines - Itinerario nacional desde Valencia (julio 2026)',
     'Turpial Airlines informa sus nuevos itinerarios nacionales desde el Aeropuerto Arturo Michelena de Valencia:\n\nLUNES Y VIERNES:\nValencia → Puerto Ordaz: 08:00-09:15\nPuerto Ordaz → Valencia: 10:15-11:30\nValencia → Maracaibo: 12:30-13:30\nMaracaibo → Valencia: 14:30-15:30\nValencia → San Antonio del Táchira: 16:30-17:30\nSan Antonio del Táchira → Valencia: 18:30-19:30\n\nJUEVES Y DOMINGO:\nValencia → Porlamar: 14:30-15:30\nPorlamar → Valencia: 16:30-17:30\n\nVuelos especiales/chárter disponibles. Contacte a su agencia de viajes o a Turpial Airlines para disponibilidad y reservas.',
