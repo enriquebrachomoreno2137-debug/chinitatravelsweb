@@ -202,6 +202,8 @@ function seedDatabase(db) {
   r('Santo Domingo', 'Barcelona', 'Ruta internacional LASER Airlines.');
   r('Madrid', 'Barcelona', 'Ruta internacional LASER Airlines.');
   r('Barcelona', 'Madrid', 'Ruta internacional LASER Airlines.');
+  r('Caracas', 'Porlamar', 'Ruta Aeropostal.');
+  r('Porlamar', 'Caracas', 'Ruta Aeropostal.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -236,10 +238,18 @@ function seedDatabase(db) {
   makeF('Valencia', 'Bogotá', 'Avianca', '', '12:27', '13:10', 'Diaria', 'Vuelo temporal por contingencia. Válido hasta 10 de julio.');
   makeF('Valencia', 'Bogotá', 'Avianca', '', '04:17', '05:00', 'Diaria', 'Vuelo temporal por contingencia. Válido hasta 10 de julio.');
 
-  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '12:00', '13:00', 'LU MA MI JU VI', 'Nuevo itinerario temporal.');
-  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'LU MA MI JU VI', 'Nuevo itinerario temporal.');
-  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'DOMINGO', 'Nuevo itinerario temporal.');
-  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '16:00', '17:00', 'DOMINGO', 'Nuevo itinerario temporal.');
+  // ── AEROPOSTAL ITINERARIO COMPLETO JULIO 2026 ──
+  // Caracas ↔ Porlamar
+  makeF('Caracas', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '12:00', '12:45', 'LUN - VIE - DOM', 'Itinerario julio 2026.');
+  makeF('Caracas', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '10:00', '10:45', 'JUE', 'Itinerario julio 2026.');
+  makeF('Porlamar', 'Caracas', 'Aeropostal Alas de Venezuela', '', '14:00', '14:45', 'LUN - VIE', 'Itinerario julio 2026.');
+  makeF('Porlamar', 'Caracas', 'Aeropostal Alas de Venezuela', '', '15:30', '16:15', 'JUE', 'Itinerario julio 2026.');
+  makeF('Porlamar', 'Caracas', 'Aeropostal Alas de Venezuela', '', '17:30', '18:15', 'DOM', 'Itinerario julio 2026.');
+  // Porlamar ↔ Valencia
+  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '11:45', '12:45', 'JUE', 'Itinerario julio 2026.');
+  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '13:45', '14:45', 'JUE', 'Itinerario julio 2026.');
+  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '13:45', '14:45', 'DOM', 'Itinerario julio 2026.');
+  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '15:45', '16:45', 'DOM', 'Itinerario julio 2026.');
 
   // ── TURPIAL AIRLINES FLIGHTS ──
   makeF('Valencia', 'Puerto Ordaz', 'Turpial Airlines', '', '08:00', '09:15', 'LUNES - VIERNES', 'Itinerario nacional.');
@@ -518,7 +528,10 @@ n('Air Europa - Nuevos vuelos Madrid-Valencia (VLN) 7, 9, 11 y 12 de julio',
 n('Aeropostal Alas de Venezuela - Comunicado oficial (2 de julio)',
     'Desde Aeropostal Alas de Venezuela C.A., nos unimos al profundo dolor que embarga a nuestro país tras los difíciles acontecimientos sísmicos ocurridos recientemente. Lamentamos profundamente la pérdida de vidas humanas.\n\nAnte esta emergencia, reafirmamos nuestro compromiso de acompañar a la nación en su proceso de recuperación, trabajando junto al Ministerio del Poder Popular para el Transporte.\n\nNuestro personal despliega todo su esfuerzo y capacidades logísticas para brindar el apoyo necesario en las operaciones aéreas de contingencia.\n\nITINERARIO VALENCIA - PORLAMAR:\nLUNES A VIERNES:\nValencia → Porlamar: 12:00 PM - 01:00 PM\nPorlamar → Valencia: 02:00 PM - 03:00 PM\n\nDOMINGO:\nValencia → Porlamar: 02:00 PM - 03:00 PM\nPorlamar → Valencia: 04:00 PM - 05:00 PM\n\nContacto: +58 422-715-39-13 / @aeropostal_ve',
     'importante', '2026-07-02 10:00:00');
-n('LATAM Airlines - Actualización flexibilidad por evento sísmico Caracas (3 de julio)',
+  n('Aeropostal Alas de Venezuela - Nuevo itinerario julio 2026',
+    'Aeropostal Alas de Venezuela actualiza sus itinerarios para julio 2026:\n\nCARACAS ↔ PORLAMAR:\nLunes, Viernes y Domingo:\nCaracas → Porlamar: 12:00 PM - 12:45 PM\nPorlamar → Caracas: 02:00 PM - 02:45 PM\n\nJueves:\nCaracas → Porlamar: 10:00 AM - 10:45 AM\nPorlamar → Caracas: 03:30 PM - 04:15 PM\n\nDomingo:\nCaracas → Porlamar: 12:00 PM - 12:45 PM\nPorlamar → Caracas: 05:30 PM - 06:15 PM\n\nPORLAMAR ↔ VALENCIA:\nJueves:\nPorlamar → Valencia: 11:45 AM - 12:45 PM\nValencia → Porlamar: 01:45 PM - 02:45 PM\n\nDomingo:\nPorlamar → Valencia: 01:45 PM - 02:45 PM\nValencia → Porlamar: 03:45 PM - 04:45 PM\n\nContacto: @aeropostal_ve',
+    'importante', '2026-07-08 10:00:00');
+  n('LATAM Airlines - Actualización flexibilidad por evento sísmico Caracas (3 de julio)',
     'ACTUALIZACIÓN FLEXIBILIDAD - Evento sísmico en Caracas (CCS), Venezuela.\n\nPasajeros desde/hacia/vía Caracas.\nFecha de vuelo original: entre 26 junio 2026 al 31 julio 2026.\n\nOpciones SIN multa (elegir una):\n\n1. Cambio de fecha/vuelo/retouring: sin multa, misma cabina, hasta 1 año desde fecha original.\n\n2. Cambio de origen/destino: sin multa, sujeta a diferencia tarifaria. Cambio a Cúcuta (CUC), Riohacha (RCH) y Barcelona (BLA) sin multa y sin diferencia de tarifa.\n\n3. Devolución: sin multa, hasta 1 año desde fecha de vuelo original.\n\nCódigo: CCS24JUL26\nOSI: INVCL CHG DUE TO: CCS24JUL26\n\nNota: LATAM opera temporalmente desde Barcelona (BLA) como aeropuerto alterno por cierre de Maiquetía.',
     'importante', '2026-07-03 14:00:00');
 n('Avior Airlines - Nuevas frecuencias desde Barcelona por contingencia (29 de junio)',
