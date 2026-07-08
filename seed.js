@@ -133,42 +133,47 @@ function seedDatabase(db) {
     'Consorcio Venezolano de Industrias Aeronáuticas y Servicios Aéreos S.A. (CONVIASA). Caracas, 29 de junio de 2026.\n\nConviasa se dirige a todos sus usuarios y al público en general para informar sobre una modificación temporal en nuestra programación regular de vuelos.\n\nDebido a los sismos ocurridos el pasado 24 de junio, las operaciones en el Aeropuerto Internacional de Maiquetía "Simón Bolívar" han sido suspendidas; por ello, nos vemos en la imperiosa necesidad de reprogramar temporalmente las operaciones en las rutas Caracas - Santa Lucía (México) - Caracas y Caracas - La Habana - Caracas.\n\nEsta medida entrará en vigor de manera inmediata y se mantendrá por un lapso estimado de quince (15) días o hasta tanto las autoridades competentes habiliten plenamente las operaciones en la mencionada terminal aérea.\n\nNuestras más sinceras disculpas. Lamentamos profundamente los inconvenientes que esta situación, ajena a nuestra voluntad, pueda causar en sus planes de viaje.\n\nPara garantizar el respaldo a todos los usuarios afectados por esta suspensión temporal, hemos habilitado la siguiente opción de protección para la reprogramación de fechas:\n\nPara pasajeros procedentes de Santa Lucía (México), ponemos a su disposición el correo electrónico: estacionsantalucia.mexico@gmail.com a fin de que faciliten sus contactos, y así informarles oportunamente la reprogramación de su vuelo.\n\nPara los pasajeros que viajan desde Caracas y desde La Habana, serán contactados por el personal de Conviasa para reprogramar su viaje, una vez inicien las operaciones en el aeropuerto de Maiquetía.\n\nAgradecemos enormemente su paciencia, comprensión y confianza mientras se normalizan las operaciones en el principal aeropuerto de nuestro país.',
     'importante', '2026-06-29 17:00:00');
 
-  const cvRoutes = [
-    'Porlamar','Valera', 'Valera','Porlamar', 'Porlamar','Barquisimeto',
-    'Barquisimeto','San Antonio del Táchira', 'San Antonio del Táchira','Barquisimeto',
-    'Barquisimeto','Porlamar', 'Porlamar','San Antonio del Táchira',
-    'San Antonio del Táchira','Porlamar', 'Porlamar','El Vigía', 'El Vigía','Porlamar',
-    'Porlamar','Valencia', 'Valencia','Puerto Ordaz', 'Puerto Ordaz','Porlamar',
-    'Porlamar','Maracaibo', 'Maracaibo','Porlamar', 'Valencia','Porlamar', 'Maturín','Valencia', 'Valencia','Maturín'
-  ];
-  for (let i = 0; i < cvRoutes.length; i += 2) {
-    r(cvRoutes[i], cvRoutes[i+1], 'Ruta reprogramada por contingencia sísmica.');
-  }
-
   // ── CONVIASA RUTAS COMPLETAS Julio 2026 ──
   const cvRoutes2 = [
-    ['Valencia','Cumaná'],['Cumaná','Valencia'],['Valencia','El Vigía'],['El Vigía','Valencia'],
+    // Internacionales
+    ['Porlamar','Bridgetown'],['Bridgetown','Porlamar'],
+    ['Valencia','Cancún'],['Cancún','Valencia'],
+    ['Valencia','La Habana'],['La Habana','Valencia'],
+    ['Valencia','Santa Lucía (México)'],['Santa Lucía (México)','Valencia'],
+    // Interciudad
+    ['Valencia','Cumaná'],['Cumaná','Valencia'],
+    ['Valencia','El Vigía'],['El Vigía','Valencia'],
     ['El Vigía','Barcelona'],['Barcelona','El Vigía'],
     ['Valencia','Santo Domingo del Táchira'],['Santo Domingo del Táchira','Valencia'],
-    ['Santo Domingo del Táchira','Porlamar'],
-    ['Valencia','Valera'],['Valera','Valencia'],['Valera','Porlamar'],['Porlamar','Valera'],
-    ['Valencia','San Antonio del Táchira'],['San Antonio del Táchira','Valencia'],
-    ['Maturín','Maracaibo'],['Maracaibo','Maturín'],
+    ['Santo Domingo del Táchira','Porlamar'],['Porlamar','Santo Domingo del Táchira'],
     ['Santo Domingo del Táchira','Maturín'],['Maturín','Santo Domingo del Táchira'],
+    ['Valencia','Valera'],['Valera','Valencia'],
+    ['Valera','Porlamar'],['Porlamar','Valera'],
+    ['Valencia','San Antonio del Táchira'],['San Antonio del Táchira','Valencia'],
+    ['Valencia','Maturín'],['Maturín','Valencia'],
+    ['Maturín','Maracaibo'],['Maracaibo','Maturín'],
+    ['Maturín','Porlamar'],['Porlamar','Maturín'],
     ['Puerto Ordaz','El Vigía'],['El Vigía','Puerto Ordaz'],
-    ['Valencia','La Fría'],['La Fría','Valencia'],['Porlamar','La Fría'],['La Fría','Porlamar'],
+    ['Valencia','La Fría'],['La Fría','Valencia'],
+    ['Porlamar','La Fría'],['La Fría','Porlamar'],
     ['Valencia','Canaima'],['Canaima','Valencia'],
-    ['Porlamar','Puerto Ordaz'],['Maracaibo','Puerto Ordaz'],['Puerto Ordaz','Maracaibo'],
+    ['Porlamar','Puerto Ordaz'],['Puerto Ordaz','Porlamar'],
+    ['Maracaibo','Puerto Ordaz'],['Puerto Ordaz','Maracaibo'],
+    ['Valencia','Maracaibo'],['Maracaibo','Valencia'],
     ['Maracaibo','Barcelona'],['Barcelona','Maracaibo'],
-    ['Barcelona','Porlamar'],
+    ['Porlamar','Barcelona'],['Barcelona','Porlamar'],
+    ['Porlamar','Barquisimeto'],['Barquisimeto','Porlamar'],
+    ['Barquisimeto','San Antonio del Táchira'],['San Antonio del Táchira','Barquisimeto'],
+    ['Porlamar','El Vigía'],['El Vigía','Porlamar'],
+    ['Porlamar','Maracaibo'],['Maracaibo','Porlamar'],
+    ['Valencia','Puerto Ordaz'],['Puerto Ordaz','Valencia'],
+    ['Valencia','Porlamar'],['Porlamar','Valencia'],
     ['Maracay','Los Roques'],['Los Roques','Maracay'],
     ['Maracay','Barcelona'],['Barcelona','Maracay'],
     ['Maracay','Puerto Ayacucho'],['Puerto Ayacucho','Maracay'],
     ['Maracay','Las Piedras'],['Las Piedras','Maracay'],
     ['Maracay','Barquisimeto'],['Barquisimeto','Maracay'],
     ['Maracay','Barinas'],['Barinas','Maracay'],
-    ['Porlamar','Bridgetown'],['Bridgetown','Porlamar'],
-    ['Valencia','Cancún'],['Cancún','Valencia'],
   ];
   for (const [o, d] of cvRoutes2) {
     r(o, d, 'Ruta Conviasa - Julio 2026.');
@@ -281,6 +286,16 @@ function seedDatabase(db) {
   makeF('Valencia', 'Madrid', 'Estelar Latinoamérica', 'ES895', '22:00', '13:15 (+1 día)', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
   // ── CONVIASA ITINERARIO COMPLETO Julio 2026 ──
   const cvF = (o, d, num, dep, arr, freq) => makeF(o, d, 'Conviasa', num, dep, arr, freq, 'Itinerario julio 2026.');
+  // Internacionales
+  cvF('Porlamar','Bridgetown','V0 4934','10:40','11:30','MI');
+  cvF('Bridgetown','Porlamar','V0 4935','12:30','13:20','MI');
+  cvF('Valencia','Cancún','V0 3736','21:30','00:00','LU, VI');
+  cvF('Cancún','Valencia','V0 3739','01:30','06:00','MA, SA');
+  cvF('Valencia','La Habana','V0 3492','11:30','14:30','MI, VI');
+  cvF('La Habana','Valencia','V0 3493','16:30','19:30','MI, VI');
+  cvF('Valencia','Santa Lucía (México)','V0 3726','10:00','12:50','MA');
+  cvF('Santa Lucía (México)','Valencia','V0 3727','16:10','23:00','MA');
+  // Interciudad
   cvF('Valencia','Cumaná','V0 058','07:30','08:10','LU');
   cvF('Cumaná','Valencia','V0 059','09:00','09:40','LU');
   cvF('Valencia','El Vigía','V0 080','10:40','11:40','LU');
@@ -290,7 +305,7 @@ function seedDatabase(db) {
   cvF('Valencia','Santo Domingo del Táchira','V0 038','12:45','13:45','LU, SA');
   cvF('Santo Domingo del Táchira','Valencia','V0 039','10:45','11:45','LU, SA');
   cvF('Valencia','Porlamar','V0 1004','13:40','14:40','LU');
-  cvF('Valencia','Porlamar','V0 1012','18:50','19:50','MA, JU, VI');
+  cvF('Valencia','Porlamar','V0 1012','18:50','19:50','LU, MA, JU, VI');
   cvF('Valencia','Porlamar','V0 1000','07:30','08:30','MI');
   cvF('Valencia','Porlamar','V0 350','09:00','10:00','MI');
   cvF('Valencia','Porlamar','V0 1006','08:00','09:00','SA');
@@ -303,8 +318,8 @@ function seedDatabase(db) {
   cvF('Porlamar','Valencia','V0 351','07:00','08:00','MI');
   cvF('Porlamar','Valencia','V0 1011','18:50','19:50','SA');
   cvF('Porlamar','Valencia','V0 353','10:50','11:50','SA');
-  cvF('Valencia','Santo Domingo del Táchira','V0 336','08:30','09:55','LU, MI, SA');
-  cvF('Santo Domingo del Táchira','Porlamar','V0 337','14:45','16:10','LU');
+  cvF('Santo Domingo del Táchira','Porlamar','V0 337','14:45','16:10','LU, SA');
+  cvF('Santo Domingo del Táchira','Porlamar','V0 335','15:35','17:00','MI');
   cvF('Valencia','Valera','V0 1174','08:00','08:50','MA');
   cvF('Valera','Valencia','V0 1175','13:00','13:50','MA');
   cvF('Valera','Porlamar','V0 2250','09:40','10:55','MA');
@@ -319,6 +334,10 @@ function seedDatabase(db) {
   cvF('San Antonio del Táchira','Valencia','V0 2403','16:45','17:45','MA');
   cvF('Valencia','San Antonio del Táchira','V0 2404','10:00','11:00','DO');
   cvF('San Antonio del Táchira','Valencia','V0 2405','15:10','16:00','DO');
+  cvF('Porlamar','Barquisimeto','V0 2290','08:30','09:30','MA');
+  cvF('Barquisimeto','Porlamar','V0 2291','10:30','11:30','MA');
+  cvF('Porlamar','Barquisimeto','V0 288','14:50','15:50','SA');
+  cvF('Barquisimeto','Porlamar','V0 289','16:50','17:50','SA');
   cvF('Valencia','Maturín','V0 032','10:00','10:50','LU, VI');
   cvF('Maturín','Valencia','V0 033','11:50','12:40','LU');
   cvF('Maturín','Valencia','V0 031','19:30','20:20','MI');
@@ -351,10 +370,6 @@ function seedDatabase(db) {
   cvF('Porlamar','Puerto Ordaz','V0 321','10:40','11:30','DO');
   cvF('Maracaibo','Puerto Ordaz','V0 332','13:25','15:00','JU');
   cvF('Puerto Ordaz','Maracaibo','V0 333','10:50','12:25','JU');
-  cvF('Porlamar','Barquisimeto','V0 2290','08:30','09:30','MA');
-  cvF('Barquisimeto','Porlamar','V0 2291','10:30','11:30','MA');
-  cvF('Porlamar','Barquisimeto','V0 288','14:50','15:50','SA');
-  cvF('Barquisimeto','Porlamar','V0 289','16:50','17:50','SA');
   cvF('Valencia','Maracaibo','V0 090','08:30','09:30','VI');
   cvF('Maracaibo','Valencia','V0 091','14:40','15:40','VI');
   cvF('Valencia','Maracaibo','V0 092','11:20','12:20','DO');
@@ -371,6 +386,7 @@ function seedDatabase(db) {
   cvF('Maturín','Porlamar','V0 2311','09:30','10:15','LU, MA, JU, VI, SA, DO');
   cvF('Porlamar','Maturín','V0 2312','13:40','14:25','LU, MA, JU, VI, SA, DO');
   cvF('Maturín','Porlamar','V0 2313','15:10','15:55','LU, MA, JU, VI, SA, DO');
+  cvF('Porlamar','Barcelona','V0 2278','11:00','11:35','LU, MA, JU, VI, SA, DO');
   cvF('Barcelona','Porlamar','V0 2279','12:25','12:55','LU, MA, JU, VI, SA, DO');
   cvF('Maracay','Los Roques','V0 2458','08:30','09:40','LU, MA, MI, JU, VI, SA');
   cvF('Los Roques','Maracay','V0 2459','10:40','11:50','LU, MA, MI, JU, VI, SA');
@@ -382,22 +398,18 @@ function seedDatabase(db) {
   cvF('Los Roques','Maracay','V0 2467','16:00','17:10','DO');
   cvF('Maracay','Barcelona','V0 1110','07:00','07:50','LU');
   cvF('Barcelona','Maracay','V0 1111','08:40','09:30','LU');
-  cvF('Maracay','Barcelona','V0 1112','16:20','17:10','VI');
-  cvF('Barcelona','Maracay','V0 1113','18:00','18:50','VI');
+  cvF('Maracay','Barcelona','V0 1112','14:50','15:40','VI');
+  cvF('Barcelona','Maracay','V0 1113','16:30','17:20','VI');
   cvF('Maracay','Puerto Ayacucho','V0 1070','10:30','11:45','LU');
   cvF('Puerto Ayacucho','Maracay','V0 1071','12:35','13:50','LU');
   cvF('Maracay','Las Piedras','V0 2488','14:50','15:50','LU');
   cvF('Las Piedras','Maracay','V0 2489','16:40','17:40','LU');
-  cvF('Maracay','Las Piedras','V0 2486','12:30','13:30','VI');
-  cvF('Las Piedras','Maracay','V0 2487','14:30','15:30','VI');
-  cvF('Maracay','Barquisimeto','V0 098','09:30','10:00','VI');
-  cvF('Barquisimeto','Maracay','V0 099','10:50','11:20','VI');
+  cvF('Maracay','Las Piedras','V0 2486','11:00','12:00','VI');
+  cvF('Las Piedras','Maracay','V0 2487','12:50','13:50','VI');
+  cvF('Maracay','Barquisimeto','V0 098','07:20','07:50','SA');
+  cvF('Barquisimeto','Maracay','V0 099','08:40','09:10','SA');
   cvF('Maracay','Barinas','V0 2492','10:00','11:30','SA');
   cvF('Barinas','Maracay','V0 2493','12:30','14:00','SA');
-  cvF('Porlamar','Bridgetown','V0 4934','10:40','11:30','MI');
-  cvF('Bridgetown','Porlamar','V0 4935','12:30','13:20','MI');
-  cvF('Valencia','Cancún','V0 3736','21:30','00:00','LU, VI');
-  cvF('Cancún','Valencia','V0 3739','01:30','06:00','MA, SA');
   // ── RUTACA AIRLINES ITINERARIO COMPLETO JULIO 2026 ──
   makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '08:30', '09:30', 'JUE-DOM', 'Itinerario julio 2026.');
   makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '17:30', '18:30', 'JUE-DOM', 'Itinerario julio 2026.');
@@ -522,7 +534,10 @@ n('Iberia - Flexibilización por terremoto en Venezuela (25 de junio)',
 n('Conviasa - Reprogramación total de rutas y contingencia por terremoto (6 de julio)',
     'El Consorcio Venezolano de Industrias Aeronáuticas y Servicios Aéreos S.A. (Conviasa), informa a todos sus usuarios sobre la reprogramación de sus rutas nacionales e internacionales por los eventos sísmicos del 24 de junio y la suspensión temporal de operaciones en Maiquetía.\n\n1. Todas las operaciones nacionales desde Maiquetía han sido trasladadas al Aeropuerto Internacional "Arturo Michelena", Valencia, estado Carabobo.\n\n2. Pasajeros con destinos Barcelona, Puerto Ayacucho, Las Piedras, Barquisimeto, Barinas, Los Roques: abordarán y desembarcarán en el Aeropuerto "Los Tacariguas", Base Aérea Mariscal Sucre de Maracay, estado Aragua.\n\n3. Rutas internacionales México (Cancún y Santa Lucía) y La Habana (Cuba): reprogramadas desde Valencia.\n\n4. Vuelos desde Porlamar siguen operando normalmente.\n\nItinerario completo disponible en la página. Canales oficiales:\n• Redes: @conviasa_ve\n• Web: www.conviasa.aero\n• Email: callcenter@conviasa.aero',
     'importante', '2026-07-06 08:00:00');
-n('Air Europa - Nuevos vuelos Madrid-Valencia (VLN) 7, 9, 11 y 12 de julio',
+  n('Conviasa - Itinerario completo julio 2026',
+    'El Consorcio Venezolano de Industrias Aeronáuticas y Servicios Aéreos S.A. (Conviasa) presenta su itinerario completo para julio 2026.\n\nINTERNACIONAL:\nV0 4934 | Porlamar → Bridgetown | 10:40-11:30 | MI\nV0 4935 | Bridgetown → Porlamar | 12:30-13:20 | MI\nV0 3736 | Valencia → Cancún | 21:30-00:00 | LU, VI\nV0 3739 | Cancún → Valencia | 01:30-06:00 | MA, SA\nV0 3492 | Valencia → La Habana | 11:30-14:30 | MI, VI\nV0 3493 | La Habana → Valencia | 16:30-19:30 | MI, VI\nV0 3726 | Valencia → Santa Lucía (México) | 10:00-12:50 | MA\nV0 3727 | Santa Lucía (México) → Valencia | 16:10-23:00 | MA\n\nItinerario completo disponible en la página de búsqueda. Canales oficiales: @conviasa_ve',
+    'importante', '2026-07-08 12:00:00');
+  n('Air Europa - Nuevos vuelos Madrid-Valencia (VLN) 7, 9, 11 y 12 de julio',
     'Debido al cierre temporal de Maiquetía (CCS) y tras la obtención de los permisos necesarios, Air Europa actualiza su operativa entre Madrid y Venezuela.\n\nVUELOS CONFIRMADOS 7, 9, 11 y 12 JULIO (vía Valencia VLN):\nUX071 | MAD→VLN | 15:30-19:05\nUX072 | VLN→MAD | 21:05-12:10 (+1 día)\n\nLos pasajeros que acepten viajar vía Valencia no requieren gestionar nada adicional. Recibirán email con itinerario actualizado.\n\nVUELO 10 JULIO: CANCELADO (Madrid-Caracas).\n\nOpciones para quienes no acepten cambio de aeropuerto:\n• Cambio de fecha sin coste hasta 31 agosto 2026\n• Cambio de ruta sin coste a Medellín, Bogotá o Panamá\n• Vale reembolsable\n• Reembolso (vía GDS)\n\nVUELOS 13-31 JULIO: Flexibilización con Dynamic Waiver 3INVE25JUN para cambios de fecha, ruta y emisión de Vale.\n\nAir Europa sigue trabajando en la operativa futura. Se informará novedades.',
     'importante', '2026-07-06 12:00:00');
 n('Aeropostal Alas de Venezuela - Comunicado oficial (2 de julio)',
