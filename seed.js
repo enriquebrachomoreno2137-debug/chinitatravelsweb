@@ -465,10 +465,6 @@ function seedDatabase(db) {
   makeF('Barcelona', 'Bogotá', 'LASER Airlines', 'QL2980', '09:00', '10:00', 'MAR-JUE-SÁB (desde 9 JUL)', 'Nueva ruta por cierre CCS.');
   makeF('Bogotá', 'Barcelona', 'LASER Airlines', 'QL2981', '11:30', '14:30', 'MAR-JUE-SÁB (desde 9 JUL)', 'Nueva ruta por cierre CCS.');
 
-  // ── IBERIA Madrid-Valencia (desde 9 JUL) ──
-  makeF('Madrid', 'Valencia', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Protocolo contingencia. Escala técnica SDQ en regreso.');
-  makeF('Valencia', 'Madrid', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Protocolo contingencia. Escala técnica en Santo Domingo.');
-
   // ── TURPIAL AIRLINES Valencia ↔ Punta Cana (julio-septiembre 2026) ──
   makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '14:00', '15:30', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
   makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '16:30', '18:00', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
@@ -488,9 +484,6 @@ function seedDatabase(db) {
   n('Venezolana - Itinerarios contingencia nacional e internacional (7 julio)',
     'Venezolana informa sus itinerarios de contingencia:\n\nINTERNACIONAL:\nBarquisimeto ↔ Panamá\nV422 BRM→PTY 10:00-11:00 | Martes y Viernes\nV423 PTY→BRM 12:00-15:00 | Martes y Viernes\n\nNACIONAL:\nMaracaibo ↔ Barquisimeto\nV1242 MAR→BRM 08:00-08:30 | L M - J V - D\nV1241 BRM→MAR 17:00-17:30 | L M - J V - D\n\nBarquisimeto ↔ Porlamar\nV1341 BRM→PMV 11:00-12:00 | L - - J - - D\nV1342 PMV→BRM 13:00-14:00 | L - - J - - D\n\nContacto: +58 424 6390281 / 0212 819 06 00 / callcenter@venezolana.aero',
     'importante', '2026-07-07 10:30:00');
-  n('Iberia - Protocolo de contingencia Madrid-Valencia desde 9 de julio',
-    'Iberia informa su protocolo de contingencia para vuelos entre España y Venezuela a partir del 9 de julio de 2026.\n\nFrecuencias: JUEVES y DOMINGOS, 2 veces por semana.\n\nRuta de ida: Madrid → Valencia (VLN) - Aeropuerto Arturo Michelena, directo.\nRuta de regreso: Valencia (VLN) → Madrid con escala técnica en Santo Domingo (SDQ).\n\nTodos los pasajeros con boletos emitidos pueden solicitar el cambio.\n\nAsesorías: @AEROTRAVELVZLA\nContacto: 0424-5350241',
-    'importante', '2026-07-07 11:00:00');
   n('Blue Sky Viajes - Política de cambio por contingencia (7 julio)',
     'Blue Sky Viajes informa a sus clientes:\n\n• Cambio de fecha y ruta sin cargo.\n• Salidas por Bogotá, Panamá, Cancún (México) sin cargo.\n• Prórroga hasta el 30 de septiembre.\n• Reembolso según aplique.\n\nContacto: (0212) 5762698\nInstagram: @blueskyviajes\nEmail: reservas2bluesky@gmail.com',
     'importante', '2026-07-07 12:00:00');
