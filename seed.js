@@ -76,8 +76,8 @@ function seedDatabase(db) {
     'Estimados Agentes de Viaje,\n\nNos unimos al gran duelo que vive el país en este momento, estamos seguros que saldremos adelante y fortalecidos de esta situación.\n\nLes informamos formalmente la reanudación de nuestras operaciones hacia y desde Venezuela a partir del próximo martes 30 de junio de 2026. Con el firme compromiso de mantener la conectividad de nuestros pasajeros, los vuelos operarán de manera temporal a través del Aeropuerto Internacional Arturo Michelena de la Ciudad de Valencia (VLN).\n\nRutas:\n• Madrid – Valencia (VLN): Vuelo PU701\n• Valencia (VLN) – Madrid: Vuelo PU702\n• Tenerife (Norte) – Valencia (VLN): Vuelo PU711\n• Valencia (VLN) – Tenerife (Norte): Vuelo PU712\n\n⚠️ IMPORTANTE: Todos los pasajeros deben presentarse en el aeropuerto de Valencia (VLN) con un mínimo de 4 horas de anticipación.\n\nAlternativas para pasajeros afectados:\n1. Aceptación de cambio de itinerario (sin coste)\n2. Cambio de fecha (gratuito, misma temporada, hasta 6 meses)\n3. Cambio de ruta (exento penalización, sujeto a diferencia tarifaria)\n4. Emisión de bono (válido 1 año, no reembolsable)\n\nGestión: Enviar correo a callcentre@plusultra.com con asunto: "SI ACEPTO" o "NO ACEPTO" + número de billete. Para bono: bonos@plusultra.com con asunto "QUIERO BONO" + número de billete.\n\nPlazo máximo: 2 de julio de 2026.\n\nSaludos cordiales,\nPlus Ultra Líneas Aéreas\nLazos que nos Unen',
     'importante', '2026-06-29 14:00:00');
   n('Plus Ultra - Itinerario de contingencia Madrid/Valencia y Tenerife (julio 2026)',
-    'Información vuelos desde/hacia Venezuela:\n\n30JUN | PU701 | MAD→VLN | 13:00-16:30\n01JUL | PU702 | VLN→MAD | 10:00-01:00(+1)\n02JUL | PU701 | MAD→VLN | 13:00-16:30\n02JUL | PU702 | VLN→MAD | 19:00-09:55(+1)\n04JUL | PU701 | MAD→VLN | 13:00-16:30\n04JUL | PU712 | VLN→TFN | 20:30-08:50(+1)\n05JUL | PU711 | TFN→VLN | 12:20-14:55\n05JUL | PU702 | VLN→MAD | 19:00-09:55(+1)\n07JUL | PU701 | MAD→VLN | 13:00-16:30\n07JUL | PU702 | VLN→MAD | 19:00-09:55(+1)\n09JUL | PU701 | MAD→VLN | 13:00-16:30\n09JUL | PU702 | VLN→MAD | 19:00-09:55(+1)\n11JUL | PU701 | MAD→VLN | 13:00-16:30\n11JUL | PU712 | VLN→TFN | 20:30-08:50(+1)\n12JUL | PU711 | TFN→VLN | 12:20-14:55\n12JUL | PU702 | VLN→MAD | 19:00-09:55(+1)\n\nVuelos a partir del 12/07 se publicarán próximamente.',
-    'importante', '2026-07-01 22:00:00');
+    'Información vuelos desde/hacia Venezuela. Ampliamos operaciones desde Valencia (VLN) hasta el 26 de julio de 2026.\n\nLUNES, MARTES Y JUEVES:\nPU701 | MAD→VLN | 13:00-16:30\nPU702 | VLN→MAD | 19:00-09:55(+1)\n\nSÁBADO:\nPU701 | MAD→VLN | 13:00-16:30\nPU712 | VLN→TFN | 20:30-08:50(+1)\n\nDOMINGO:\nPU711 | TFN→VLN | 12:20-14:55\nPU702 | VLN→MAD | 19:00-09:55(+1)\n\nCualquier novedad será comunicada por canales oficiales.\nContacto: callcentre@plusultra.com',
+    'importante', '2026-07-09 08:00:00');
   n('Rutaca Airlines - Retiro de equipajes vuelo 300 Caracas-Porlamar',
     'Informamos a los pasajeros del vuelo 300 de Caracas - Porlamar, cancelado tras los sismos ocurridos el pasado 24 de junio, que pueden proceder al retiro de sus equipajes.\n\nOficinas de Rutaca Airlines en el Aeropuerto Internacional Arturo Michelena de Valencia.\n\nHorario de atenci\u00f3n: De lunes a domingo de 8:30 a.m. a 4:30 p.m.\n\nPresentar su pase de abordar (boarding pass) y documento de identidad.',
     'importante', '2026-06-30 21:00:00');
@@ -232,11 +232,10 @@ function seedDatabase(db) {
   };
 
 
-  makeF('Madrid', 'Valencia', 'Plus Ultra Líneas Aéreas', 'PU701', '13:00', '16:30', '30 jun, 2, 4, 7, 9 y 11 de julio', 'Vuelo reprogramado por contingencia.');
-  makeF('Valencia', 'Madrid', 'Plus Ultra Líneas Aéreas', 'PU702', '10:00', '01:00 (+1 día)', '1 de julio', 'Vuelo reprogramado por contingencia.');
-  makeF('Valencia', 'Madrid', 'Plus Ultra Líneas Aéreas', 'PU702', '19:00', '09:55 (+1 día)', '2, 5, 7, 9 y 12 de julio', 'Vuelo reprogramado por contingencia.');
-  makeF('Tenerife', 'Valencia', 'Plus Ultra Líneas Aéreas', 'PU711', '12:20', '14:55', '5 y 12 de julio', 'Vuelo reprogramado por contingencia.');
-  makeF('Valencia', 'Tenerife', 'Plus Ultra Líneas Aéreas', 'PU712', '20:30', '08:50 (+1 día)', '4 y 11 de julio', 'Vuelo reprogramado por contingencia. Conexión Madrid.');
+  makeF('Madrid', 'Valencia', 'Plus Ultra Líneas Aéreas', 'PU701', '13:00', '16:30', 'LU - MA - JU - SA (hasta 26 JUL)', 'Itinerario actualizado.');
+  makeF('Valencia', 'Madrid', 'Plus Ultra Líneas Aéreas', 'PU702', '19:00', '09:55 (+1 día)', 'LU - MA - JU - DOM', 'Itinerario actualizado.');
+  makeF('Tenerife', 'Valencia', 'Plus Ultra Líneas Aéreas', 'PU711', '12:20', '14:55', 'DOMINGO', 'Itinerario actualizado.');
+  makeF('Valencia', 'Tenerife', 'Plus Ultra Líneas Aéreas', 'PU712', '20:30', '08:50 (+1 día)', 'SÁBADO', 'Itinerario actualizado.');
 
   makeF('Bogotá', 'Valencia', 'Avianca', '', '07:35', '10:35', 'Diaria', 'Vuelo temporal por contingencia. Válido hasta 10 de julio.');
   makeF('Bogotá', 'Valencia', 'Avianca', '', '23:20', '02:20 (+1 día)', 'Diaria', 'Vuelo temporal por contingencia. Válido hasta 10 de julio.');
