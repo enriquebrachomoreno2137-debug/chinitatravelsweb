@@ -91,6 +91,9 @@ function seedDatabase(db) {
   n('Plus Ultra - Itinerario de contingencia Madrid/Valencia y Tenerife (julio 2026)',
     'Información vuelos desde/hacia Venezuela. Ampliamos operaciones desde Valencia (VLN) hasta el 26 de julio de 2026.\n\nLUNES, MARTES Y JUEVES:\nPU701 | MAD→VLN | 13:00-16:30\nPU702 | VLN→MAD | 19:00-09:55(+1)\n\nSÁBADO:\nPU701 | MAD→VLN | 13:00-16:30\nPU712 | VLN→TFN | 20:30-08:50(+1)\n\nDOMINGO:\nPU711 | TFN→VLN | 12:20-14:55\nPU702 | VLN→MAD | 19:00-09:55(+1)\n\nCualquier novedad será comunicada por canales oficiales.\nContacto: callcentre@plusultra.com',
     'importante', '2026-07-09 08:00:00');
+  n('Plus Ultra - Itinerario extendido hasta 26 de julio (10 julio)',
+    'Informamos que nuestras operaciones a Venezuela, a través del aeropuerto Arturo Michelena de Valencia (VLN), se mantendrán hasta el 26 de julio.\n\nENTRE MADRID Y VALENCIA:\nLunes, martes y jueves:\nPU701 | MAD→VLN | 13:00-16:30\nPU702 | VLN→MAD | 19:00-09:55(+1)\n\nSábados:\nPU701 | MAD→VLN | 13:00-16:30\n\nDomingos:\nPU702 | VLN→MAD | 19:00-09:55(+1)\n\nENTRE TENERIFE NORTE Y VALENCIA:\nSábados:\nPU712 | VLN→TFN | 20:30-08:50(+1)\n\nDomingos:\nPU711 | TFN→VLN | 12:20-14:55\n\nA la espera de información sobre reapertura de Caracas. Itinerarios disponibles en GDS y plusultra.com.',
+    'importante', '2026-07-10 12:00:00');
   n('Rutaca Airlines - Retiro de equipajes vuelo 300 Caracas-Porlamar',
     'Informamos a los pasajeros del vuelo 300 de Caracas - Porlamar, cancelado tras los sismos ocurridos el pasado 24 de junio, que pueden proceder al retiro de sus equipajes.\n\nOficinas de Rutaca Airlines en el Aeropuerto Internacional Arturo Michelena de Valencia.\n\nHorario de atenci\u00f3n: De lunes a domingo de 8:30 a.m. a 4:30 p.m.\n\nPresentar su pase de abordar (boarding pass) y documento de identidad.',
     'importante', '2026-06-30 21:00:00');
