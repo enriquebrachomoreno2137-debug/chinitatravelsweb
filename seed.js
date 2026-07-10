@@ -440,21 +440,43 @@ function seedDatabase(db) {
   cvF('Maracay','Barinas','V0 2492','10:00','11:30','SA');
   cvF('Barinas','Maracay','V0 2493','12:30','14:00','SA');
   // ── RUTACA AIRLINES ITINERARIO COMPLETO JULIO 2026 ──
+  // Barcelona ↔ Puerto Ordaz
+  makeF('Barcelona', 'Puerto Ordaz', 'Rutaca Airlines', '', '19:20', '20:00', 'LUN-MIÉ-VIE-DOM', 'Itinerario julio 2026.');
+  makeF('Puerto Ordaz', 'Barcelona', 'Rutaca Airlines', '', '06:00', '06:40', 'LUN-MAR-JUE-SÁB', 'Itinerario julio 2026.');
+  // Puerto Ordaz ↔ Boa Vista
+  makeF('Puerto Ordaz', 'Boa Vista', 'Rutaca Airlines', '', '09:00', '10:10', 'LUN-JUE', 'Itinerario internacional julio 2026.');
+  makeF('Boa Vista', 'Puerto Ordaz', 'Rutaca Airlines', '', '12:45', '13:55', 'LUN-JUE', 'Itinerario internacional julio 2026.');
+  // Porlamar ↔ Puerto Ordaz
+  makeF('Porlamar', 'Puerto Ordaz', 'Rutaca Airlines', '', '07:00', '07:50', 'LUN-JUE', 'Itinerario julio 2026.');
+  makeF('Puerto Ordaz', 'Porlamar', 'Rutaca Airlines', '', '15:40', '16:30', 'LUN-JUE', 'Itinerario julio 2026.');
+  // Valencia ↔ Punta Cana
+  makeF('Valencia', 'Punta Cana', 'Rutaca Airlines', '', '10:00', '11:30', 'JUE-DOM (desde 9 JUL)', 'Itinerario internacional julio 2026.');
+  makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '15:00', 'JUE-DOM (desde 9 JUL)', 'Itinerario internacional julio 2026.');
+  // Valencia ↔ Maracaibo
+  makeF('Valencia', 'Maracaibo', 'Rutaca Airlines', '', '19:00', '20:00', 'MAR-JUE-DOM', 'Itinerario julio 2026.');
+  makeF('Maracaibo', 'Valencia', 'Rutaca Airlines', '', '06:00', '07:00', 'LUN-MIÉ-VIE', 'Itinerario julio 2026.');
+  // Valencia ↔ Maturín
+  makeF('Valencia', 'Maturín', 'Rutaca Airlines', '', '08:30', '09:30', 'MIÉ-VIE', 'Itinerario julio 2026.');
+  makeF('Maturín', 'Valencia', 'Rutaca Airlines', '', '10:30', '11:30', 'MIÉ-VIE', 'Itinerario julio 2026.');
+  // Valencia ↔ Porlamar
   makeF('Valencia', 'Porlamar', 'Rutaca Airlines', '', '08:30', '09:30', 'JUE-DOM', 'Itinerario julio 2026.');
   makeF('Porlamar', 'Valencia', 'Rutaca Airlines', '', '17:30', '18:30', 'JUE-DOM', 'Itinerario julio 2026.');
+  // Porlamar ↔ Puerto España
   makeF('Porlamar', 'Puerto España', 'Rutaca Airlines', '', '11:30', '12:10', 'JUE-DOM', 'Itinerario internacional julio 2026.');
   makeF('Puerto España', 'Porlamar', 'Rutaca Airlines', '', '13:40', '14:20', 'JUE-DOM', 'Itinerario internacional julio 2026.');
-  makeF('Valencia', 'Puerto Ordaz', 'Rutaca Airlines', '', '18:00', '19:00', 'JUE-DOM', 'Itinerario julio 2026.');
-  makeF('Puerto Ordaz', 'Valencia', 'Rutaca Airlines', '', '07:00', '08:00', 'JUE-DOM', 'Itinerario julio 2026.');
+  // Valencia ↔ Santo Domingo del Táchira
   makeF('Valencia', 'Santo Domingo del Táchira', 'Rutaca Airlines', '', '09:30', '10:30', 'LUN-MAR-VIE-SÁB', 'Itinerario julio 2026.');
   makeF('Santo Domingo del Táchira', 'Valencia', 'Rutaca Airlines', '', '11:30', '12:30', 'MAR-VIE-SÁB', 'Itinerario julio 2026.');
   makeF('Santo Domingo del Táchira', 'Valencia', 'Rutaca Airlines', '', '12:00', '13:00', 'LUN', 'Itinerario julio 2026.');
+  // Valencia ↔ Puerto Ordaz
+  makeF('Valencia', 'Puerto Ordaz', 'Rutaca Airlines', '', '18:00', '19:00', 'JUE-DOM', 'Itinerario julio 2026.');
+  makeF('Puerto Ordaz', 'Valencia', 'Rutaca Airlines', '', '07:00', '08:00', 'MIÉ-VIE-DOM', 'Itinerario julio 2026.');
+  // Valencia ↔ La Habana
   makeF('Valencia', 'La Habana', 'Rutaca Airlines', '', '10:00', '14:50', 'LUN', 'Itinerario internacional julio 2026.');
   makeF('La Habana', 'Valencia', 'Rutaca Airlines', '', '15:40', '20:30', 'LUN', 'Itinerario internacional julio 2026.');
+  // Valencia ↔ Barcelona
   makeF('Valencia', 'Barcelona', 'Rutaca Airlines', '', '17:30', '18:20', 'LUN-MIÉ-VIE-DOM', 'Itinerario julio 2026.');
   makeF('Barcelona', 'Valencia', 'Rutaca Airlines', '', '07:30', '08:10', 'LUN-MAR-JUE-SÁB', 'Itinerario julio 2026.');
-  makeF('Porlamar', 'Puerto Ordaz', 'Rutaca Airlines', '', '17:30', '18:30', 'JUE', 'Itinerario julio 2026.');
-  makeF('Puerto Ordaz', 'Porlamar', 'Rutaca Airlines', '', '16:10', '17:10', 'DOM', 'Itinerario julio 2026.');
   makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '11, 12, 14, 16, 18, 19, 21, 23, 25, 26, 28, 30 JUL', 'Operativa por cierre de CCS.');
   makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '11, 12, 14, 16, 18, 19, 21, 23, 25, 26, 28, 30 JUL', 'Operativa por cierre de CCS.');
   makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM250', '11:43', '14:53', 'Diaria', 'Operación regular.');
