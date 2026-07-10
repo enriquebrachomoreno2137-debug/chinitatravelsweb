@@ -491,8 +491,10 @@ function seedDatabase(db) {
   makeF('Barquisimeto', 'Maracaibo', 'Venezolana', 'V1241', '17:00', '17:30', 'L M J V D', 'Plan de contingencia desde 6 jul.');
   makeF('Barquisimeto', 'Porlamar', 'Venezolana', 'V1341', '11:00', '12:00', 'L-J-D', 'Plan de contingencia desde 6 jul.');
   makeF('Porlamar', 'Barquisimeto', 'Venezolana', 'V1342', '13:00', '14:00', 'L-J-D', 'Plan de contingencia desde 6 jul.');
-  makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '10:00', '11:00', 'Mar-Vie', 'Plan de contingencia desde 6 jul.');
-  makeF('Panamá', 'Barquisimeto', 'Venezolana', 'V423', '12:00', '15:00', 'Mar-Vie', 'Plan de contingencia desde 6 jul.');
+  makeF('Maracaibo', 'Panamá', 'Venezolana', 'V412', '08:00', '08:30', 'Mar-Sáb', 'Itinerario internacional 10 jul.');
+  makeF('Panamá', 'Maracaibo', 'Venezolana', 'V413', '14:30', '17:00', 'Mar-Sáb', 'Itinerario internacional 10 jul.');
+  makeF('Barquisimeto', 'Panamá', 'Venezolana', 'V422', '13:00', '13:30', 'Mar-Sáb', 'Itinerario internacional 10 jul.');
+  makeF('Panamá', 'Barquisimeto', 'Venezolana', 'V423', '09:30', '12:00', 'Mar-Sáb', 'Itinerario internacional 10 jul.');
   makeF('Barquisimeto', 'Panamá', 'Estelar Latinoamérica', 'ES8402', '10:00', '11:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
   makeF('Panamá', 'Barquisimeto', 'Estelar Latinoamérica', 'ES8403', '12:00', '15:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
   // ── AVIOR AIRLINES ITINERARIO ACTUALIZADO ──
@@ -596,9 +598,9 @@ function seedDatabase(db) {
   n('Aerocaribe - Actualización políticas de flexibilidad por contingencia (7 julio)',
     'Ante las adversidades que la naturaleza nos presenta, en AEROCARIBE reafirmamos nuestro compromiso con el país.\n\nPolíticas de flexibilidad:\n• Boletos emitidos con fecha de viaje entre el 24/06/2026 y el 30/07/2026: cambio sin costo, válido para cualquier fecha dentro de los 365 días de vigencia.\n• Boletos adquiridos a través de agencia de viaje: contactar con su asesor para gestionar la modificación de fechas.',
     'importante', '2026-07-07 10:00:00');
-  n('Venezolana - Itinerarios contingencia nacional e internacional (7 julio)',
-    'Venezolana informa sus itinerarios de contingencia:\n\nINTERNACIONAL:\nBarquisimeto ↔ Panamá\nV422 BRM→PTY 10:00-11:00 | Martes y Viernes\nV423 PTY→BRM 12:00-15:00 | Martes y Viernes\n\nNACIONAL:\nMaracaibo ↔ Barquisimeto\nV1242 MAR→BRM 08:00-08:30 | L M - J V - D\nV1241 BRM→MAR 17:00-17:30 | L M - J V - D\n\nBarquisimeto ↔ Porlamar\nV1341 BRM→PMV 11:00-12:00 | L - - J - - D\nV1342 PMV→BRM 13:00-14:00 | L - - J - - D\n\nContacto: +58 424 6390281 / 0212 819 06 00 / callcenter@venezolana.aero',
-    'importante', '2026-07-07 10:30:00');
+  n('Venezolana - Itinerario internacional actualizado (10 julio)',
+     'Venezolana actualiza su itinerario internacional (10 de julio de 2026):\n\nMARACAIBO ↔ PANAMÁ:\nV412 MAR→PTY 08:00-08:30 | Martes y Sábado\nV413 PTY→MAR 14:30-17:00 | Martes y Sábado\n\nBARQUISIMETO ↔ PANAMÁ:\nV423 PTY→BRM 09:30-12:00 | Martes y Sábado\nV422 BRM→PTY 13:00-13:30 | Martes y Sábado\n\nContacto:\nWhatsApp: +58 424 639 02 81\nTeléfono: 0212 819 06 00\nCall Center: callcenter@venezolana.aero\nWeb: www.venezolana.aero',
+     'importante', '2026-07-10 18:00:00');
   n('Blue Sky Viajes - Política de cambio por contingencia (7 julio)',
     'Blue Sky Viajes informa a sus clientes:\n\n• Cambio de fecha y ruta sin cargo.\n• Salidas por Bogotá, Panamá, Cancún (México) sin cargo.\n• Prórroga hasta el 30 de septiembre.\n• Reembolso según aplique.\n\nContacto: (0212) 5762698\nInstagram: @blueskyviajes\nEmail: reservas2bluesky@gmail.com',
     'importante', '2026-07-07 12:00:00');
