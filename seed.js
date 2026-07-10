@@ -44,9 +44,9 @@ function seedDatabase(db) {
   n('Avior Airlines - Suspensión de operaciones y alternativas para pasajeros (25 de junio)',
     'Jueves, 25 de junio de 2026.\n\nUna vez más, expresamos nuestra solidaridad y acompañamiento a nuestros pasajeros, colaboradores y sus familias ante estos momentos de adversidad.\n\nPor instrucciones del Instituto Nacional de Aeronáutica Civil (INAC) las operaciones aéreas desde y hacia Caracas, a través del Aeropuerto Internacional de Maiquetía se mantienen suspendidas.\n\nReafirmamos nuestro compromiso y conscientes de los inconvenientes que esta medida pueda generar, ponemos a disposición las siguientes alternativas para los pasajeros afectados entre el 24 de junio y el 02 de julio de 2026:\n\n• Cambio de fecha y ruta sin penalidad: Reprograme su viaje manteniendo el tipo de ruta original (nacional o internacional), ajustando fecha y hora según disponibilidad.\n• Sin cobros adicionales, válido para cualquier fecha dentro de los 365 días de vigencia de su boleto.\n• Boleto abierto: Si lo prefiere, puede mantener su boleto abierto durante 365 días a partir de la fecha de emisión, para reprogramarlo luego según disponibilidad del vuelo seleccionado.\n• Boletos emitidos por agencias de viaje: Si su boleto fue adquirido a través de una agencia de viaje, deberá contactar directamente a su asesor para gestionar cualquier modificación.\n\nAgradecemos su comprensión y les invitamos a mantenerse atentos a nuestros canales oficiales, donde compartiremos oportunamente cualquier actualización relacionada con la reanudación de los vuelos y las reprogramaciones correspondientes.\n\nAnte cualquier duda les invitamos a contactarnos a través de nuestros canales de atención:\n• 0501-AVIOR-00\n• +1 407 214 4866\n\nTe acompañamos en este momento y estamos para servirte',
     'importante', '2026-06-25 14:00:00');
-  n('Avior Airlines - Nuevas frecuencias desde Barcelona (nacional e internacional) desde 3 julio',
-    'Martes, 30 de junio de 2026.\n\nEn Avior Airlines, al mantenerse suspendidas las operaciones desde y hacia Caracas a través del Aeropuerto Internacional de Maiquetía, se han habilitado temporalmente nuevas frecuencias desde el Aeropuerto Internacional de Barcelona (Anzoátegui).\n\nVuelos nacionales desde el 3 de julio:\n• Barcelona - Barquisimeto: 07:00-08:00\n• Barquisimeto - Maracaibo: 09:00-09:40\n• Maracaibo - Barquisimeto: 11:00-11:40\n• Barquisimeto - Barcelona: 12:40-13:40\n\nVuelos internacionales (sujeto a autorización autoridades colombianas):\n• Barcelona - Bogotá: 17:00-18:10\n• Bogotá - Barcelona: 19:30-22:40\n• Barcelona - Medellín: 17:00-18:10\n• Medellín - Barcelona: 19:30-22:40\n\nContacto: 0501-AVIOR-00 / +1 (407) 214-4866\nAviorair.com',
-    'importante', '2026-06-30 12:00:00');
+  n('Avior Airlines - Itinerario actualizado desde Barcelona (julio 2026)',
+    'Seguimos sumando frecuencias a nuestros vuelos de contingencia desde el aeropuerto BLA (General de División José Antonio Anzoátegui).\n\nVUELOS INTERNACIONALES:\n\nBLA↔BOG:\nL-Mi-V: BLA→BOG 17:00-18:10 / BOG→BLA 19:30-22:40\nD (desde 19 JUL): BLA→BOG 16:30-17:40 / BOG→BLA 18:50-22:00\n\nBLA↔MDE:\nMa-S: BLA→MDE 17:00-18:10 / MDE→BLA 19:30-22:40\nJ (desde 17 JUL): BLA→MDE 16:30-17:40 / MDE→BLA 18:50-22:00\n\nBLA↔CUR (desde 16 JUL):\nMa-J: BLA→CUR 10:00-11:30 / CUR→BLA 20:00-21:30\n\nMAR↔CUR (desde 16 JUL):\nMa-J: MAR→CUR 18:00-19:00 / CUR→MAR 12:00-13:00\n\nVUELOS NACIONALES:\nBLA↔BRM↔MAR:\nL-Mi-V-D: BLA→BRM 07:00-08:00 / BRM→MAR 09:00-09:40 / MAR→BRM 11:00-11:40 / BRM→BLA 12:40-13:40\n\nBLA↔LSP↔MAR (desde 16 JUL):\nMa-J: BLA→LSP 07:00-08:00 / LSP→MAR 09:00-09:40 / MAR→LSP 11:00-11:40 / LSP→BLA 13:00-14:00\n\nBLA↔VIG (desde 22 JUL):\nMi: BLA→VIG 09:00-10:30 / VIG→BLA 11:30-13:00\n\nYa estos vuelos se encuentran en sistema para su venta.\n\nContacto: 0501-AVIOR-00 / +1 (407) 214-4866',
+    'importante', '2026-07-09 10:00:00');
 
   r('Barcelona', 'Barquisimeto', 'Ruta Avior Airlines.');
   r('Barquisimeto', 'Barcelona', 'Ruta Avior Airlines.');
@@ -56,6 +56,16 @@ function seedDatabase(db) {
   r('Bogotá', 'Barcelona', 'Ruta internacional Avior Airlines.');
   r('Barcelona', 'Medellín', 'Ruta internacional Avior Airlines.');
   r('Medellín', 'Barcelona', 'Ruta internacional Avior Airlines.');
+  r('Barcelona', 'Curazao', 'Ruta internacional Avior Airlines.');
+  r('Curazao', 'Barcelona', 'Ruta internacional Avior Airlines.');
+  r('Maracaibo', 'Curazao', 'Ruta internacional Avior Airlines.');
+  r('Curazao', 'Maracaibo', 'Ruta internacional Avior Airlines.');
+  r('Barcelona', 'Las Piedras', 'Ruta Avior Airlines.');
+  r('Las Piedras', 'Barcelona', 'Ruta Avior Airlines.');
+  r('Las Piedras', 'Maracaibo', 'Ruta Avior Airlines.');
+  r('Maracaibo', 'Las Piedras', 'Ruta Avior Airlines.');
+  r('Barcelona', 'El Vigía', 'Ruta Avior Airlines.');
+  r('El Vigía', 'Barcelona', 'Ruta Avior Airlines.');
 
   n('Estelar Latinoamérica - Retiro equipajes vuelo ES895 Caracas-Madrid (24 junio)',
     'Informamos a nuestros pasajeros que, tras las gestiones realizadas, el equipaje correspondiente al vuelo ES895 CARACAS - MADRID del 24 de junio estará disponible para su retiro.\n\nLugar: Oficina comercial Las Mercedes (Torre Estelar, Calle Londres, Las Mercedes, Caracas)\nA partir del: 02 de julio\nHorario: 08:00AM a 05:00PM\n\nLos titulares deben acudir personalmente con cédula de identidad. Si retira un tercero, debe presentar carta de autorización firmada por el titular + copias de cédulas de ambos.',
@@ -443,14 +453,36 @@ function seedDatabase(db) {
   makeF('Panamá', 'Barquisimeto', 'Venezolana', 'V423', '12:00', '15:00', 'Mar-Vie', 'Plan de contingencia desde 6 jul.');
   makeF('Barquisimeto', 'Panamá', 'Estelar Latinoamérica', 'ES8402', '10:00', '11:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
   makeF('Panamá', 'Barquisimeto', 'Estelar Latinoamérica', 'ES8403', '12:00', '15:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
-  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
-  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
-  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
-  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'L-M-V-D', 'Plan de contingencia desde 3 JUL.');
-  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'L-M-V', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
-  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'L-M-V', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
-  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
-  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'M-S', 'Plan de contingencia desde 3 JUL. Sujeto a autorización.');
+  // ── AVIOR AIRLINES ITINERARIO ACTUALIZADO ──
+  // Nacional: BLA↔BRM↔MAR↔BRM↔BLA
+  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
+  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
+  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
+  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
+  // Nacional: BLA↔LSP↔MAR↔LSP↔BLA (desde 16 JUL)
+  makeF('Barcelona', 'Las Piedras', 'Avior Airlines', '', '07:00', '08:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Las Piedras', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Maracaibo', 'Las Piedras', 'Avior Airlines', '', '11:00', '11:40', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Las Piedras', 'Barcelona', 'Avior Airlines', '', '13:00', '14:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  // Nacional: BLA↔VIG (desde 22 JUL)
+  makeF('Barcelona', 'El Vigía', 'Avior Airlines', '', '09:00', '10:30', 'MIÉRCOLES', 'Plan de contingencia desde 22 JUL.');
+  makeF('El Vigía', 'Barcelona', 'Avior Airlines', '', '11:30', '13:00', 'MIÉRCOLES', 'Plan de contingencia desde 22 JUL.');
+  // Internacional: BLA↔BOG
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'L-Mi-V', 'Plan de contingencia.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'L-Mi-V', 'Plan de contingencia.');
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '16:30', '17:40', 'DOMINGO (desde 19 JUL)', 'Plan de contingencia.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DOMINGO (desde 19 JUL)', 'Plan de contingencia.');
+  // Internacional: BLA↔MDE
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'MA - SA', 'Plan de contingencia.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'MA - SA', 'Plan de contingencia.');
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '16:30', '17:40', 'JUEVES (desde 17 JUL)', 'Plan de contingencia.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'JUEVES (desde 17 JUL)', 'Plan de contingencia.');
+  // Internacional: BLA↔CUR (desde 16 JUL)
+  makeF('Barcelona', 'Curazao', 'Avior Airlines', '', '10:00', '11:30', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Curazao', 'Barcelona', 'Avior Airlines', '', '20:00', '21:30', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  // Internacional: MAR↔CUR (desde 16 JUL)
+  makeF('Maracaibo', 'Curazao', 'Avior Airlines', '', '18:00', '19:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Curazao', 'Maracaibo', 'Avior Airlines', '', '12:00', '13:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
   makeF('Miami', 'Barcelona', 'LASER Airlines', 'G6 200', '07:30', '11:00', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Miami', 'LASER Airlines', 'G6 201', '12:45', '16:15', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Santo Domingo', 'LASER Airlines', 'QL2968', '10:00', '11:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
