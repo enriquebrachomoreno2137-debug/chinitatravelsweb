@@ -284,10 +284,10 @@ function seedDatabase(db) {
   makeF('Porlamar', 'Caracas', 'Aeropostal Alas de Venezuela', '', '15:30', '16:15', 'JUE', 'Itinerario julio 2026.');
   makeF('Porlamar', 'Caracas', 'Aeropostal Alas de Venezuela', '', '17:30', '18:15', 'DOM', 'Itinerario julio 2026.');
   // Porlamar ↔ Valencia
-  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '11:45', '12:45', 'JUE', 'Itinerario julio 2026.');
-  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '13:45', '14:45', 'JUE', 'Itinerario julio 2026.');
-  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '13:45', '14:45', 'DOM', 'Itinerario julio 2026.');
-  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '15:45', '16:45', 'DOM', 'Itinerario julio 2026.');
+  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'LU - MA - JU - VI', 'Itinerario julio 2026.');
+  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '12:00', '13:00', 'LU - MA - JU - VI', 'Itinerario julio 2026.');
+  makeF('Porlamar', 'Valencia', 'Aeropostal Alas de Venezuela', '', '16:00', '17:00', 'DOM', 'Itinerario julio 2026.');
+  makeF('Valencia', 'Porlamar', 'Aeropostal Alas de Venezuela', '', '14:00', '15:00', 'DOM', 'Itinerario julio 2026.');
 
   // ── TURPIAL AIRLINES FLIGHTS ──
   makeF('Valencia', 'Puerto Ordaz', 'Turpial Airlines', '', '08:00', '09:15', 'LUNES - VIERNES', 'Itinerario nacional.');
@@ -431,16 +431,12 @@ function seedDatabase(db) {
   cvF('Los Roques','Maracay','V0 2467','16:00','17:10','DO');
   cvF('Maracay','Barcelona','V0 1110','07:00','07:50','LU');
   cvF('Barcelona','Maracay','V0 1111','08:40','09:30','LU');
-  cvF('Maracay','Barcelona','V0 1112','14:50','15:40','VI');
-  cvF('Barcelona','Maracay','V0 1113','16:30','17:20','VI');
-  cvF('Maracay','Puerto Ayacucho','V0 1070','10:30','11:45','LU');
-  cvF('Puerto Ayacucho','Maracay','V0 1071','12:35','13:50','LU');
-  cvF('Maracay','Las Piedras','V0 2488','14:50','15:50','LU');
-  cvF('Las Piedras','Maracay','V0 2489','16:40','17:40','LU');
-  cvF('Maracay','Las Piedras','V0 2486','11:00','12:00','VI');
-  cvF('Las Piedras','Maracay','V0 2487','12:50','13:50','VI');
-  cvF('Maracay','Barquisimeto','V0 098','07:20','07:50','SA');
-  cvF('Barquisimeto','Maracay','V0 099','08:40','09:10','SA');
+  cvF('Maracay','Barcelona','V0 1112','16:20','17:10','VI');
+  cvF('Barcelona','Maracay','V0 1113','18:00','18:50','VI');
+  cvF('Maracay','Las Piedras','V0 2486','12:30','13:30','VI');
+  cvF('Las Piedras','Maracay','V0 2487','14:30','15:30','VI');
+  cvF('Maracay','Barquisimeto','V0 098','09:30','10:00','VI');
+  cvF('Barquisimeto','Maracay','V0 099','10:50','11:20','VI');
   cvF('Maracay','Barinas','V0 2492','10:00','11:30','SA');
   cvF('Barinas','Maracay','V0 2493','12:30','14:00','SA');
   // ── RUTACA AIRLINES ITINERARIO COMPLETO JULIO 2026 ──
@@ -672,6 +668,12 @@ n('Turpial Airlines - Nueva ruta Valencia-El Vigía (julio-septiembre 2026)',
 n('Estelar - Nuevas frecuencias San Antonio-Valencia y San Antonio-Porlamar (desde 13 julio)',
     'Estelar activa frecuencias desde San Antonio del Táchira.\n\nDesde 13 JUL:\nSan Antonio ↔ Valencia: LU-MI-VI-SA\nSan Antonio ↔ Porlamar: MI-SA\n\nPlan de contingencia por cierre de Maiquetía. Consultar horarios en flyestelar.com.',
     'importante', '2026-07-09 16:00:00');
+n('Conviasa - Itinerario actualizado desde Maracay (10 julio)',
+    'Atención pasajeros: Ahora despegamos desde Maracay.\n\nVUELOS DESDE MARACAY (MYC):\nV0 2458 | MYC→LRV | 08:30-09:40 | LU-MA-MI-JU-VI-SA\nV0 2464 | MYC→LRV | 09:55-11:05 | DO\nV0 2460 | MYC→LRV | 13:20-14:30 | LU-MA-MI-JU-VI-SA\nV0 2466 | MYC→LRV | 14:10-15:20 | DO\nV0 1110 | MYC→BLA | 07:00-07:50 | LU\nV0 1112 | MYC→BLA | 16:20-17:10 | VI\nV0 1070 | MYC→PYH | 10:30-11:45 | LU\nV0 2488 | MYC→LSP | 14:50-15:50 | LU\nV0 2486 | MYC→LSP | 12:30-13:30 | VI\nV0 098 | MYC→BRM | 09:30-10:00 | VI\nV0 2492 | MYC→BNS | 10:00-11:30 | SA\n\nVUELOS HACIA MARACAY:\nLos Roques, Barcelona, Puerto Ayacucho, Las Piedras, Barquisimeto, Barinas.\n\nItinerarios disponibles en conviasa.aero.',
+    'importante', '2026-07-10 16:00:00');
+n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
+    'Aeropostal Alas de Venezuela actualiza su itinerario Valencia-Porlamar.\n\nLU, MA, JU, VI:\nValencia → Porlamar: 12:00-13:00\nPorlamar → Valencia: 14:00-15:00\n\nDOMINGO:\nValencia → Porlamar: 14:00-15:00\nPorlamar → Valencia: 16:00-17:00\n\nContacto: +58 422-715-39-13 / @aeropostal_ve',
+    'importante', '2026-07-10 16:00:00');
 }
 
 module.exports = { seedDatabase };
