@@ -225,6 +225,8 @@ function seedDatabase(db) {
   r('Barcelona', 'Madrid', 'Ruta internacional LASER Airlines.');
   r('Caracas', 'Porlamar', 'Ruta Aeropostal.');
   r('Porlamar', 'Caracas', 'Ruta Aeropostal.');
+  r('Valencia', 'Porlamar', 'Ruta Aeropostal.');
+  r('Porlamar', 'Valencia', 'Ruta Aeropostal.');
 
   r('Valencia', 'Santo Domingo del Táchira', 'Ruta Estelar Airlines.');
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
@@ -238,6 +240,22 @@ function seedDatabase(db) {
   r('San Antonio del Táchira', 'Valencia', 'Ruta Turpial Airlines.');
   r('Valencia', 'Porlamar', 'Ruta Turpial Airlines.');
   r('Porlamar', 'Valencia', 'Ruta Turpial Airlines.');
+
+  // ── NUEVAS RUTAS POR CONTINGENCIA ──
+  r('Barquisimeto', 'Panamá', 'Ruta internacional Copa Airlines.');
+  r('Panamá', 'Barquisimeto', 'Ruta internacional Copa Airlines.');
+  r('Barcelona', 'Panamá', 'Ruta internacional Copa Airlines.');
+  r('Panamá', 'Barcelona', 'Ruta internacional Copa Airlines.');
+  r('Bogotá', 'Maracaibo', 'Ruta internacional Avianca.');
+  r('Maracaibo', 'Bogotá', 'Ruta internacional Avianca.');
+  r('Miami', 'Maracaibo', 'Ruta internacional American Airlines.');
+  r('Maracaibo', 'Miami', 'Ruta internacional American Airlines.');
+  r('Caracas', 'Los Roques', 'Ruta Aerocaribe.');
+  r('Los Roques', 'Caracas', 'Ruta Aerocaribe.');
+  r('San Antonio del Táchira', 'Porlamar', 'Ruta Estelar Airlines.');
+  r('Porlamar', 'San Antonio del Táchira', 'Ruta Estelar Airlines.');
+  r('Bogotá', 'Porlamar', 'Ruta internacional Wingo.');
+  r('Porlamar', 'Bogotá', 'Ruta internacional Wingo.');
 
   const allRoutes = db.getAllRoutes();
   const g = (o, d) => { const x = allRoutes.find(x => x.origin === o.toUpperCase() && x.destination === d.toUpperCase()); return x ? x.id : null; };
@@ -508,6 +526,48 @@ function seedDatabase(db) {
   makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '15:00', '16:30', 'DOMINGO (19 jul - 27 sep)', 'Ruta temporal.');
   makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '17:30', '19:00', 'DOMINGO (19 jul - 27 sep)', 'Ruta temporal.');
 
+  // ── COPA AIRLINES NUEVAS RUTAS ──
+  makeF('Panamá', 'Barquisimeto', 'Copa Airlines', 'CM336', '09:25', '12:28', 'LU - JU - VI', 'Ruta regular Copa Airlines.');
+  makeF('Barquisimeto', 'Panamá', 'Copa Airlines', 'CM843', '13:38', '14:38', 'LU - JU - VI', 'Ruta regular Copa Airlines.');
+  makeF('Panamá', 'Barcelona', 'Copa Airlines', 'CM100', '09:35', '13:18', 'MA - JU - SA', 'Ruta regular Copa Airlines.');
+  makeF('Barcelona', 'Panamá', 'Copa Airlines', 'CM492', '14:28', '16:20', 'MA - JU - SA', 'Ruta regular Copa Airlines.');
+
+  // ── LATAM AIRLINES BARCELONA-BOGOTÁ (JULIO 2026) ──
+  makeF('Bogotá', 'Barcelona', 'LATAM Airlines', 'LA4966', '07:35', '09:15', 'LUNES - VIERNES', 'Ruta temporal julio 2026 por contingencia CCS.');
+  makeF('Barcelona', 'Bogotá', 'LATAM Airlines', 'LA4967', '11:40', '13:15', 'LUNES - VIERNES', 'Ruta temporal julio 2026 por contingencia CCS.');
+
+  // ── AVIANCA BOGOTÁ-MARACAIBO (DESDE 28 AGO) ──
+  makeF('Bogotá', 'Maracaibo', 'Avianca', 'AV94', '15:05', '17:40', 'DIARIA (desde 28 AGO)', 'Nueva ruta directa.');
+  makeF('Maracaibo', 'Bogotá', 'Avianca', 'AV95', '19:00', '19:25', 'DIARIA (desde 28 AGO)', 'Nueva ruta directa.');
+
+  // ── WINGO ──
+  makeF('Bogotá', 'Porlamar', 'Wingo', '', '22:30', '02:01 (+1 día)', 'SÁBADO', 'Ruta Wingo.');
+  makeF('Porlamar', 'Bogotá', 'Wingo', '', '03:14', '04:45', 'DOMINGO', 'Ruta Wingo.');
+  makeF('Bogotá', 'Valencia', 'Wingo', '', '', '', 'MA - JU - DO (desde 14 JUL)', 'Horario matutino. Consultar wingo.com.');
+  makeF('Valencia', 'Bogotá', 'Wingo', '', '', '', 'MA - JU - DO (desde 14 JUL)', 'Horario matutino. Consultar wingo.com.');
+
+  // ── AMERICAN AIRLINES MIAMI-MARACAIBO (DESDE 14 JUL) ──
+  makeF('Miami', 'Maracaibo', 'American Airlines', '', '10:10', '13:30', 'DIARIO (desde 14 JUL)', 'Nueva ruta.');
+  makeF('Maracaibo', 'Miami', 'American Airlines', '', '14:10', '17:15', 'DIARIO (desde 14 JUL)', 'Nueva ruta.');
+
+  // ── AEROCARIBE CARACAS-LOS ROQUES (DESDE 17 JUL) ──
+  makeF('Caracas', 'Los Roques', 'Aerocaribe', '', '08:00', '08:45', 'Desde 17 JUL', 'Plan de contingencia.');
+  makeF('Los Roques', 'Caracas', 'Aerocaribe', '', '17:00', '17:45', 'Desde 17 JUL', 'Plan de contingencia.');
+
+  // ── IBERIA MADRID-VALENCIA (DESDE 9 JUL) ──
+  makeF('Madrid', 'Valencia', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Retorno con escala técnica en SDQ.');
+  makeF('Valencia', 'Madrid', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Retorno con escala técnica en SDQ.');
+
+  // ── TURPIAL VALENCIA-EL VIGÍA ──
+  makeF('Valencia', 'El Vigía', 'Turpial Airlines', '6450', '10:00', '11:00', 'VIERNES', 'Ruta estacional jul-sep 2026.');
+  makeF('El Vigía', 'Valencia', 'Turpial Airlines', '6451', '12:00', '13:00', 'VIERNES', 'Ruta estacional jul-sep 2026.');
+  makeF('Valencia', 'El Vigía', 'Turpial Airlines', '6450', '13:30', '14:30', 'DOMINGO', 'Ruta estacional jul-sep 2026.');
+  makeF('El Vigía', 'Valencia', 'Turpial Airlines', '6451', '15:30', '16:30', 'DOMINGO', 'Ruta estacional jul-sep 2026.');
+
+  // ── ESTELAR SAN ANTONIO-PORLAMAR (DESDE 13 JUL) ──
+  makeF('San Antonio del Táchira', 'Porlamar', 'Estelar', '', '', '', 'MI - SA (desde 13 JUL)', 'Plan de contingencia.');
+  makeF('Porlamar', 'San Antonio del Táchira', 'Estelar', '', '', '', 'MI - SA (desde 13 JUL)', 'Plan de contingencia.');
+
   // ── Comunicados 7 de julio ──
   n('LASER Airlines - Nueva ruta Madrid vía Barcelona (BLA) desde 8 de julio',
     'LASER Airlines informa a sus clientes y aliados comerciales que, debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto habilitado: Aeropuerto Internacional General José Antonio Anzoátegui (BLA)\n\nA partir del próximo miércoles 8 de julio de 2026.\n\nItinerario disponible (lunes, miércoles, viernes y sábados):\nQL2921 | MAD → BLA | 10:55 - 14:10\nQL2920 | BLA → MAD | 17:00 - 08:35 (+1 día)\n\nPasajeros con reservas confirmadas deben presentarse con al menos 3 horas de antelación.\n\nEquipaje Turista: 2 maletas 23 kg + 1 mano 10 kg\nEquipaje Ejecutiva: 3 maletas 23 kg + 1 mano 10 kg\n\nPasajeros afectados (24 jun - 7 jul): reprogramación sin costo, cambio de ruta, boleto 1 año o nota de crédito.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
@@ -585,6 +645,33 @@ n('Avior Airlines - Nuevas frecuencias desde Barcelona por contingencia (29 de j
 n('American Airlines - Política de excepción por terremoto Caracas (actualizado 1 julio)',
     'American Airlines ha implementado una política de excepción especial por el terremoto de Caracas, Venezuela.\n\nCódigos afectados: CCS\nBoletos emitidos hasta: 23 de junio de 2026\nFechas de viaje afectadas: 25 junio - 11 julio 2026 (extendido)\nNuevas fechas de viaje: hasta 14 julio 2026\n\nCambio de origen/destino: No permitido. Radio de 300 millas permitido.\nCambio de Connection City: Permitido\nCambio coterminal: Permitido\n\nCódigo en endoso: TNADVE/24JUN26A\n\nAplica para vuelos operados por American Airlines y JB, y socios Aer Lingus, British Airways, Finnair, Iberia, Japan Airlines, Qantas.',
     'importante', '2026-07-01 12:00:00');
+n('Copa Airlines - Rutas Panamá-Barquisimeto y Panamá-Barcelona',
+    'Copa Airlines mantiene sus vuelos regulares a Barquisimeto y Barcelona como parte de su red de destinos en Venezuela.\n\nBarquisimeto (BRM):\nCM336 | PTY→BRM | 09:25-12:28 | LU-JU-VI\nCM843 | BRM→PTY | 13:38-14:38 | LU-JU-VI\n\nBarcelona (BLA):\nCM100 | PTY→BLA | 09:35-13:18 | MA-JU-SA\nCM492 | BLA→PTY | 14:28-16:20 | MA-JU-SA\n\nMás información en copa.com',
+    'informativo', '2026-07-09 08:00:00');
+n('LATAM Airlines - Nueva ruta temporal Bogotá-Barcelona (julio 2026)',
+    'LATAM Airlines Colombia habilitó una ruta temporal entre Bogotá y Barcelona (Venezuela) para reforzar la conectividad durante la contingencia.\n\nLA4966 | BOG→BLA | 07:35-09:15 | LUNES y VIERNES (solo julio)\nLA4967 | BLA→BOG | 11:40-13:15 | LUNES y VIERNES (solo julio)\n\nPasajeros afectados pueden cambiar fecha sin costo, reembolso o cambio de ruta hacia Cúcuta, Riohacha o Barcelona.',
+    'importante', '2026-07-06 22:00:00');
+n('Avianca - Nueva ruta Bogotá-Maracaibo (desde 28 de agosto)',
+    'Avianca anuncia nueva ruta directa diaria entre Bogotá y Maracaibo a partir del 28 de agosto de 2026.\n\nAV94 | BOG→MAR | 15:05-17:40 | DIARIA\nAV95 | MAR→BOG | 19:00-19:25 | DIARIA\n\nOperada con Airbus A320 (180 asientos). Boletos ya disponibles en avianca.com.\n\nSujeto a aprobación gubernamental.',
+    'informativo', '2026-07-09 10:00:00');
+n('Wingo - Nueva ruta Bogotá-Valencia y Bogotá-Porlamar (julio 2026)',
+    'Wingo inició vuelos entre Bogotá y Valencia de forma anticipada por cierre de Maiquetía.\n\nBOGOTÁ-VALENCIA:\nDesde 14 JUL: MA-JU-DO, horario matutino. Consultar horarios en wingo.com\n\nBOGOTÁ-PORLAMAR:\nSA 22:30-02:01(+1) / DO 03:14-04:45\n\nPasajeros con vuelos BOG-CCS entre 26 jun y 15 jul: reubicación voluntaria sin costo hacia Valencia.',
+    'importante', '2026-07-09 10:00:00');
+n('American Airlines - Nueva ruta Miami-Maracaibo (desde 14 de julio)',
+    'American Airlines lanza servicio diario entre Miami y Maracaibo a partir del 14 de julio de 2026.\n\nMIA→MAR | 10:10-13:30 | DIARIO\nMAR→MIA | 14:10-17:15 | DIARIO\n\nOperado con Embraer E175. Segundo destino de American en Venezuela junto a Caracas.',
+    'importante', '2026-07-09 10:00:00');
+n('Aerocaribe - Plan de contingencia ruta Caracas-Los Roques (desde 17 julio)',
+    'Plan de Contingencia: Ruta Los Roques.\nConectividad garantizada desde el Aeropuerto Caracas (Charallave).\n\nCCS→LRV | 08:00-08:45 | Desde 17 JUL\nLRV→CCS | 17:00-17:45 | Desde 17 JUL\n\nPresentarse 1:30 h antes. Horarios sujetos a modificaciones.',
+    'importante', '2026-07-10 14:00:00');
+n('Iberia - Reactivación vuelos Madrid-Valencia (desde 9 de julio)',
+    'Iberia retomó sus vuelos regulares a Venezuela desde el 9 de julio, operando desde/hacia Valencia (VLN) por cierre de Maiquetía.\n\nJUEVES y DOMINGOS:\nMAD→VLN: Directo\nVLN→MAD: Con escala técnica en Santo Domingo (SDQ)\n\nDos frecuencias semanales. Consultar horarios en iberia.com.',
+    'importante', '2026-07-09 12:00:00');
+n('Turpial Airlines - Nueva ruta Valencia-El Vigía (julio-septiembre 2026)',
+    'Turpial Airlines reactiva ruta estacional Valencia-El Vigía.\n\nVIERNES (desde 17 JUL):\n6450 | VLN→VIG | 10:00-11:00\n6451 | VIG→VLN | 12:00-13:00\n\nDOMINGO (desde 17 JUL):\n6450 | VLN→VIG | 13:30-14:30\n6451 | VIG→VLN | 15:30-16:30\n\nVálido julio a septiembre 2026.',
+    'informativo', '2026-07-09 14:00:00');
+n('Estelar - Nuevas frecuencias San Antonio-Valencia y San Antonio-Porlamar (desde 13 julio)',
+    'Estelar activa frecuencias desde San Antonio del Táchira.\n\nDesde 13 JUL:\nSan Antonio ↔ Valencia: LU-MI-VI-SA\nSan Antonio ↔ Porlamar: MI-SA\n\nPlan de contingencia por cierre de Maiquetía. Consultar horarios en flyestelar.com.',
+    'importante', '2026-07-09 16:00:00');
 }
 
 module.exports = { seedDatabase };
