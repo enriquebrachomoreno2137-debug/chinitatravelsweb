@@ -513,8 +513,8 @@ function seedDatabase(db) {
   makeF('Santo Domingo', 'Barcelona', 'LASER Airlines', 'QL2969', '13:20', '14:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
 
   // ── LASER AIRLINES Madrid vía Barcelona (8 JUL) ──
-  makeF('Madrid', 'Barcelona', 'LASER Airlines', 'QL2921', '10:55', '14:10', 'LUN-MIÉ-VIE-SÁB (desde 8 JUL)', 'Protocolo contingencia ruta Madrid.');
-  makeF('Barcelona', 'Madrid', 'LASER Airlines', 'QL2920', '17:00', '08:35 (+1 día)', 'LUN-MIÉ-VIE-SÁB (desde 8 JUL)', 'Protocolo contingencia ruta Madrid.');
+  makeF('Madrid', 'Barcelona', 'LASER Airlines', 'QL2921', '10:55', '14:10', 'LUN-MIÉ-VIE-SÁB (desde 8 JUL)', 'Operado por Hifly. Protocolo contingencia ruta Madrid.');
+  makeF('Barcelona', 'Madrid', 'LASER Airlines', 'QL2920', '17:00', '08:35 (+1 día)', 'LUN-MIÉ-VIE-SÁB (desde 8 JUL)', 'Operado por Hifly. Protocolo contingencia ruta Madrid.');
 
   // ── LASER AIRLINES Bogotá vía Barcelona (9 JUL) ──
   makeF('Barcelona', 'Bogotá', 'LASER Airlines', 'QL2980', '09:00', '10:00', 'MAR-JUE-SÁB (desde 9 JUL)', 'Nueva ruta por cierre CCS.');
@@ -570,7 +570,7 @@ function seedDatabase(db) {
 
   // ── Comunicados 7 de julio ──
   n('LASER Airlines - Nueva ruta Madrid vía Barcelona (BLA) desde 8 de julio',
-    'LASER Airlines informa a sus clientes y aliados comerciales que, debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto habilitado: Aeropuerto Internacional General José Antonio Anzoátegui (BLA)\n\nA partir del próximo miércoles 8 de julio de 2026.\n\nItinerario disponible (lunes, miércoles, viernes y sábados):\nQL2921 | MAD → BLA | 10:55 - 14:10\nQL2920 | BLA → MAD | 17:00 - 08:35 (+1 día)\n\nPasajeros con reservas confirmadas deben presentarse con al menos 3 horas de antelación.\n\nEquipaje Turista: 2 maletas 23 kg + 1 mano 10 kg\nEquipaje Ejecutiva: 3 maletas 23 kg + 1 mano 10 kg\n\nPasajeros afectados (24 jun - 7 jul): reprogramación sin costo, cambio de ruta, boleto 1 año o nota de crédito.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
+    'LASER Airlines informa a sus clientes y aliados comerciales que, debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto habilitado: Aeropuerto Internacional General José Antonio Anzoátegui (BLA)\n\nA partir del próximo miércoles 8 de julio de 2026.\n\nItinerario disponible (lunes, miércoles, viernes y sábados):\nQL2921 | MAD → BLA | 10:55 - 14:10\nQL2920 | BLA → MAD | 17:00 - 08:35 (+1 día)\n\nVuelo operado por: Hifly.\n\nPasajeros con reservas confirmadas deben presentarse con al menos 3 horas de antelación.\n\nEquipaje Turista: 2 maletas 23 kg + 1 mano 10 kg\nEquipaje Ejecutiva: 3 maletas 23 kg + 1 mano 10 kg\n\nPasajeros afectados (24 jun - 7 jul): reprogramación sin costo, cambio de ruta, boleto 1 año o nota de crédito.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
     'importante', '2026-07-07 08:00:00');
   n('LASER Airlines - Nueva ruta Bogotá vía Barcelona (BLA) desde 9 de julio',
     'LASER Airlines informa a sus clientes y aliados comerciales que, debido al cierre temporal del Aeropuerto Internacional Simón Bolívar, hemos diseñado una alternativa a través de Barcelona, estado Anzoátegui.\n\nAeropuerto habilitado: Aeropuerto Internacional General José Antonio Anzoátegui (BLA)\n\nA partir del próximo jueves 9 de julio de 2026.\n\nItinerario disponible (martes, jueves y sábados):\nQL2980 | BLA → BOG | 09:00 - 10:00\nQL2981 | BOG → BLA | 11:30 - 14:30\n\nPasajeros con reservas confirmadas deben presentarse con al menos 3 horas de antelación.\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
