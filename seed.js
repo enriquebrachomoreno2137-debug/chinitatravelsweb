@@ -232,6 +232,10 @@ function seedDatabase(db) {
   r('Santo Domingo del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
   r('Valencia', 'Maracaibo', 'Ruta Estelar Airlines.');
   r('Maracaibo', 'Valencia', 'Ruta Estelar Airlines.');
+  r('Valencia', 'San Antonio del Táchira', 'Ruta Estelar Airlines.');
+  r('San Antonio del Táchira', 'Valencia', 'Ruta Estelar Airlines.');
+  r('Valencia', 'Puerto Ordaz', 'Ruta Estelar Airlines.');
+  r('Puerto Ordaz', 'Valencia', 'Ruta Estelar Airlines.');
 
   // ── TURPIAL AIRLINES RUTAS NACIONALES ──
   r('Valencia', 'Puerto Ordaz', 'Ruta Turpial Airlines.');
@@ -309,6 +313,17 @@ function seedDatabase(db) {
   makeF('Maracaibo', 'Valencia', 'Estelar', '', '06:30', '07:30', 'JUEVES', 'Itinerario contingencia.');
   makeF('Valencia', 'Maracaibo', 'Estelar', '', '20:30', '21:30', 'VIERNES', 'Itinerario contingencia.');
   makeF('Maracaibo', 'Valencia', 'Estelar', '', '09:30', '10:30', 'SÁBADO', 'Itinerario contingencia.');
+
+  makeF('Valencia', 'San Antonio del Táchira', 'Estelar', '', '08:30', '09:30', 'LUNES - MIÉRCOLES - VIERNES - SÁBADO', 'Itinerario contingencia 14 jul.');
+  makeF('San Antonio del Táchira', 'Valencia', 'Estelar', '', '10:30', '11:30', 'LUNES - VIERNES', 'Itinerario contingencia 14 jul.');
+  makeF('San Antonio del Táchira', 'Valencia', 'Estelar', '', '16:30', '17:30', 'MIÉRCOLES - SÁBADO', 'Itinerario contingencia 14 jul.');
+
+  makeF('San Antonio del Táchira', 'Porlamar', 'Estelar', '', '11:00', '12:30', 'MIÉRCOLES - SÁBADO', 'Itinerario contingencia 14 jul.');
+  makeF('Porlamar', 'San Antonio del Táchira', 'Estelar', '', '14:00', '15:30', 'MIÉRCOLES - SÁBADO', 'Itinerario contingencia 14 jul.');
+
+  makeF('Valencia', 'Puerto Ordaz', 'Estelar', '', '14:30', '15:30', 'LUNES', 'Itinerario contingencia 14 jul.');
+  makeF('Valencia', 'Puerto Ordaz', 'Estelar', '', '16:00', '17:00', 'JUEVES - DOMINGO', 'Itinerario contingencia 14 jul.');
+  makeF('Puerto Ordaz', 'Valencia', 'Estelar', '', '06:30', '07:30', 'LUNES - MARTES - VIERNES', 'Itinerario contingencia 14 jul.');
 
   makeF('Valencia', 'Porlamar', 'Estelar', '', '08:30', '09:30', 'JUEVES', 'Itinerario contingencia.');
   makeF('Porlamar', 'Valencia', 'Estelar', '', '10:30', '11:30', 'JUEVES', 'Itinerario contingencia.');
@@ -477,8 +492,8 @@ function seedDatabase(db) {
   // Valencia ↔ Barcelona
   makeF('Valencia', 'Barcelona', 'Rutaca Airlines', '', '17:30', '18:20', 'LUN-MIÉ-VIE-DOM', 'Itinerario julio 2026.');
   makeF('Barcelona', 'Valencia', 'Rutaca Airlines', '', '07:30', '08:10', 'LUN-MAR-JUE-SÁB', 'Itinerario julio 2026.');
-  makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '11, 12, 14, 16, 18, 19, 21, 23, 25, 26, 28, 30 JUL', 'Operativa por cierre de CCS.');
-  makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '11, 12, 14, 16, 18, 19, 21, 23, 25, 26, 28, 30 JUL', 'Operativa por cierre de CCS.');
+  makeF('Madrid', 'Valencia', 'Air Europa', 'UX071', '15:30', '19:05', '11,12,14,16,18,21,23,25,28,30 JUL', 'Operativa por cierre CCS. Cancelados: 17,19,24,26,31 JUL.');
+  makeF('Valencia', 'Madrid', 'Air Europa', 'UX072', '21:05', '12:10 (+1 día)', '11,12,14,16,18,21,23,25,28,30 JUL', 'Operativa por cierre CCS. Cancelados: 17,19,24,26,31 JUL.');
   makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM250', '11:43', '14:53', 'Diaria', 'Operación regular.');
   makeF('Valencia', 'Panamá', 'Copa Airlines', 'CM251', '16:03', '17:21', 'Diaria', 'Operación regular.');
   makeF('Panamá', 'Valencia', 'Copa Airlines', 'CM603', '09:03', '12:13', 'Hasta 15 JUL', 'Vuelo adicional.');
@@ -499,34 +514,35 @@ function seedDatabase(db) {
   makeF('Panamá', 'Barquisimeto', 'Estelar Latinoamérica', 'ES8403', '12:00', '15:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
   // ── AVIOR AIRLINES ITINERARIO ACTUALIZADO ──
   // Nacional: BLA↔BRM↔MAR↔BRM↔BLA
-  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
-  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
-  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
-  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'L-Mi-V-D', 'Plan de contingencia. Domingos desde 19 JUL.');
+  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
+  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
+  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
+  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
   // Nacional: BLA↔LSP↔MAR↔LSP↔BLA (desde 16 JUL)
-  makeF('Barcelona', 'Las Piedras', 'Avior Airlines', '', '07:00', '08:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
-  makeF('Las Piedras', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
-  makeF('Maracaibo', 'Las Piedras', 'Avior Airlines', '', '11:00', '11:40', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
-  makeF('Las Piedras', 'Barcelona', 'Avior Airlines', '', '13:00', '14:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Barcelona', 'Las Piedras', 'Avior Airlines', '', '07:00', '08:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
+  makeF('Las Piedras', 'Maracaibo', 'Avior Airlines', '', '09:00', '10:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
+  makeF('Maracaibo', 'Las Piedras', 'Avior Airlines', '', '11:00', '12:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
+  makeF('Las Piedras', 'Barcelona', 'Avior Airlines', '', '13:00', '14:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
   // Nacional: BLA↔VIG (desde 22 JUL)
-  makeF('Barcelona', 'El Vigía', 'Avior Airlines', '', '09:00', '10:30', 'MIÉRCOLES', 'Plan de contingencia desde 22 JUL.');
-  makeF('El Vigía', 'Barcelona', 'Avior Airlines', '', '11:30', '13:00', 'MIÉRCOLES', 'Plan de contingencia desde 22 JUL.');
+  makeF('Barcelona', 'El Vigía', 'Avior Airlines', '', '09:00', '10:30', 'LU-MA-MI-JU-VI-SA-DO (desde 22 JUL)', 'Itinerario 14 jul.');
+  makeF('El Vigía', 'Barcelona', 'Avior Airlines', '', '11:30', '13:00', 'LU-MA-MI-JU-VI-SA-DO (desde 22 JUL)', 'Itinerario 14 jul.');
   // Internacional: BLA↔BOG
-  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'L-Mi-V', 'Plan de contingencia.');
-  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'L-Mi-V', 'Plan de contingencia.');
-  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '16:30', '17:40', 'DOMINGO (desde 19 JUL)', 'Plan de contingencia.');
-  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DOMINGO (desde 19 JUL)', 'Plan de contingencia.');
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'DIARIO', 'Itinerario 14 jul.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'DIARIO', 'Itinerario 14 jul.');
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '16:30', '17:40', 'DIARIO', 'Itinerario 14 jul.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '07:00', '10:10', 'DIARIO', 'Itinerario 14 jul. Nueva frecuencia.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DIARIO (desde 17 JUL)', 'Itinerario 14 jul.');
   // Internacional: BLA↔MDE
-  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'MA - SA', 'Plan de contingencia.');
-  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'MA - SA', 'Plan de contingencia.');
-  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '16:30', '17:40', 'JUEVES (desde 17 JUL)', 'Plan de contingencia.');
-  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'JUEVES (desde 17 JUL)', 'Plan de contingencia.');
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'DIARIO', 'Itinerario 14 jul.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'DIARIO', 'Itinerario 14 jul.');
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '16:30', '17:40', 'DIARIO (desde 17 JUL)', 'Itinerario 14 jul.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DIARIO (desde 17 JUL)', 'Itinerario 14 jul.');
   // Internacional: BLA↔CUR (desde 16 JUL)
-  makeF('Barcelona', 'Curazao', 'Avior Airlines', '', '10:00', '11:30', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
-  makeF('Curazao', 'Barcelona', 'Avior Airlines', '', '20:00', '21:30', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Barcelona', 'Curazao', 'Avior Airlines', '', '10:00', '11:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
+  makeF('Curazao', 'Barcelona', 'Avior Airlines', '', '20:00', '21:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
   // Internacional: MAR↔CUR (desde 16 JUL)
-  makeF('Maracaibo', 'Curazao', 'Avior Airlines', '', '18:00', '19:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
-  makeF('Curazao', 'Maracaibo', 'Avior Airlines', '', '12:00', '13:00', 'MA - JU', 'Plan de contingencia desde 16 JUL.');
+  makeF('Curazao', 'Maracaibo', 'Avior Airlines', '', '12:00', '13:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
+  makeF('Maracaibo', 'Curazao', 'Avior Airlines', '', '18:00', '19:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
   makeF('Miami', 'Barcelona', 'LASER Airlines', 'G6 200', '07:30', '11:00', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Miami', 'LASER Airlines', 'G6 201', '12:45', '16:15', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Santo Domingo', 'LASER Airlines', 'QL2968', '10:00', '11:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
@@ -578,15 +594,20 @@ function seedDatabase(db) {
   makeF('Madrid', 'Valencia', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Retorno con escala técnica en SDQ.');
   makeF('Valencia', 'Madrid', 'Iberia', '', '', '', 'JUEVES - DOMINGO (desde 9 JUL)', 'Retorno con escala técnica en SDQ.');
 
-  // ── TURPIAL VALENCIA-EL VIGÍA ──
-  makeF('Valencia', 'El Vigía', 'Turpial Airlines', '6450', '10:00', '11:00', 'VIERNES', 'Ruta estacional jul-sep 2026.');
-  makeF('El Vigía', 'Valencia', 'Turpial Airlines', '6451', '12:00', '13:00', 'VIERNES', 'Ruta estacional jul-sep 2026.');
-  makeF('Valencia', 'El Vigía', 'Turpial Airlines', '6450', '13:30', '14:30', 'DOMINGO', 'Ruta estacional jul-sep 2026.');
-  makeF('El Vigía', 'Valencia', 'Turpial Airlines', '6451', '15:30', '16:30', 'DOMINGO', 'Ruta estacional jul-sep 2026.');
+  // ── TURPIAL AIRLINES VALENCIA-EL VIGÍA Y PORLAMAR-EL VIGÍA ──
+  // VLN↔VIG (19 JUL - 28 SEP)
+  makeF('Valencia', 'El Vigía', 'Turpial Airlines', '6450', '10:00', '11:00', 'VIERNES (19 JUL - 28 SEP)', 'Ruta estacional.');
+  makeF('El Vigía', 'Valencia', 'Turpial Airlines', '6451', '12:00', '13:00', 'VIERNES (19 JUL - 28 SEP)', 'Ruta estacional.');
+  makeF('Valencia', 'El Vigía', 'Turpial Airlines', '6450', '13:30', '14:30', 'DOMINGO (19 JUL - 28 SEP)', 'Ruta estacional.');
+  makeF('El Vigía', 'Valencia', 'Turpial Airlines', '6451', '15:30', '16:30', 'DOMINGO (19 JUL - 28 SEP)', 'Ruta estacional.');
+  // PMV↔VIG (16 JUL - 28 SEP)
+  makeF('Porlamar', 'El Vigía', 'Turpial Airlines', '', '11:00', '12:30', 'LUNES (16 JUL - 28 SEP)', 'Ruta estacional.');
+  makeF('El Vigía', 'Porlamar', 'Turpial Airlines', '', '13:30', '15:00', 'LUNES (16 JUL - 28 SEP)', 'Ruta estacional.');
+  makeF('Porlamar', 'El Vigía', 'Turpial Airlines', '', '12:00', '13:30', 'JUEVES (16 JUL - 28 SEP)', 'Ruta estacional.');
+  makeF('El Vigía', 'Porlamar', 'Turpial Airlines', '', '14:30', '16:00', 'JUEVES (16 JUL - 28 SEP)', 'Ruta estacional.');
 
-  // ── ESTELAR SAN ANTONIO-PORLAMAR (DESDE 13 JUL) ──
-  makeF('San Antonio del Táchira', 'Porlamar', 'Estelar', '', '', '', 'MI - SA (desde 13 JUL)', 'Plan de contingencia.');
-  makeF('Porlamar', 'San Antonio del Táchira', 'Estelar', '', '', '', 'MI - SA (desde 13 JUL)', 'Plan de contingencia.');
+  // ── SASCA AIRLINES MARACAY-LOS ROQUES (DESDE 17 JUL) ──
+  makeF('Maracay', 'Los Roques', 'Sasca Airlines', '', '', '', 'DIARIA (desde 17 JUL)', 'Plan de contingencia. Transporte terrestre gratuito Caracas-Maracay.');
 
   // ── Comunicados 7 de julio ──
   n('LASER Airlines - Nueva ruta Madrid vía Barcelona (BLA) desde 8 de julio',
@@ -647,8 +668,8 @@ n('Conviasa - Reprogramación total de rutas y contingencia por terremoto (6 de 
   n('Conviasa - Itinerario completo julio 2026',
     'El Consorcio Venezolano de Industrias Aeronáuticas y Servicios Aéreos S.A. (Conviasa) presenta su itinerario completo para julio 2026.\n\nINTERNACIONAL:\nV0 4934 | Porlamar → Bridgetown | 10:40-11:30 | MI\nV0 4935 | Bridgetown → Porlamar | 12:30-13:20 | MI\nV0 3736 | Valencia → Cancún | 21:30-00:00 | LU, VI\nV0 3739 | Cancún → Valencia | 01:30-06:00 | MA, SA\nV0 3492 | Valencia → La Habana | 11:30-14:30 | MI, VI\nV0 3493 | La Habana → Valencia | 16:30-19:30 | MI, VI\nV0 3726 | Valencia → Santa Lucía (México) | 10:00-12:50 | MA\nV0 3727 | Santa Lucía (México) → Valencia | 16:10-23:00 | MA\n\nItinerario completo disponible en la página de búsqueda. Canales oficiales: @conviasa_ve',
     'importante', '2026-07-08 12:00:00');
-  n('Air Europa - Actualización operativa Valencia (VLN) 11 al 30 de julio',
-    'Se actualiza la información operativa previamente comunicada.\n\nTener en cuenta: los vuelos de los días 17, 24 y 31 de julio, cuya operativa había sido modificada para operar desde/hacia Valencia (VLN), han sido cancelados al no disponerse de las autorizaciones necesarias.\n\nVUELOS OPERATIVOS 11 AL 30 DE JULIO (excepto 10, 17, 24, 31):\nUX071 | MAD→VLN | 15:30-19:05\nUX072 | VLN→MAD | 21:05-12:10 (+1 día)\n\nFechas: 11, 12, 14, 16, 18, 19, 21, 23, 25, 26, 28 y 30 de julio.\n\nPara pasajeros con vuelos cancelados y billetes emitidos hasta el 25 de junio de 2026:\n• Cambio de fecha sin coste hasta 31 octubre 2026\n• Cambio de ruta sin coste a Medellín, Bogotá o Panamá\n• Cambio de ruta a Valencia (VLN) sin coste\n• Vale reembolsable\n• Reembolso\n\nVuelos desde 1 de agosto: se informará próximamente.',
+  n('Air Europa - Actualización cancelaciones julio y agosto (14 julio)',
+     'Actualización de cancelaciones (14 de julio de 2026):\n\nCANCELADOS:\n• UX071 Madrid-Valencia: 17, 19, 24, 26 y 31 de julio\n• UX072 Valencia-Madrid: 17, 19, 24, 26 y 31 de julio\n• UX071 Madrid-Caracas: 7 y 14 de agosto\n• UX072 Caracas-Madrid: 7 y 14 de agosto\n\nVUELOS OPERATIVOS (MAD→VLN / VLN→MAD):\n11, 12, 14, 16, 18, 21, 23, 25, 28 y 30 de julio.\n\nPolíticas para pasajeros con vuelos cancelados (billetes emitidos hasta 25 junio):\n• Cambio de fecha sin coste (misma cabina) hasta 31 octubre\n• Cambio de ruta a Medellín, Bogotá o Panamá sin coste (misma cabina, hasta 31 oct)\n• Cambio de ruta a Valencia (VLN) sin coste\n• Vale reembolsable\n• Reembolso',
     'importante', '2026-07-10 14:00:00');
 n('Aeropostal Alas de Venezuela - Comunicado oficial (2 de julio)',
     'Desde Aeropostal Alas de Venezuela C.A., nos unimos al profundo dolor que embarga a nuestro país tras los difíciles acontecimientos sísmicos ocurridos recientemente. Lamentamos profundamente la pérdida de vidas humanas.\n\nAnte esta emergencia, reafirmamos nuestro compromiso de acompañar a la nación en su proceso de recuperación, trabajando junto al Ministerio del Poder Popular para el Transporte.\n\nNuestro personal despliega todo su esfuerzo y capacidades logísticas para brindar el apoyo necesario en las operaciones aéreas de contingencia.\n\nITINERARIO VALENCIA - PORLAMAR:\nLUNES A VIERNES:\nValencia → Porlamar: 12:00 PM - 01:00 PM\nPorlamar → Valencia: 02:00 PM - 03:00 PM\n\nDOMINGO:\nValencia → Porlamar: 02:00 PM - 03:00 PM\nPorlamar → Valencia: 04:00 PM - 05:00 PM\n\nContacto: +58 422-715-39-13 / @aeropostal_ve',
@@ -686,12 +707,24 @@ n('Aerocaribe - Plan de contingencia ruta Caracas-Los Roques (desde 17 julio)',
 n('Iberia - Reactivación vuelos Madrid-Valencia (desde 9 de julio)',
     'Iberia retomó sus vuelos regulares a Venezuela desde el 9 de julio, operando desde/hacia Valencia (VLN) por cierre de Maiquetía.\n\nJUEVES y DOMINGOS:\nMAD→VLN: Directo\nVLN→MAD: Con escala técnica en Santo Domingo (SDQ)\n\nDos frecuencias semanales. Consultar horarios en iberia.com.',
     'importante', '2026-07-09 12:00:00');
-n('Turpial Airlines - Nueva ruta Valencia-El Vigía (julio-septiembre 2026)',
-    'Turpial Airlines reactiva ruta estacional Valencia-El Vigía.\n\nVIERNES (desde 17 JUL):\n6450 | VLN→VIG | 10:00-11:00\n6451 | VIG→VLN | 12:00-13:00\n\nDOMINGO (desde 17 JUL):\n6450 | VLN→VIG | 13:30-14:30\n6451 | VIG→VLN | 15:30-16:30\n\nVálido julio a septiembre 2026.',
-    'informativo', '2026-07-09 14:00:00');
-n('Estelar - Nuevas frecuencias San Antonio-Valencia y San Antonio-Porlamar (desde 13 julio)',
-    'Estelar activa frecuencias desde San Antonio del Táchira.\n\nDesde 13 JUL:\nSan Antonio ↔ Valencia: LU-MI-VI-SA\nSan Antonio ↔ Porlamar: MI-SA\n\nPlan de contingencia por cierre de Maiquetía. Consultar horarios en flyestelar.com.',
-    'importante', '2026-07-09 16:00:00');
+ n('Turpial Airlines - Nueva ruta Valencia-El Vigía y Porlamar-El Vigía (14 julio)',
+     'Turpial Airlines anuncia rutas estacionales (julio-septiembre 2026):\n\nVALENCIA ↔ EL VIGÍA (19 JUL - 28 SEP):\nViernes: VLN→VIG 10:00-11:00 / VIG→VLN 12:00-13:00\nDomingos: VLN→VIG 13:30-14:30 / VIG→VLN 15:30-16:30\n\nPORLAMAR ↔ EL VIGÍA (16 JUL - 28 SEP):\nLunes: PMV→VIG 11:00-12:30 / VIG→PMV 13:30-15:00\nJueves: PMV→VIG 12:00-13:30 / VIG→PMV 14:30-16:00\n\nReservas: www.turpialairlines.com',
+     'informativo', '2026-07-14 10:00:00');
+ n('Estelar Latinoamérica - Itinerario completo contingencia (14 julio)',
+     'Estelar Latinoamérica actualiza su itinerario de contingencia (14 julio 2026):\n\nMADRID:\nMi-Vie: MAD→VLN 14:40-19:00 / VLN→MAD 22:00-13:15(+1)\n\nSANTO DOMINGO DEL TÁCHIRA:\nLU-MA-MI-VIE-SA-DO: VLN→STD 12:10-13:10 / STD→VLN 14:10-15:10\nJUEVES: VLN→STD 12:30-13:30 / STD→VLN 14:30-15:30\n\nSAN ANTONIO DEL TÁCHIRA:\nLU-MI-VI-SA: VLN→SVZ 08:30-09:30\nLU-VI: SVZ→VLN 10:30-11:30\nMI-SA: SVZ→VLN 16:30-17:30\n\nSAN ANTONIO ↔ PORLAMAR:\nMI-SA: SVZ→PMV 11:00-12:30 / PMV→SVZ 14:00-15:30\n\nPUERTO ORDAZ:\nLU: VLN→PZO 14:30-15:30\nJU-DO: VLN→PZO 16:00-17:00\nLU-MA-VI: PZO→VLN 06:30-07:30\n\nMARACAIBO:\nLU-MI: VLN→MAR 17:00-18:00\nMA: MAR→VLN 07:30-08:30\nJU: MAR→VLN 06:30-07:30\nVI: VLN→MAR 20:30-21:30\nSA: MAR→VLN 09:30-10:30\n\nContacto: 0414-3783527 / 0424-2364555 / flyestelar.com',
+     'importante', '2026-07-14 10:30:00');
+ n('Sasca Airlines - Reanudación ruta Los Roques desde Maracay (13 julio)',
+     'A partir del viernes 17 de julio de 2026, Sasca Airlines retoma operaciones diarias hacia Los Roques desde el Aeropuerto Nacional de Aragua "Tacarigua" en Maracay.\n\nServicio gratuito de transporte terrestre (ida y vuelta) desde El Rosal, Caracas, hasta el aeropuerto de Maracay.\n\nLogística de reprogramación: equipo contactará progresivamente a pasajeros y agencias.\n\nContacto: @sascaa / +58 412-3391705',
+     'importante', '2026-07-14 12:00:00');
+ n('Sasca Airlines - Tasas de entrada y salida Los Roques (14 julio)',
+     'Tasas de entrada y salida para Los Roques:\n\nVENEZOLANOS:\nEntrada: Adultos 15 USD / Niños 8 USD / Adultos mayores 8 USD\nSalida: 12 USD\n\nEXTRANJEROS:\nEntrada: Adultos 50 USD / Niños 25 USD / Adultos mayores 25 USD\nSalida: 12 USD\n\nMARACAY:\n5.90 EUR (desde 2 años)\n\nPago en efectivo o punto directamente en el aeropuerto. Sasca Airlines no es responsable de estos cobros.',
+     'informativo', '2026-07-14 12:30:00');
+ n('Avior Airlines - Itinerario actualizado internacional y nacional (14 julio)',
+     'Avior Airlines actualiza su itinerario desde Barcelona (BLA) al 14 de julio:\n\nINTERNACIONAL:\nBLA↔BOG: 4 frecuencias diarias (17:00-18:10, 19:30-22:40, 16:30-17:40, 07:00-10:10). Desde 17 JUL: BOG→BLA 18:50-22:00\nBLA↔MDE: 2 frecuencias diarias (17:00-18:10, 19:30-22:40). Desde 17 JUL: 16:30-17:40 / 18:50-22:00\nBLA↔CUR (desde 16 JUL): 10:00-11:00 / 20:00-21:00 (diario)\nCUR↔MAR (desde 16 JUL): 12:00-13:00 / 18:00-19:00 (diario)\n\nNACIONAL:\nBLA↔BRM↔MAR: Diario (DO desde 19 JUL)\nBLA↔LSP↔MAR (desde 16 JUL): Diario\nBLA↔VIG (desde 22 JUL): Diario\n\nContacto: 0501-AVIOR-00 / +1 (407) 214-4866\nWeb: aviorair.com',
+     'importante', '2026-07-14 14:00:00');
+ n('Venezolana - Itinerario internacional confirmado (14 julio)',
+     'Venezolana confirma itinerario internacional:\n\nMARACAIBO ↔ PANAMÁ:\nV412 MAR→PTY 08:00-08:30 | Martes y Sábado\nV413 PTY→MAR 14:30-17:00 | Martes y Sábado\n\nBARQUISIMETO ↔ PANAMÁ:\nV423 PTY→BRM 09:30-12:00 | Martes y Sábado\nV422 BRM→PTY 13:00-13:30 | Martes y Sábado\n\nContacto: +58 424 639 02 81 / callcenter@venezolana.aero',
+     'importante', '2026-07-14 14:00:00');
 n('Conviasa - Itinerario actualizado desde Maracay (10 julio)',
     'Atención pasajeros: Ahora despegamos desde Maracay.\n\nVUELOS DESDE MARACAY (MYC):\nV0 2458 | MYC→LRV | 08:30-09:40 | LU-MA-MI-JU-VI-SA\nV0 2464 | MYC→LRV | 09:55-11:05 | DO\nV0 2460 | MYC→LRV | 13:20-14:30 | LU-MA-MI-JU-VI-SA\nV0 2466 | MYC→LRV | 14:10-15:20 | DO\nV0 1110 | MYC→BLA | 07:00-07:50 | LU\nV0 1112 | MYC→BLA | 16:20-17:10 | VI\nV0 1070 | MYC→PYH | 10:30-11:45 | LU\nV0 2488 | MYC→LSP | 14:50-15:50 | LU\nV0 2486 | MYC→LSP | 12:30-13:30 | VI\nV0 098 | MYC→BRM | 09:30-10:00 | VI\nV0 2492 | MYC→BNS | 10:00-11:30 | SA\n\nVUELOS HACIA MARACAY:\nLos Roques, Barcelona, Puerto Ayacucho, Las Piedras, Barquisimeto, Barinas.\n\nItinerarios disponibles en conviasa.aero.',
     'importante', '2026-07-10 16:00:00');
