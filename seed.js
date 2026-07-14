@@ -725,6 +725,9 @@ n('Iberia - Reactivación vuelos Madrid-Valencia (desde 9 de julio)',
  n('Venezolana - Itinerario internacional confirmado (14 julio)',
      'Venezolana confirma itinerario internacional:\n\nMARACAIBO ↔ PANAMÁ:\nV412 MAR→PTY 08:00-08:30 | Martes y Sábado\nV413 PTY→MAR 14:30-17:00 | Martes y Sábado\n\nBARQUISIMETO ↔ PANAMÁ:\nV423 PTY→BRM 09:30-12:00 | Martes y Sábado\nV422 BRM→PTY 13:00-13:30 | Martes y Sábado\n\nContacto: +58 424 639 02 81 / callcenter@venezolana.aero',
      'importante', '2026-07-14 14:00:00');
+ n('Aerocaribe - Confirmación plan contingencia Los Roques (14 julio)',
+     'Aerocaribe confirma operaciones especiales desde Aeropuerto Caracas (Charallave) para la ruta Los Roques.\n\nSVCS→SVRS: 08:00\nSVRS→SVCS: 17:00\n\nChequeo: 1:30 h antes. Horarios sujetos a modificaciones.\nPasajeros con boleto emitido: reubicación automática sin costo.\n\nContacto: +58 (416) 623.74.84 / @aerocaribevzla / aerocaribe.aero',
+     'importante', '2026-07-14 15:00:00');
 n('Conviasa - Itinerario actualizado desde Maracay (10 julio)',
     'Atención pasajeros: Ahora despegamos desde Maracay.\n\nVUELOS DESDE MARACAY (MYC):\nV0 2458 | MYC→LRV | 08:30-09:40 | LU-MA-MI-JU-VI-SA\nV0 2464 | MYC→LRV | 09:55-11:05 | DO\nV0 2460 | MYC→LRV | 13:20-14:30 | LU-MA-MI-JU-VI-SA\nV0 2466 | MYC→LRV | 14:10-15:20 | DO\nV0 1110 | MYC→BLA | 07:00-07:50 | LU\nV0 1112 | MYC→BLA | 16:20-17:10 | VI\nV0 1070 | MYC→PYH | 10:30-11:45 | LU\nV0 2488 | MYC→LSP | 14:50-15:50 | LU\nV0 2486 | MYC→LSP | 12:30-13:30 | VI\nV0 098 | MYC→BRM | 09:30-10:00 | VI\nV0 2492 | MYC→BNS | 10:00-11:30 | SA\n\nVUELOS HACIA MARACAY:\nLos Roques, Barcelona, Puerto Ayacucho, Las Piedras, Barquisimeto, Barinas.\n\nItinerarios disponibles en conviasa.aero.',
     'importante', '2026-07-10 16:00:00');
