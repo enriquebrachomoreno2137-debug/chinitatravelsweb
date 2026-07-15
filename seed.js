@@ -607,7 +607,8 @@ function seedDatabase(db) {
   makeF('El Vigía', 'Porlamar', 'Turpial Airlines', '', '14:30', '16:00', 'JUEVES (16 JUL - 28 SEP)', 'Ruta estacional.');
 
   // ── SASCA AIRLINES MARACAY-LOS ROQUES (DESDE 17 JUL) ──
-  makeF('Maracay', 'Los Roques', 'Sasca Airlines', '', '', '', 'DIARIA (desde 17 JUL)', 'Plan de contingencia. Transporte terrestre gratuito Caracas-Maracay.');
+  makeF('Maracay', 'Los Roques', 'Sasca Airlines', '', '08:00', '09:10', 'DIARIO (desde 17 JUL)', 'Plan de contingencia. Bus gratis Caracas (Torre Onix 04:30) → Maracay.');
+  makeF('Los Roques', 'Maracay', 'Sasca Airlines', '', '16:00', '17:10', 'DIARIO (desde 17 JUL)', 'Plan de contingencia. Bus gratis Maracay → Caracas.');
 
   // ── Comunicados 7 de julio ──
   n('LASER Airlines - Nueva ruta Madrid vía Barcelona (BLA) desde 8 de julio',
@@ -713,9 +714,9 @@ n('Iberia - Reactivación vuelos Madrid-Valencia (desde 9 de julio)',
  n('Estelar Latinoamérica - Itinerario completo contingencia (14 julio)',
      'Estelar Latinoamérica actualiza su itinerario de contingencia (14 julio 2026):\n\nMADRID:\nMi-Vie: MAD→VLN 14:40-19:00 / VLN→MAD 22:00-13:15(+1)\n\nSANTO DOMINGO DEL TÁCHIRA:\nLU-MA-MI-VIE-SA-DO: VLN→STD 12:10-13:10 / STD→VLN 14:10-15:10\nJUEVES: VLN→STD 12:30-13:30 / STD→VLN 14:30-15:30\n\nSAN ANTONIO DEL TÁCHIRA:\nLU-MI-VI-SA: VLN→SVZ 08:30-09:30\nLU-VI: SVZ→VLN 10:30-11:30\nMI-SA: SVZ→VLN 16:30-17:30\n\nSAN ANTONIO ↔ PORLAMAR:\nMI-SA: SVZ→PMV 11:00-12:30 / PMV→SVZ 14:00-15:30\n\nPUERTO ORDAZ:\nLU: VLN→PZO 14:30-15:30\nJU-DO: VLN→PZO 16:00-17:00\nLU-MA-VI: PZO→VLN 06:30-07:30\n\nMARACAIBO:\nLU-MI: VLN→MAR 17:00-18:00\nMA: MAR→VLN 07:30-08:30\nJU: MAR→VLN 06:30-07:30\nVI: VLN→MAR 20:30-21:30\nSA: MAR→VLN 09:30-10:30\n\nContacto: 0414-3783527 / 0424-2364555 / flyestelar.com',
      'importante', '2026-07-14 10:30:00');
- n('Sasca Airlines - Reanudación ruta Los Roques desde Maracay (13 julio)',
-     'A partir del viernes 17 de julio de 2026, Sasca Airlines retoma operaciones diarias hacia Los Roques desde el Aeropuerto Nacional de Aragua "Tacarigua" en Maracay.\n\nServicio gratuito de transporte terrestre (ida y vuelta) desde El Rosal, Caracas, hasta el aeropuerto de Maracay.\n\nLogística de reprogramación: equipo contactará progresivamente a pasajeros y agencias.\n\nContacto: @sascaa / +58 412-3391705',
-     'importante', '2026-07-14 12:00:00');
+ n('Sasca Airlines - Reanudación ruta Los Roques desde Maracay (15 julio)',
+     'A partir del viernes 17 de julio de 2026, Sasca Airlines retoma operaciones diarias hacia Los Roques.\n\nITINERARIO:\nMYC→LRV: 08:00-09:10\nLRV→MYC: 16:00-17:10\n\nServicio gratuito de transporte terrestre (ida y vuelta):\n• Salida desde Torre Onix, Av. Sojo, El Rosal, Caracas a las 05:00\n• Punto de encuentro: 04:30 en Torre Onix\n• Retorno: sujeto a hora de aterrizaje\n\nTasa de salida Maracay: 5.90 € (pago en aeropuerto).\n\nContacto: @sascaa / +58 412-3391705',
+     'importante', '2026-07-15 12:00:00');
  n('Sasca Airlines - Tasas de entrada y salida Los Roques (14 julio)',
      'Tasas de entrada y salida para Los Roques:\n\nVENEZOLANOS:\nEntrada: Adultos 15 USD / Niños 8 USD / Adultos mayores 8 USD\nSalida: 12 USD\n\nEXTRANJEROS:\nEntrada: Adultos 50 USD / Niños 25 USD / Adultos mayores 25 USD\nSalida: 12 USD\n\nMARACAY:\n5.90 EUR (desde 2 años)\n\nPago en efectivo o punto directamente en el aeropuerto. Sasca Airlines no es responsable de estos cobros.',
      'informativo', '2026-07-14 12:30:00');
@@ -733,7 +734,10 @@ n('Conviasa - Itinerario actualizado desde Maracay (10 julio)',
     'importante', '2026-07-10 16:00:00');
 n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
     'Aeropostal Alas de Venezuela actualiza su itinerario Valencia-Porlamar.\n\nLU, MA, JU, VI:\nValencia → Porlamar: 12:00-13:00\nPorlamar → Valencia: 14:00-15:00\n\nDOMINGO:\nValencia → Porlamar: 14:00-15:00\nPorlamar → Valencia: 16:00-17:00\n\nContacto: +58 422-715-39-13 / @aeropostal_ve',
-    'importante', '2026-07-10 16:00:00');
+     'importante', '2026-07-10 16:00:00');
+ n('Rutaca Airlines - Medidas para pasajeros afectados por contingencia (15 julio)',
+     'Rutaca Airlines informa medidas para pasajeros afectados por la contingencia del 24/06/2026:\n\nANTICIPACIÓN RECOMENDADA:\n• Vuelos nacionales: 4 horas antes en VLN\n• Vuelos internacionales: 5 horas antes en VLN\n\nOPCIONES DE PROTECCIÓN (hasta 30 JUL):\n1. Cambio de itinerario: un (1) cambio gratuito sin penalidad ni diferencia de tarifa si se completa antes del 30 JUL. Para cambios posteriores, boleto válido 365 días con penalidad exonerada pero diferencia tarifaria aplica.\n2. Nota de crédito (EMD): canjeable para misma ruta o cualquier ruta Rutaca. Válida 1 año. No reembolsable.\n\nPlazo máximo para gestionar: 30 de julio de 2026.\n\nVuelos disponibles en sistema para nuevos boletos.\nContacto: callcenter@flyrutaca.com / 0500-RUTACA-1',
+     'importante', '2026-07-15 10:00:00');
 }
 
 module.exports = { seedDatabase };
