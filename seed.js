@@ -770,8 +770,9 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
 
   // ── HOTEL SEED DATA ──
   db.addHotel('LD Palm Beach', 'Margarita', '3 estrellas', 'Todo incluido',
-    'Hotel ubicado en la playa más hermosa de Margarita, Playa el Agua. Habitaciones cómodas con aire acondicionado, TV por cable, nevera ejecutiva y baño privado. Cuenta con piscina, restaurante, bar, snack, wifi en áreas comunes, estacionamiento privado y acceso directo a la playa.',
-    4.2, 128, null, 'Playa El Agua, Isla de Margarita', null, null, null);
+    'Hotel ubicado en el corazón de Playa El Agua, una de las más hermosas de la isla. Cuenta con 126 habitaciones con aire acondicionado, TV por cable, minibar, caja fuerte y baño privado. Piscina para adultos y niños, jacuzzi, restaurante, bar, snack, wifi en áreas comunes, estacionamiento privado y acceso directo a la playa.',
+    4.2, 128, null, 'Playa El Agua, Isla de Margarita', null,
+    'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/BEACH-01-dbd6fd0d-640w.jpg', null);
   const hotels = db.getHotels('Margarita');
   const ld = hotels[hotels.length - 1];
   const ldId = ld.id;
@@ -782,11 +783,11 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
   db.addHotelRate(ldId, 'Baja', '2027-01-16', '2027-03-31', 280, 340, 80, 0, 1);
   db.addHotelRate(ldId, 'Baja', '2027-04-16', '2027-06-30', 280, 340, 80, 0, 1);
 
-  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/49/ld-palm-beach.jpg', 1);
-  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/4a/ld-palm-beach.jpg', 0);
-  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/48/ld-palm-beach.jpg', 0);
-  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/47/ld-palm-beach.jpg', 0);
-  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/46/ld-palm-beach.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/BEACH-01-dbd6fd0d-640w.jpg', 1);
+  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/POOL-01-640w.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/AREAS-5-15d0c7d1-640w.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/FOOD-DRINK-03-bc698a63-640w.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/AREAS-6-1ec38875-640w.jpg', 0);
 
   db.addHotelReview(ldId, 'María G.', 5, 'Excelente hotel, la playa es espectacular. La comida muy buena y el personal muy amable. Volvería sin dudas.');
   db.addHotelReview(ldId, 'Carlos M.', 4, 'Muy buena ubicación, frente a Playa El Agua. Habitaciones cómodas, el servicio de comida aceptable.');
