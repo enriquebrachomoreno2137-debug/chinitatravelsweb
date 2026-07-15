@@ -258,8 +258,14 @@ function seedDatabase(db) {
   r('Los Roques', 'Caracas', 'Ruta Aerocaribe.');
   r('San Antonio del Táchira', 'Porlamar', 'Ruta Estelar Airlines.');
   r('Porlamar', 'San Antonio del Táchira', 'Ruta Estelar Airlines.');
-  r('Bogotá', 'Porlamar', 'Ruta internacional Wingo.');
+   r('Bogotá', 'Porlamar', 'Ruta internacional Wingo.');
   r('Porlamar', 'Bogotá', 'Ruta internacional Wingo.');
+  r('Maracay', 'Maracaibo', 'Ruta LASER Airlines.');
+  r('Maracaibo', 'Maracay', 'Ruta LASER Airlines.');
+  r('Maracay', 'El Vigía', 'Ruta LASER Airlines.');
+  r('El Vigía', 'Maracay', 'Ruta LASER Airlines.');
+  r('Maracay', 'Porlamar', 'Ruta LASER Airlines.');
+  r('Porlamar', 'Maracay', 'Ruta LASER Airlines.');
 
   const allRoutes = db.getAllRoutes();
   const g = (o, d) => { const x = allRoutes.find(x => x.origin === o.toUpperCase() && x.destination === d.toUpperCase()); return x ? x.id : null; };
@@ -556,6 +562,26 @@ function seedDatabase(db) {
   makeF('Barcelona', 'Bogotá', 'LASER Airlines', 'QL2980', '09:00', '10:00', 'MAR-JUE-SÁB (desde 9 JUL)', 'Nueva ruta por cierre CCS.');
   makeF('Bogotá', 'Barcelona', 'LASER Airlines', 'QL2981', '11:30', '14:30', 'MAR-JUE-SÁB (desde 9 JUL)', 'Nueva ruta por cierre CCS.');
 
+  // ── LASER AIRLINES Vuelos nacionales desde Maracay (17 JUL) ──
+  // Maracay ↔ Maracaibo
+  makeF('Maracay', 'Maracaibo', 'LASER Airlines', 'QL942', '10:45', '11:55', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracaibo', 'Maracay', 'LASER Airlines', 'QL943', '12:55', '14:05', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  // Maracay ↔ El Vigía
+  makeF('Maracay', 'El Vigía', 'LASER Airlines', 'QL920', '10:00', '11:10', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('El Vigía', 'Maracay', 'LASER Airlines', 'QL921', '12:10', '13:20', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  // Maracay ↔ Barcelona (3 frecuencias diarias)
+  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL970', '06:30', '07:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL971', '08:45', '09:45', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL972', '09:30', '10:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL973', '13:00', '14:00', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL974', '16:30', '17:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL975', '18:30', '19:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  // Maracay ↔ Porlamar
+  makeF('Porlamar', 'Maracay', 'LASER Airlines', 'QL907', '07:30', '08:40', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracay', 'Porlamar', 'LASER Airlines', 'QL904', '15:30', '16:40', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Porlamar', 'Maracay', 'LASER Airlines', 'QL905', '17:40', '18:50', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracay', 'Porlamar', 'LASER Airlines', 'QL906', '19:50', '21:00', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+
   // ── TURPIAL AIRLINES Valencia ↔ Punta Cana (julio-septiembre 2026) ──
   makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '14:00', '15:30', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
   makeF('Punta Cana', 'Valencia', 'Turpial Airlines', '8609', '16:30', '18:00', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
@@ -738,6 +764,9 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
  n('Rutaca Airlines - Medidas para pasajeros afectados por contingencia (15 julio)',
      'Rutaca Airlines informa medidas para pasajeros afectados por la contingencia del 24/06/2026:\n\nANTICIPACIÓN RECOMENDADA:\n• Vuelos nacionales: 4 horas antes en VLN\n• Vuelos internacionales: 5 horas antes en VLN\n\nOPCIONES DE PROTECCIÓN (hasta 30 JUL):\n1. Cambio de itinerario: un (1) cambio gratuito sin penalidad ni diferencia de tarifa si se completa antes del 30 JUL. Para cambios posteriores, boleto válido 365 días con penalidad exonerada pero diferencia tarifaria aplica.\n2. Nota de crédito (EMD): canjeable para misma ruta o cualquier ruta Rutaca. Válida 1 año. No reembolsable.\n\nPlazo máximo para gestionar: 30 de julio de 2026.\n\nVuelos disponibles en sistema para nuevos boletos.\nContacto: callcenter@flyrutaca.com / 0500-RUTACA-1',
      'importante', '2026-07-15 10:00:00');
+ n('LASER Airlines - Protocolo contingencia vuelos nacionales desde Maracay (15 julio)',
+     'LASER Airlines habilita operaciones nacionales desde el Aeropuerto Libertador de Maracay (MYC) a partir del 17 de julio de 2026.\n\nITINERARIOS DIARIOS:\n\nMARACAY ↔ MARACAIBO:\nQL942 MYC→MAR 10:45-11:55\nQL943 MAR→MYC 12:55-14:05\n\nMARACAY ↔ EL VIGÍA:\nQL920 MYC→VIG 10:00-11:10\nQL921 VIG→MYC 12:10-13:20\n\nMARACAY ↔ BARCELONA (3 frecuencias):\nQL970 MYC→BLA 06:30-07:30 / QL971 BLA→MYC 08:45-09:45\nQL972 MYC→BLA 09:30-10:30 / QL973 BLA→MYC 13:00-14:00\nQL974 MYC→BLA 16:30-17:30 / QL975 BLA→MYC 18:30-19:30\n\nMARACAY ↔ PORLAMAR:\nQL907 PMV→MYC 07:30-08:40\nQL904 MYC→PMV 15:30-16:40\nQL905 PMV→MYC 17:40-18:50\nQL906 MYC→PMV 19:50-21:00\n\nFranquicia equipaje:\nTurista: 1 maleta 30 kg + mano 8 kg\nEjecutiva: 2 maletas 30 kg + mano 8 kg\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
+     'importante', '2026-07-15 16:00:00');
 }
 
 module.exports = { seedDatabase };
