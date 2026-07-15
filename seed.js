@@ -764,9 +764,35 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
  n('Rutaca Airlines - Medidas para pasajeros afectados por contingencia (15 julio)',
      'Rutaca Airlines informa medidas para pasajeros afectados por la contingencia del 24/06/2026:\n\nANTICIPACIÓN RECOMENDADA:\n• Vuelos nacionales: 4 horas antes en VLN\n• Vuelos internacionales: 5 horas antes en VLN\n\nOPCIONES DE PROTECCIÓN (hasta 30 JUL):\n1. Cambio de itinerario: un (1) cambio gratuito sin penalidad ni diferencia de tarifa si se completa antes del 30 JUL. Para cambios posteriores, boleto válido 365 días con penalidad exonerada pero diferencia tarifaria aplica.\n2. Nota de crédito (EMD): canjeable para misma ruta o cualquier ruta Rutaca. Válida 1 año. No reembolsable.\n\nPlazo máximo para gestionar: 30 de julio de 2026.\n\nVuelos disponibles en sistema para nuevos boletos.\nContacto: callcenter@flyrutaca.com / 0500-RUTACA-1',
      'importante', '2026-07-15 10:00:00');
- n('LASER Airlines - Protocolo contingencia vuelos nacionales desde Maracay (15 julio)',
-     'LASER Airlines habilita operaciones nacionales desde el Aeropuerto Libertador de Maracay (MYC) a partir del 17 de julio de 2026.\n\nITINERARIOS DIARIOS:\n\nMARACAY ↔ MARACAIBO:\nQL942 MYC→MAR 10:45-11:55\nQL943 MAR→MYC 12:55-14:05\n\nMARACAY ↔ EL VIGÍA:\nQL920 MYC→VIG 10:00-11:10\nQL921 VIG→MYC 12:10-13:20\n\nMARACAY ↔ BARCELONA (3 frecuencias):\nQL970 MYC→BLA 06:30-07:30 / QL971 BLA→MYC 08:45-09:45\nQL972 MYC→BLA 09:30-10:30 / QL973 BLA→MYC 13:00-14:00\nQL974 MYC→BLA 16:30-17:30 / QL975 BLA→MYC 18:30-19:30\n\nMARACAY ↔ PORLAMAR:\nQL907 PMV→MYC 07:30-08:40\nQL904 MYC→PMV 15:30-16:40\nQL905 PMV→MYC 17:40-18:50\nQL906 MYC→PMV 19:50-21:00\n\nFranquicia equipaje:\nTurista: 1 maleta 30 kg + mano 8 kg\nEjecutiva: 2 maletas 30 kg + mano 8 kg\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
-     'importante', '2026-07-15 16:00:00');
+  n('LASER Airlines - Protocolo contingencia vuelos nacionales desde Maracay (15 julio)',
+      'LASER Airlines habilita operaciones nacionales desde el Aeropuerto Libertador de Maracay (MYC) a partir del 17 de julio de 2026.\n\nITINERARIOS DIARIOS:\n\nMARACAY ↔ MARACAIBO:\nQL942 MYC→MAR 10:45-11:55\nQL943 MAR→MYC 12:55-14:05\n\nMARACAY ↔ EL VIGÍA:\nQL920 MYC→VIG 10:00-11:10\nQL921 VIG→MYC 12:10-13:20\n\nMARACAY ↔ BARCELONA (3 frecuencias):\nQL970 MYC→BLA 06:30-07:30 / QL971 BLA→MYC 08:45-09:45\nQL972 MYC→BLA 09:30-10:30 / QL973 BLA→MYC 13:00-14:00\nQL974 MYC→BLA 16:30-17:30 / QL975 BLA→MYC 18:30-19:30\n\nMARACAY ↔ PORLAMAR:\nQL907 PMV→MYC 07:30-08:40\nQL904 MYC→PMV 15:30-16:40\nQL905 PMV→MYC 17:40-18:50\nQL906 MYC→PMV 19:50-21:00\n\nFranquicia equipaje:\nTurista: 1 maleta 30 kg + mano 8 kg\nEjecutiva: 2 maletas 30 kg + mano 8 kg\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
+      'importante', '2026-07-15 16:00:00');
+
+  // ── HOTEL SEED DATA ──
+  db.addHotel('LD Palm Beach', 'Margarita', '3 estrellas', 'Todo incluido',
+    'Hotel ubicado en la playa más hermosa de Margarita, Playa el Agua. Habitaciones cómodas con aire acondicionado, TV por cable, nevera ejecutiva y baño privado. Cuenta con piscina, restaurante, bar, snack, wifi en áreas comunes, estacionamiento privado y acceso directo a la playa.',
+    4.2, 128, null, 'Playa El Agua, Isla de Margarita', null, null, null);
+  const hotels = db.getHotels('Margarita');
+  const ld = hotels[hotels.length - 1];
+  const ldId = ld.id;
+  db.addHotelRate(ldId, 'Alta', '2026-07-01', '2026-09-15', 410, 480, 120, 0, 2);
+  db.addHotelRate(ldId, 'Alta', '2026-12-15', '2027-01-15', 410, 480, 120, 0, 2);
+  db.addHotelRate(ldId, 'Alta', '2027-04-01', '2027-04-15', 410, 480, 120, 0, 2);
+  db.addHotelRate(ldId, 'Baja', '2026-09-16', '2026-12-14', 280, 340, 80, 0, 1);
+  db.addHotelRate(ldId, 'Baja', '2027-01-16', '2027-03-31', 280, 340, 80, 0, 1);
+  db.addHotelRate(ldId, 'Baja', '2027-04-16', '2027-06-30', 280, 340, 80, 0, 1);
+
+  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/49/ld-palm-beach.jpg', 1);
+  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/4a/ld-palm-beach.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/48/ld-palm-beach.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/47/ld-palm-beach.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1b/8c/46/ld-palm-beach.jpg', 0);
+
+  db.addHotelReview(ldId, 'María G.', 5, 'Excelente hotel, la playa es espectacular. La comida muy buena y el personal muy amable. Volvería sin dudas.');
+  db.addHotelReview(ldId, 'Carlos M.', 4, 'Muy buena ubicación, frente a Playa El Agua. Habitaciones cómodas, el servicio de comida aceptable.');
+  db.addHotelReview(ldId, 'Ana R.', 4, 'Buen hotel para descansar. La piscina y el acceso a la playa son lo mejor. Relación calidad-precio justa.');
+
+  db.addFlightPrice('Margarita', 'Valencia', 120, 90, 'Vuelo ida y vuelta + traslado aeropuerto-hotel');
 }
 
 module.exports = { seedDatabase };

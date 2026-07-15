@@ -178,7 +178,194 @@ app.get('/api/routes/list', (req, res) => {
   }
 });
 
+// ── HOTELS API ──
+app.get('/api/hotels', (req, res) => {
+  try {
+    const destination = req.query.destination || 'Margarita';
+    const hotels = db.getHotels(destination);
+    res.json(hotels);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/hotels/:id', (req, res) => {
+  try {
+    const hotel = db.getHotel(req.params.id);
+    if (!hotel) return res.status(404).json({ error: 'Hotel no encontrado' });
+    res.json(hotel);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/hotels/:id/price', (req, res) => {
+  try {
+    const { check_in, check_out, adults, children } = req.query;
+    if (!check_in || !check_out) return res.status(400).json({ error: 'check_in y check_out requeridos' });
+    const result = db.calculatePackagePrice(req.params.id, check_in, check_out, parseInt(adults || 1), parseInt(children || 0));
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/flight-prices', (req, res) => {
+  try {
+    const destination = req.query.destination || 'Margarita';
+    const prices = db.getFlightPrices(destination);
+    res.json(prices);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.use('/api/admin', requireAdmin);
+
+// ── ADMIN HOTELS ──
+app.get('/api/admin/hotels', (req, res) => {
+  try {
+    res.json(db.getHotels(req.query.destination));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/admin/hotels', (req, res) => {
+  try {
+    const r = req.body;
+    db.addHotel(r.name, r.destination, r.category, r.regime, r.description, r.rating, r.reviews_count, r.place_id, r.address, r.website, r.main_photo, r.notes);
+    const hotels = db.getHotels(r.destination || 'Margarita');
+    const last = hotels[hotels.length - 1];
+    res.json({ success: true, id: last ? last.id : null });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.put('/api/admin/hotels/:id', (req, res) => {
+  try {
+    const r = req.body;
+    db.updateHotel(req.params.id, r.name, r.category, r.regime, r.description, r.rating, r.reviews_count, r.address, r.website, r.notes, r.active);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/hotels/:id', (req, res) => {
+  try {
+    db.deleteHotel(req.params.id);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Admin: hotel photos
+app.post('/api/admin/hotels/:id/photos', (req, res) => {
+  try {
+    db.addHotelPhoto(req.params.id, req.body.photo_url, req.body.is_main);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/hotel-photos/:id', (req, res) => {
+  try {
+    db.deleteHotelPhoto(req.params.id);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Admin: hotel reviews
+app.post('/api/admin/hotels/:id/reviews', (req, res) => {
+  try {
+    db.addHotelReview(req.params.id, req.body.author, req.body.rating, req.body.text);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/hotel-reviews/:id', (req, res) => {
+  try {
+    db.deleteHotelReview(req.params.id);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Admin: hotel rates
+app.post('/api/admin/hotels/:id/rates', (req, res) => {
+  try {
+    const r = req.body;
+    db.addHotelRate(req.params.id, r.season_name, r.date_from, r.date_to, r.rate_sgl, r.rate_dbl, r.rate_chd, r.rate_chd2, r.min_nights);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.put('/api/admin/hotel-rates/:id', (req, res) => {
+  try {
+    const r = req.body;
+    db.updateHotelRate(req.params.id, r.season_name, r.date_from, r.date_to, r.rate_sgl, r.rate_dbl, r.rate_chd, r.rate_chd2, r.min_nights);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/hotel-rates/:id', (req, res) => {
+  try {
+    db.deleteHotelRate(req.params.id);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Admin: flight prices
+app.get('/api/admin/flight-prices', (req, res) => {
+  try {
+    res.json(db.getFlightPrices(req.query.destination));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/admin/flight-prices', (req, res) => {
+  try {
+    const r = req.body;
+    db.addFlightPrice(r.destination, r.origin, r.price, r.price_chd, r.notes);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.put('/api/admin/flight-prices/:id', (req, res) => {
+  try {
+    db.updateFlightPrice(req.params.id, req.body.price, req.body.price_chd, req.body.notes, req.body.active);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/flight-prices/:id', (req, res) => {
+  try {
+    db.deleteFlightPrice(req.params.id);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 
 app.post('/api/admin/routes', (req, res) => {
   try {

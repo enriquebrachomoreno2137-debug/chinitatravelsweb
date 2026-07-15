@@ -16,6 +16,7 @@
       <nav>
         <a href="#" id="navInicio" class="active">Inicio</a>
         <a href="#" id="navNoticias">Noticias</a>
+        <a href="#" id="navMargarita">Margarita</a>
       </nav>
     </div>
   </header>
@@ -73,6 +74,50 @@
       </section>
     </div>
 
+    <div id="pageMargarita" class="hidden">
+      <section class="hero">
+        <h2>Paquetes Margarita</h2>
+        <p>Hoteles, precios y todo incluido — cotiza directo por WhatsApp</p>
+      </section>
+
+      <section class="search-section">
+        <form id="packageForm" class="search-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkIn">Entrada</label>
+              <input type="date" id="checkIn" name="checkIn" required>
+            </div>
+            <div class="form-group">
+              <label for="checkOut">Salida</label>
+              <input type="date" id="checkOut" name="checkOut" required>
+            </div>
+            <div class="form-group">
+              <label for="adults">Adultos</label>
+              <input type="number" id="adults" name="adults" min="1" max="10" value="2">
+            </div>
+            <div class="form-group">
+              <label for="children">Niños (4-10)</label>
+              <input type="number" id="children" name="children" min="0" max="10" value="0">
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">Buscar Paquetes</button>
+        </form>
+      </section>
+
+      <section id="resultsSection" style="display:none;">
+        <div id="resultsHeader">
+          <h3 id="resultsTitle">Resultados</h3>
+          <p id="resultsSubtitle" class="text-muted"></p>
+        </div>
+        <div id="hotelResults" class="hotel-grid"></div>
+      </section>
+
+      <section id="detailSection" style="display:none;">
+        <button id="backToResults" class="btn-secondary">&larr; Volver a resultados</button>
+        <div id="hotelDetail"></div>
+      </section>
+    </div>
+
     <div id="pageNoticias" class="hidden">
       <section class="news-section">
         <h3>Noticias / Comunicados</h3>
@@ -84,6 +129,15 @@
       </section>
     </div>
   </main>
+
+  <div id="whatsappModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span id="closeModal" class="modal-close">&times;</span>
+      <h3>Cotizar por WhatsApp</h3>
+      <div id="modalBody"></div>
+      <button id="sendWhatsAppBtn" class="btn-whatsapp">Enviar a WhatsApp</button>
+    </div>
+  </div>
 
   <footer>
     <div class="container">

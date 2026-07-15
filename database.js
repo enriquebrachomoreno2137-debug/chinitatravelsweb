@@ -82,6 +82,75 @@ async function initDatabase() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS hotels (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      destination TEXT NOT NULL DEFAULT 'Margarita',
+      category TEXT,
+      regime TEXT,
+      description TEXT,
+      rating REAL,
+      reviews_count INTEGER DEFAULT 0,
+      place_id TEXT,
+      address TEXT,
+      website TEXT,
+      main_photo TEXT,
+      notes TEXT,
+      active INTEGER DEFAULT 1,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS hotel_photos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hotel_id INTEGER NOT NULL,
+      photo_url TEXT NOT NULL,
+      is_main INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE
+    )
+  `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS hotel_reviews (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hotel_id INTEGER NOT NULL,
+      author TEXT,
+      rating REAL,
+      text TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE
+    )
+  `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS hotel_rates (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hotel_id INTEGER NOT NULL,
+      season_name TEXT,
+      date_from TEXT,
+      date_to TEXT,
+      rate_sgl REAL,
+      rate_dbl REAL,
+      rate_chd REAL,
+      rate_chd2 REAL,
+      min_nights INTEGER DEFAULT 1,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE
+    )
+  `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS flight_prices (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      destination TEXT NOT NULL,
+      origin TEXT DEFAULT 'Valencia',
+      price REAL NOT NULL,
+      price_chd REAL,
+      notes TEXT,
+      active INTEGER DEFAULT 1,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
   saveDb();
   seedDatabase(module.exports);
 }
@@ -280,6 +349,11 @@ function clearAllData() {
 function clearAllDataIncludingVisits() {
   clearAllData();
   try { query('DELETE FROM visits'); } catch (e) {}
+  try { query('DELETE FROM hotel_photos'); } catch (e) {}
+  try { query('DELETE FROM hotel_reviews'); } catch (e) {}
+  try { query('DELETE FROM hotel_rates'); } catch (e) {}
+  try { query('DELETE FROM flight_prices'); } catch (e) {}
+  try { query('DELETE FROM hotels'); } catch (e) {}
 }
 
 function addNews(title, content, category, createdAt) {
@@ -317,6 +391,129 @@ function getStats() {
   return { total, unique, devices, recent };
 }
 
+// ── HOTELS CRUD ──
+function getHotels(destination) {
+  let sql = 'SELECT * FROM hotels WHERE active = 1';
+  const params = [];
+  if (destination) {
+    sql += ' AND destination = ?';
+    params.push(destination);
+  }
+  sql += ' ORDER BY name';
+  return query(sql, params);
+}
+
+function getHotel(id) {
+  const hotels = query('SELECT * FROM hotels WHERE id = ?', [id]);
+  if (!hotels.length) return null;
+  const hotel = hotels[0];
+  hotel.photos = query('SELECT * FROM hotel_photos WHERE hotel_id = ? ORDER BY is_main DESC', [id]);
+  hotel.reviews = query('SELECT * FROM hotel_reviews WHERE hotel_id = ? ORDER BY created_at DESC', [id]);
+  hotel.rates = query('SELECT * FROM hotel_rates WHERE hotel_id = ? ORDER BY date_from', [id]);
+  return hotel;
+}
+
+function addHotel(name, destination, category, regime, description, rating, reviewsCount, placeId, address, website, mainPhoto, notes) {
+  return query(`INSERT INTO hotels (name, destination, category, regime, description, rating, reviews_count, place_id, address, website, main_photo, notes)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [name, destination || 'Margarita', category || null, regime || null, description || null, rating || null, reviewsCount || 0, placeId || null, address || null, website || null, mainPhoto || null, notes || null]);
+}
+
+function updateHotel(id, name, category, regime, description, rating, reviewsCount, address, website, notes, active) {
+  return query(`UPDATE hotels SET name = ?, category = ?, regime = ?, description = ?, rating = ?, reviews_count = ?, address = ?, website = ?, notes = ?, active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+    [name, category, regime, description, rating, reviewsCount, address, website, notes, active, id]);
+}
+
+function deleteHotel(id) {
+  return query('UPDATE hotels SET active = 0, updated_at = CURRENT_TIMESTAMP WHERE id = ?', [id]);
+}
+
+function addHotelPhoto(hotelId, photoUrl, isMain) {
+  return query('INSERT INTO hotel_photos (hotel_id, photo_url, is_main) VALUES (?, ?, ?)', [hotelId, photoUrl, isMain ? 1 : 0]);
+}
+
+function deleteHotelPhoto(id) {
+  return query('DELETE FROM hotel_photos WHERE id = ?', [id]);
+}
+
+function addHotelReview(hotelId, author, rating, text) {
+  return query('INSERT INTO hotel_reviews (hotel_id, author, rating, text) VALUES (?, ?, ?, ?)', [hotelId, author || null, rating || null, text]);
+}
+
+function deleteHotelReview(id) {
+  return query('DELETE FROM hotel_reviews WHERE id = ?', [id]);
+}
+
+function addHotelRate(hotelId, seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights) {
+  return query('INSERT INTO hotel_rates (hotel_id, season_name, date_from, date_to, rate_sgl, rate_dbl, rate_chd, rate_chd2, min_nights) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [hotelId, seasonName || null, dateFrom, dateTo, rateSgl || 0, rateDbl || 0, rateChd || 0, rateChd2 || 0, minNights || 1]);
+}
+
+function updateHotelRate(id, seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights) {
+  return query('UPDATE hotel_rates SET season_name = ?, date_from = ?, date_to = ?, rate_sgl = ?, rate_dbl = ?, rate_chd = ?, rate_chd2 = ?, min_nights = ? WHERE id = ?',
+    [seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights, id]);
+}
+
+function deleteHotelRate(id) {
+  return query('DELETE FROM hotel_rates WHERE id = ?', [id]);
+}
+
+function findRateForDate(hotelId, dateStr) {
+  const date = new Date(dateStr);
+  const rates = query(`SELECT * FROM hotel_rates WHERE hotel_id = ? AND date(date_from) <= date(?) AND date(date_to) >= date(?)`, [hotelId, dateStr, dateStr]);
+  return rates.length ? rates[0] : null;
+}
+
+function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
+  const hotel = query('SELECT * FROM hotels WHERE id = ?', [hotelId])[0];
+  if (!hotel) return null;
+
+  const checkInDate = new Date(checkIn);
+  const checkOutDate = new Date(checkOut);
+  const nights = Math.max(0, Math.floor((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)));
+
+  let total = 0;
+  let breakdown = [];
+
+  for (let i = 0; i < nights; i++) {
+    const d = new Date(checkInDate);
+    d.setDate(d.getDate() + i);
+    const dateStr = d.toISOString().split('T')[0];
+    const rate = findRateForDate(hotelId, dateStr);
+    if (!rate) return { error: `Sin tarifa disponible para ${dateStr}` };
+    const nightCost = rate.rate_dbl * adults + rate.rate_chd * children;
+    total += nightCost;
+    breakdown.push({ date: dateStr, rateName: rate.season_name, rateDbl: rate.rate_dbl, rateChd: rate.rate_chd, nightCost });
+  }
+
+  return { hotel, nights, adults, children, total, breakdown };
+}
+
+// ── FLIGHT PRICES CRUD ──
+function getFlightPrices(destination) {
+  let sql = 'SELECT * FROM flight_prices WHERE active = 1';
+  const params = [];
+  if (destination) {
+    sql += ' AND destination = ?';
+    params.push(destination);
+  }
+  sql += ' ORDER BY destination, origin';
+  return query(sql, params);
+}
+
+function addFlightPrice(destination, origin, price, priceChd, notes) {
+  return query('INSERT INTO flight_prices (destination, origin, price, price_chd, notes) VALUES (?, ?, ?, ?, ?)',
+    [destination, origin || 'Valencia', price, priceChd || null, notes || null]);
+}
+
+function updateFlightPrice(id, price, priceChd, notes, active) {
+  return query('UPDATE flight_prices SET price = ?, price_chd = ?, notes = ?, active = ? WHERE id = ?', [price, priceChd, notes, active, id]);
+}
+
+function deleteFlightPrice(id) {
+  return query('UPDATE flight_prices SET active = 0 WHERE id = ?', [id]);
+}
+
 module.exports = {
   initDatabase,
   getAllRoutes,
@@ -346,5 +543,22 @@ module.exports = {
   clearAllData,
   clearAllDataIncludingVisits,
   recordVisit,
-  getStats
+  getStats,
+  getHotels,
+  getHotel,
+  addHotel,
+  updateHotel,
+  deleteHotel,
+  addHotelPhoto,
+  deleteHotelPhoto,
+  addHotelReview,
+  deleteHotelReview,
+  addHotelRate,
+  updateHotelRate,
+  deleteHotelRate,
+  calculatePackagePrice,
+  getFlightPrices,
+  addFlightPrice,
+  updateFlightPrice,
+  deleteFlightPrice
 };

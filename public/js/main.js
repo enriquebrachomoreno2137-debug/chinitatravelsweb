@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage('noticias');
   });
 
+  document.getElementById('navMargarita').addEventListener('click', (e) => {
+    e.preventDefault();
+    showPage('margarita');
+  });
+
   document.getElementById('swapBtn').addEventListener('click', () => {
     const o = document.getElementById('origin');
     const d = document.getElementById('destination');
@@ -249,11 +254,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showPage(page) {
-  document.querySelectorAll('#pageInicio, #pageNoticias').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('#pageInicio, #pageNoticias, #pageMargarita').forEach(el => el.classList.add('hidden'));
   document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1)).classList.remove('hidden');
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
   document.getElementById('nav' + page.charAt(0).toUpperCase() + page.slice(1)).classList.add('active');
   scrollTo(0, 0);
+  if (page === 'margarita') initMargarita();
 }
 
 function sendWhatsApp() {
@@ -426,4 +432,251 @@ async function loadNews() {
   } catch (err) {
     document.getElementById('newsContainer').innerHTML = '<p class="no-data">Error al cargar noticias.</p>';
   }
+}
+
+// ── MARGARITA HOTELS ──
+let margaritaInitialized = false;
+let currentResults = [];
+let currentDetail = null;
+
+function initMargarita() {
+  if (margaritaInitialized) return;
+  margaritaInitialized = true;
+
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('checkIn').valueAsDate = today;
+  document.getElementById('checkOut').valueAsDate = tomorrow;
+
+  document.getElementById('packageForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await loadHotels();
+  });
+
+  document.getElementById('backToResults').addEventListener('click', () => {
+    document.getElementById('detailSection').style.display = 'none';
+    document.getElementById('resultsSection').style.display = 'block';
+  });
+
+  document.getElementById('closeModal').addEventListener('click', () =>
+    document.getElementById('whatsappModal').style.display = 'none');
+  window.addEventListener('click', e => {
+    if (e.target === document.getElementById('whatsappModal'))
+      document.getElementById('whatsappModal').style.display = 'none';
+  });
+
+  loadHotels();
+}
+
+async function loadHotels() {
+  try {
+    const checkIn = document.getElementById('checkIn').value;
+    const checkOut = document.getElementById('checkOut').value;
+    const adults = parseInt(document.getElementById('adults').value) || 2;
+    const children = parseInt(document.getElementById('children').value) || 0;
+    const nights = calcNights(checkIn, checkOut);
+
+    const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('resultsTitle').textContent = 'Hoteles en Margarita';
+    document.getElementById('resultsSubtitle').textContent =
+      `${new Date(checkIn).toLocaleDateString('es-ES', fOpts)} → ${new Date(checkOut).toLocaleDateString('es-ES', fOpts)} (${nights} noche${nights !== 1 ? 's' : ''}) · ${adults} adulto${adults !== 1 ? 's' : ''}${children > 0 ? ` · ${children} niño${children !== 1 ? 's' : ''}` : ''}`;
+
+    const hotels = await (await fetch('/api/hotels?destination=Margarita')).json();
+    const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
+    const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
+
+    const pricedHotels = [];
+    for (const hotel of hotels) {
+      const priceData = await (await fetch(`/api/hotels/${hotel.id}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
+      pricedHotels.push({ ...hotel, priceData, flightPrice, checkIn, checkOut, adults, children });
+    }
+
+    currentResults = pricedHotels;
+    renderResults(pricedHotels);
+    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('detailSection').style.display = 'none';
+  } catch (err) {
+    document.getElementById('hotelResults').innerHTML =
+      `<div class="error-msg">Error al cargar hoteles: ${err.message}</div>`;
+  }
+}
+
+function calcNights(checkIn, checkOut) {
+  return Math.max(0, Math.floor((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)));
+}
+
+function renderResults(hotels) {
+  if (!hotels.length) {
+    document.getElementById('hotelResults').innerHTML = '<div class="empty-msg">No hay hoteles disponibles.</div>';
+    return;
+  }
+  document.getElementById('hotelResults').innerHTML = hotels.map(h => {
+    const pd = h.priceData;
+    const hasError = pd && pd.error;
+    const totalHotel = pd && !hasError ? pd.total : 0;
+    const totalFlight = h.flightPrice * (h.adults || 1);
+    const grandTotal = totalHotel + totalFlight;
+
+    return `
+      <div class="hotel-card">
+        <div class="hotel-card-img">
+          ${h.main_photo ? `<img src="${h.main_photo}" alt="${h.name}" loading="lazy">` : '<div class="hotel-placeholder">🏖️</div>'}
+        </div>
+        <div class="hotel-card-body">
+          <div class="hotel-card-header">
+            <h3 class="hotel-name">${h.name}</h3>
+            ${h.rating ? `<span class="hotel-rating">⭐ ${h.rating}${h.reviews_count ? ` (${h.reviews_count})` : ''}</span>` : ''}
+          </div>
+          ${h.category ? `<span class="hotel-category">${h.category}</span>` : ''}
+          ${h.regime ? `<span class="hotel-regime">${h.regime}</span>` : ''}
+          <p class="hotel-desc">${h.description || ''}</p>
+          ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
+          <div class="hotel-price-breakdown">
+            <div class="price-line"><span>Alojamiento:</span> <span>$${totalHotel.toFixed(2)}</span></div>
+            <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+            <div class="price-line total"><span>Total:</span> <span>$${grandTotal.toFixed(2)}</span></div>
+          </div>`}
+          <div class="hotel-card-actions">
+            <button class="btn-secondary" onclick="viewHotel(${h.id})">Visualizar</button>
+            <button class="btn-whatsapp" onclick="openWhatsApp(${h.id})">Cotizar</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+async function viewHotel(hotelId) {
+  try {
+    const hotel = await (await fetch(`/api/hotels/${hotelId}`)).json();
+    currentDetail = hotel;
+
+    const checkIn = document.getElementById('checkIn').value;
+    const checkOut = document.getElementById('checkOut').value;
+    const adults = parseInt(document.getElementById('adults').value) || 2;
+    const children = parseInt(document.getElementById('children').value) || 0;
+    const nights = calcNights(checkIn, checkOut);
+
+    const pd = await (await fetch(`/api/hotels/${hotelId}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
+    const hasError = pd && pd.error;
+    const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
+    const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
+    const totalFlight = flightPrice * adults;
+    const totalHotel = pd && !hasError ? pd.total : 0;
+    const grandTotal = totalHotel + totalFlight;
+
+    document.getElementById('resultsSection').style.display = 'none';
+    document.getElementById('detailSection').style.display = 'block';
+
+    document.getElementById('hotelDetail').innerHTML = `
+      <div class="hotel-detail-header">
+        <h2>${hotel.name}</h2>
+        ${hotel.rating ? `<span class="hotel-rating-lg">⭐ ${hotel.rating}${hotel.reviews_count ? ` (${hotel.reviews_count} reseñas)` : ''}</span>` : ''}
+      </div>
+      ${hotel.photos && hotel.photos.length ? `
+      <div class="hotel-gallery">
+        ${hotel.photos.map(p => `<img src="${p.photo_url}" alt="${hotel.name}" loading="lazy">`).join('')}
+      </div>` : `
+      <div class="hotel-gallery-single"><img src="${hotel.main_photo || ''}" alt="${hotel.name}"></div>`}
+      <div class="hotel-detail-body">
+        ${hotel.description ? `<p>${hotel.description}</p>` : ''}
+        ${hotel.reviews && hotel.reviews.length ? `
+        <div class="hotel-reviews">
+          <h4>Reseñas destacadas</h4>
+          ${hotel.reviews.slice(0, 3).map(r => `
+            <div class="review-item">
+              <strong>${r.author ? r.author : 'Cliente'}</strong>
+              ${r.rating ? `<span class="review-rating">${'⭐'.repeat(Math.round(r.rating))}</span>` : ''}
+              <p>"${r.text}"</p>
+            </div>`).join('')}
+        </div>` : ''}
+        <div class="hotel-rate-calculator">
+          <h4>Cotizador</h4>
+          <div class="form-row">
+            <div class="form-group"><label>Entrada</label><input type="date" id="detCheckIn" value="${checkIn}" onchange="recalcDetail()"></div>
+            <div class="form-group"><label>Salida</label><input type="date" id="detCheckOut" value="${checkOut}" onchange="recalcDetail()"></div>
+            <div class="form-group"><label>Adultos</label><input type="number" id="detAdults" min="1" value="${adults}" onchange="recalcDetail()"></div>
+            <div class="form-group"><label>Niños</label><input type="number" id="detChildren" min="0" value="${children}" onchange="recalcDetail()"></div>
+          </div>
+          <div id="detailPrice">
+            ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
+            <div class="hotel-price-breakdown">
+              <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${totalHotel.toFixed(2)}</span></div>
+              <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+              <div class="price-line total"><span>Total:</span> <span>$${grandTotal.toFixed(2)}</span></div>
+            </div>`}
+          </div>
+          <button class="btn-whatsapp" onclick="openWhatsApp(${hotelId})">Cotizar por WhatsApp</button>
+        </div>
+        ${hotel.rates && hotel.rates.length ? `
+        <div class="hotel-rates-table">
+          <h4>Tarifas por temporada</h4>
+          <table><thead><tr><th>Temporada</th><th>Desde</th><th>Hasta</th><th>SGL</th><th>DBL</th><th>CHD</th></tr></thead>
+          <tbody>${hotel.rates.map(r => `
+            <tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>€${r.rate_sgl}</td><td>€${r.rate_dbl}</td><td>€${r.rate_chd}</td></tr>`).join('')}
+          </tbody></table>
+        </div>` : ''}
+      </div>`;
+  } catch (err) {
+    document.getElementById('hotelDetail').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+  }
+}
+
+async function recalcDetail() {
+  if (!currentDetail) return;
+  const checkIn = document.getElementById('detCheckIn').value;
+  const checkOut = document.getElementById('detCheckOut').value;
+  const adults = parseInt(document.getElementById('detAdults').value) || 2;
+  const children = parseInt(document.getElementById('detChildren').value) || 0;
+  const nights = calcNights(checkIn, checkOut);
+
+  try {
+    const pd = await (await fetch(`/api/hotels/${currentDetail.id}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
+    const hasError = pd && pd.error;
+    const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
+    const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
+    const totalFlight = flightPrice * adults;
+    const totalHotel = pd && !hasError ? pd.total : 0;
+    const grandTotal = totalHotel + totalFlight;
+
+    document.getElementById('detailPrice').innerHTML = hasError
+      ? `<div class="error-msg">${pd.error}</div>`
+      : `<div class="hotel-price-breakdown">
+          <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${totalHotel.toFixed(2)}</span></div>
+          <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+          <div class="price-line total"><span>Total:</span> <span>$${grandTotal.toFixed(2)}</span></div>
+        </div>`;
+  } catch (err) {
+    document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+  }
+}
+
+function openWhatsApp(hotelId) {
+  const hotel = currentResults.find(h => h.id === hotelId) || currentDetail;
+  if (!hotel) return;
+
+  const checkIn = document.getElementById('checkIn').value || document.getElementById('detCheckIn').value;
+  const checkOut = document.getElementById('checkOut').value || document.getElementById('detCheckOut').value;
+  const adults = parseInt(document.getElementById('adults').value || document.getElementById('detAdults').value) || 2;
+  const children = parseInt(document.getElementById('children').value || document.getElementById('detChildren').value) || 0;
+  const nights = calcNights(checkIn, checkOut);
+
+  const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
+  const d1 = new Date(checkIn).toLocaleDateString('es-ES', fOpts);
+  const d2 = new Date(checkOut).toLocaleDateString('es-ES', fOpts);
+
+  fetch('/api/flight-prices?destination=Margarita').then(r => r.json()).then(fp => {
+    const flightPrice = fp.length > 0 ? fp[0].price : 0;
+    const msg = `Hola, quiero cotizar este paquete:
+
+🏨 Hotel: ${hotel.name}
+📅 Entrada: ${d1}
+📅 Salida: ${d2} (${nights} noche${nights !== 1 ? 's' : ''})
+👤 Adultos: ${adults}
+${children > 0 ? `👶 Niños: ${children}` : ''}
+✈️ Vuelo + traslado: $${flightPrice.toFixed(2)} pp
+
+Quedo atento a disponibilidad y precio final. Gracias!`;
+    window.open(`https://wa.me/584246390281?text=${encodeURIComponent(msg)}`, '_blank');
+  });
 }

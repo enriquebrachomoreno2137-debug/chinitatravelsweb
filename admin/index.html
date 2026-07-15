@@ -45,6 +45,9 @@
         <button class="tab-btn" data-tab="flights">Vuelos</button>
         <button class="tab-btn" data-tab="itineraries">Itinerarios</button>
         <button class="tab-btn" data-tab="news">Noticias</button>
+        <button class="tab-btn" data-tab="hotels">Hoteles</button>
+        <button class="tab-btn" data-tab="rates">Tarifas</button>
+        <button class="tab-btn" data-tab="flightprices">Vuelo+Hotel</button>
       </div>
 
       <div id="routesTab" class="tab-content active">
@@ -71,14 +74,37 @@
         <div id="itinerariesList"></div>
       </div>
 
-      <div id="newsTab" class="tab-content">
-        <div class="tab-header">
-          <h3>Noticias / Información</h3>
-          <button class="btn-primary btn-sm" onclick="showAddNewsForm()">+ Nueva Noticia</button>
+        <div id="newsTab" class="tab-content">
+          <div class="tab-header">
+            <h3>Noticias / Información</h3>
+            <button class="btn-primary btn-sm" onclick="showAddNewsForm()">+ Nueva Noticia</button>
+          </div>
+          <div id="newsList"></div>
         </div>
-        <div id="newsList"></div>
-      </div>
-    </section>
+
+        <div id="hotelsTab" class="tab-content">
+          <div class="tab-header">
+            <h3>Gestión de Hoteles</h3>
+            <button class="btn-primary btn-sm" onclick="showAddHotelForm()">+ Nuevo Hotel</button>
+          </div>
+          <div id="hotelsList"></div>
+        </div>
+
+        <div id="ratesTab" class="tab-content">
+          <div class="tab-header">
+            <h3>Tarifas por Temporada</h3>
+          </div>
+          <div id="ratesList"></div>
+        </div>
+
+        <div id="flightpricesTab" class="tab-content">
+          <div class="tab-header">
+            <h3>Precios Vuelo+Hotel</h3>
+            <button class="btn-primary btn-sm" onclick="showAddFlightPriceForm()">+ Nuevo Precio</button>
+          </div>
+          <div id="flightpricesList"></div>
+        </div>
+      </section>
   </main>
 
   <div id="modal" class="modal hidden">
