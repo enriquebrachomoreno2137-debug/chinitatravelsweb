@@ -514,35 +514,35 @@ function seedDatabase(db) {
   makeF('Panamá', 'Barquisimeto', 'Estelar Latinoamérica', 'ES8403', '12:00', '15:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
   // ── AVIOR AIRLINES ITINERARIO ACTUALIZADO ──
   // Nacional: BLA↔BRM↔MAR↔BRM↔BLA
-  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
-  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
-  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
-  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'LU-MA-MI-JU-VI-SA-DO (DO desde 19 JUL)', 'Itinerario 14 jul.');
-  // Nacional: BLA↔LSP↔MAR↔LSP↔BLA (desde 16 JUL)
-  makeF('Barcelona', 'Las Piedras', 'Avior Airlines', '', '07:00', '08:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
-  makeF('Las Piedras', 'Maracaibo', 'Avior Airlines', '', '09:00', '10:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
-  makeF('Maracaibo', 'Las Piedras', 'Avior Airlines', '', '11:00', '12:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
-  makeF('Las Piedras', 'Barcelona', 'Avior Airlines', '', '13:00', '14:00', 'LU-MA-MI-JU-VI-SA-DO (desde 16 JUL)', 'Itinerario 14 jul.');
-  // Nacional: BLA↔VIG (desde 22 JUL)
-  makeF('Barcelona', 'El Vigía', 'Avior Airlines', '', '09:00', '10:30', 'LU-MA-MI-JU-VI-SA-DO (desde 22 JUL)', 'Itinerario 14 jul.');
-  makeF('El Vigía', 'Barcelona', 'Avior Airlines', '', '11:30', '13:00', 'LU-MA-MI-JU-VI-SA-DO (desde 22 JUL)', 'Itinerario 14 jul.');
+  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'DIARIO', 'Itinerario 15 jul.');
+  // Nacional: BLA↔LSP↔MAR↔LSP↔BLA
+  makeF('Barcelona', 'Las Piedras', 'Avior Airlines', '', '07:00', '08:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Las Piedras', 'Maracaibo', 'Avior Airlines', '', '09:00', '10:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Maracaibo', 'Las Piedras', 'Avior Airlines', '', '11:00', '12:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Las Piedras', 'Barcelona', 'Avior Airlines', '', '13:00', '14:00', 'DIARIO', 'Itinerario 15 jul.');
+  // Nacional: BLA↔VIG
+  makeF('Barcelona', 'El Vigía', 'Avior Airlines', '', '09:00', '10:30', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('El Vigía', 'Barcelona', 'Avior Airlines', '', '11:30', '13:00', 'DIARIO', 'Itinerario 15 jul.');
   // Internacional: BLA↔BOG
-  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'DIARIO', 'Itinerario 14 jul.');
-  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'DIARIO', 'Itinerario 14 jul.');
-  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '16:30', '17:40', 'DIARIO', 'Itinerario 14 jul.');
-  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '07:00', '10:10', 'DIARIO', 'Itinerario 14 jul. Nueva frecuencia.');
-  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DIARIO (desde 17 JUL)', 'Itinerario 14 jul.');
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '16:30', '17:40', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '07:00', '10:10', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DIARIO', 'Itinerario 15 jul.');
   // Internacional: BLA↔MDE
-  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'DIARIO', 'Itinerario 14 jul.');
-  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'DIARIO', 'Itinerario 14 jul.');
-  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '16:30', '17:40', 'DIARIO (desde 17 JUL)', 'Itinerario 14 jul.');
-  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DIARIO (desde 17 JUL)', 'Itinerario 14 jul.');
-  // Internacional: BLA↔CUR (desde 16 JUL)
-  makeF('Barcelona', 'Curazao', 'Avior Airlines', '', '10:00', '11:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
-  makeF('Curazao', 'Barcelona', 'Avior Airlines', '', '20:00', '21:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
-  // Internacional: MAR↔CUR (desde 16 JUL)
-  makeF('Curazao', 'Maracaibo', 'Avior Airlines', '', '12:00', '13:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
-  makeF('Maracaibo', 'Curazao', 'Avior Airlines', '', '18:00', '19:00', 'DIARIO (desde 16 JUL)', 'Itinerario 14 jul.');
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '17:00', '18:10', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Barcelona', 'Medellín', 'Avior Airlines', '', '16:30', '17:40', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Medellín', 'Barcelona', 'Avior Airlines', '', '18:50', '22:00', 'DIARIO', 'Itinerario 15 jul.');
+  // Internacional: BLA↔CUR
+  makeF('Barcelona', 'Curazao', 'Avior Airlines', '', '10:00', '11:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Curazao', 'Barcelona', 'Avior Airlines', '', '20:00', '21:00', 'DIARIO', 'Itinerario 15 jul.');
+  // Internacional: CUR↔MAR
+  makeF('Curazao', 'Maracaibo', 'Avior Airlines', '', '12:00', '13:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Maracaibo', 'Curazao', 'Avior Airlines', '', '18:00', '19:00', 'DIARIO', 'Itinerario 15 jul.');
   makeF('Miami', 'Barcelona', 'LASER Airlines', 'G6 200', '07:30', '11:00', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Miami', 'LASER Airlines', 'G6 201', '12:45', '16:15', 'Desde 2 JUL', 'Nueva ruta por cierre CCS.');
   makeF('Barcelona', 'Santo Domingo', 'LASER Airlines', 'QL2968', '10:00', '11:50', 'MIÉRCOLES - DOMINGO (desde 8 JUL)', 'Nueva ruta por cierre CCS.');
@@ -720,8 +720,8 @@ n('Iberia - Reactivación vuelos Madrid-Valencia (desde 9 de julio)',
  n('Sasca Airlines - Tasas de entrada y salida Los Roques (14 julio)',
      'Tasas de entrada y salida para Los Roques:\n\nVENEZOLANOS:\nEntrada: Adultos 15 USD / Niños 8 USD / Adultos mayores 8 USD\nSalida: 12 USD\n\nEXTRANJEROS:\nEntrada: Adultos 50 USD / Niños 25 USD / Adultos mayores 25 USD\nSalida: 12 USD\n\nMARACAY:\n5.90 EUR (desde 2 años)\n\nPago en efectivo o punto directamente en el aeropuerto. Sasca Airlines no es responsable de estos cobros.',
      'informativo', '2026-07-14 12:30:00');
- n('Avior Airlines - Itinerario actualizado internacional y nacional (14 julio)',
-     'Avior Airlines actualiza su itinerario desde Barcelona (BLA) al 14 de julio:\n\nINTERNACIONAL:\nBLA↔BOG: 4 frecuencias diarias (17:00-18:10, 19:30-22:40, 16:30-17:40, 07:00-10:10). Desde 17 JUL: BOG→BLA 18:50-22:00\nBLA↔MDE: 2 frecuencias diarias (17:00-18:10, 19:30-22:40). Desde 17 JUL: 16:30-17:40 / 18:50-22:00\nBLA↔CUR (desde 16 JUL): 10:00-11:00 / 20:00-21:00 (diario)\nCUR↔MAR (desde 16 JUL): 12:00-13:00 / 18:00-19:00 (diario)\n\nNACIONAL:\nBLA↔BRM↔MAR: Diario (DO desde 19 JUL)\nBLA↔LSP↔MAR (desde 16 JUL): Diario\nBLA↔VIG (desde 22 JUL): Diario\n\nContacto: 0501-AVIOR-00 / +1 (407) 214-4866\nWeb: aviorair.com',
+ n('Avior Airlines - Itinerario confirmado todas las rutas diarias (15 julio)',
+     'Avior Airlines confirma todos sus itinerarios como DIARIOS (15 julio 2026):\n\nINTERNACIONAL:\nBLA↔BOG: 5 frecuencias diarias (17:00-18:10, 19:30-22:40, 16:30-17:40, 07:00-10:10, 18:50-22:00)\nBLA↔MDE: 4 frecuencias diarias (17:00-18:10, 19:30-22:40, 16:30-17:40, 18:50-22:00)\nBLA↔CUR: 10:00-11:00 / 20:00-21:00\nCUR↔MAR: 12:00-13:00 / 18:00-19:00\n\nNACIONAL:\nBLA↔BRM↔MAR: Diario\nBLA↔LSP↔MAR: Diario\nBLA↔VIG: Diario\n\nContacto: 0501-AVIOR-00 / +1 (407) 214-4866\nWeb: aviorair.com',
      'importante', '2026-07-14 14:00:00');
  n('Venezolana - Itinerario internacional confirmado (14 julio)',
      'Venezolana confirma itinerario internacional:\n\nMARACAIBO ↔ PANAMÁ:\nV412 MAR→PTY 08:00-08:30 | Martes y Sábado\nV413 PTY→MAR 14:30-17:00 | Martes y Sábado\n\nBARQUISIMETO ↔ PANAMÁ:\nV423 PTY→BRM 09:30-12:00 | Martes y Sábado\nV422 BRM→PTY 13:00-13:30 | Martes y Sábado\n\nContacto: +58 424 639 02 81 / callcenter@venezolana.aero',
