@@ -456,10 +456,10 @@ let currentDetail = null;
 const PACKAGE_NIGHTS = 3;
 
 function updateDateRange() {
-  const travelDate = document.getElementById('travelDate').value;
+  const input = document.getElementById('paqTravelDate');
   const display = document.getElementById('dateRangeDisplay');
-  if (!travelDate) { display.textContent = ''; return; }
-  const start = new Date(travelDate + 'T12:00:00');
+  if (!input || !input.value) { if (display) display.textContent = ''; return; }
+  const start = new Date(input.value + 'T12:00:00');
   const end = new Date(start);
   end.setDate(end.getDate() + PACKAGE_NIGHTS);
   const opts = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -471,10 +471,10 @@ function initPaquetes() {
   paquetesInitialized = true;
 
   const today = new Date();
-  document.getElementById('travelDate').valueAsDate = today;
+  document.getElementById('paqTravelDate').valueAsDate = today;
   updateDateRange();
 
-  document.getElementById('travelDate').addEventListener('change', updateDateRange);
+  document.getElementById('paqTravelDate').addEventListener('change', updateDateRange);
 
   document.getElementById('packageForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -498,7 +498,7 @@ function initPaquetes() {
 
 async function loadHotels() {
   try {
-    const travelDate = document.getElementById('travelDate').value;
+    const travelDate = document.getElementById('paqTravelDate').value;
     if (!travelDate) return;
     const checkIn = travelDate;
     const checkOutDate = new Date(travelDate + 'T12:00:00');
@@ -582,7 +582,7 @@ async function viewHotel(hotelId) {
     const hotel = await (await fetch(`/api/hotels/${hotelId}`)).json();
     currentDetail = hotel;
 
-    const travelDate = document.getElementById('travelDate').value || document.getElementById('detTravelDate').value;
+const travelDate = document.getElementById('paqTravelDate').value || document.getElementById('detTravelDate').value;
     const checkIn = travelDate;
     const checkOutDate = new Date(travelDate + 'T12:00:00');
     checkOutDate.setDate(checkOutDate.getDate() + PACKAGE_NIGHTS);
@@ -702,7 +702,7 @@ function openWhatsApp(hotelId) {
   const hotel = currentResults.find(h => h.id === hotelId) || currentDetail;
   if (!hotel) return;
 
-  const travelDate = document.getElementById('travelDate').value || document.getElementById('detTravelDate').value;
+  const travelDate = document.getElementById('paqTravelDate').value || document.getElementById('detTravelDate').value;
   const checkIn = travelDate;
   const checkOutDate = new Date(travelDate + 'T12:00:00');
   checkOutDate.setDate(checkOutDate.getDate() + PACKAGE_NIGHTS);
