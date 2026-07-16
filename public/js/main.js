@@ -453,15 +453,28 @@ let paquetesInitialized = false;
 let currentResults = [];
 let currentDetail = null;
 
+const PACKAGE_NIGHTS = 3;
+
+function updateDateRange() {
+  const travelDate = document.getElementById('travelDate').value;
+  const display = document.getElementById('dateRangeDisplay');
+  if (!travelDate) { display.textContent = ''; return; }
+  const start = new Date(travelDate + 'T12:00:00');
+  const end = new Date(start);
+  end.setDate(end.getDate() + PACKAGE_NIGHTS);
+  const opts = { day: 'numeric', month: 'long', year: 'numeric' };
+  display.textContent = `del ${start.toLocaleDateString('es-ES', opts)} al ${end.toLocaleDateString('es-ES', opts)} (${PACKAGE_NIGHTS} noches)`;
+}
+
 function initPaquetes() {
   if (paquetesInitialized) return;
   paquetesInitialized = true;
 
   const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById('checkIn').valueAsDate = today;
-  document.getElementById('checkOut').valueAsDate = tomorrow;
+  document.getElementById('travelDate').valueAsDate = today;
+  updateDateRange();
+
+  document.getElementById('travelDate').addEventListener('change', updateDateRange);
 
   document.getElementById('packageForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -485,11 +498,15 @@ function initPaquetes() {
 
 async function loadHotels() {
   try {
-    const checkIn = document.getElementById('checkIn').value;
-    const checkOut = document.getElementById('checkOut').value;
+    const travelDate = document.getElementById('travelDate').value;
+    if (!travelDate) return;
+    const checkIn = travelDate;
+    const checkOutDate = new Date(travelDate + 'T12:00:00');
+    checkOutDate.setDate(checkOutDate.getDate() + PACKAGE_NIGHTS);
+    const checkOut = checkOutDate.toISOString().split('T')[0];
     const adults = parseInt(document.getElementById('adults').value) || 2;
     const children = parseInt(document.getElementById('children').value) || 0;
-    const nights = calcNights(checkIn, checkOut);
+    const nights = PACKAGE_NIGHTS;
 
     const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById('resultsTitle').textContent = 'Hoteles en Margarita';
@@ -565,11 +582,14 @@ async function viewHotel(hotelId) {
     const hotel = await (await fetch(`/api/hotels/${hotelId}`)).json();
     currentDetail = hotel;
 
-    const checkIn = document.getElementById('checkIn').value;
-    const checkOut = document.getElementById('checkOut').value;
+    const travelDate = document.getElementById('travelDate').value || document.getElementById('detTravelDate').value;
+    const checkIn = travelDate;
+    const checkOutDate = new Date(travelDate + 'T12:00:00');
+    checkOutDate.setDate(checkOutDate.getDate() + PACKAGE_NIGHTS);
+    const checkOut = checkOutDate.toISOString().split('T')[0];
     const adults = parseInt(document.getElementById('adults').value) || 2;
     const children = parseInt(document.getElementById('children').value) || 0;
-    const nights = calcNights(checkIn, checkOut);
+    const nights = PACKAGE_NIGHTS;
 
     const pd = await (await fetch(`/api/hotels/${hotelId}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
     const hasError = pd && pd.error;
@@ -581,6 +601,12 @@ async function viewHotel(hotelId) {
 
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('detailSection').style.display = 'block';
+
+    const startD = new Date(travelDate + 'T12:00:00');
+    const endD = new Date(startD);
+    endD.setDate(endD.getDate() + PACKAGE_NIGHTS);
+    const fOpts = { day: 'numeric', month: 'long', year: 'numeric' };
+    const rangeStr = `del ${startD.toLocaleDateString('es-ES', fOpts)} al ${endD.toLocaleDateString('es-ES', fOpts)}`;
 
     document.getElementById('hotelDetail').innerHTML = `
       <div class="hotel-detail-header">
@@ -606,9 +632,12 @@ async function viewHotel(hotelId) {
         </div>` : ''}
         <div class="hotel-rate-calculator">
           <h4>Cotizador</h4>
+          <p style="margin-bottom:0.8rem;color:#555;">${rangeStr} &middot; ${nights} noche${nights !== 1 ? 's' : ''}</p>
           <div class="form-row">
-            <div class="form-group"><label>Entrada</label><input type="date" id="detCheckIn" value="${checkIn}" onchange="recalcDetail()"></div>
-            <div class="form-group"><label>Salida</label><input type="date" id="detCheckOut" value="${checkOut}" onchange="recalcDetail()"></div>
+            <div class="form-group" style="flex:1.5;">
+              <label>Fecha de viaje</label>
+              <input type="date" id="detTravelDate" value="${travelDate}" onchange="recalcDetail()">
+            </div>
             <div class="form-group"><label>Adultos</label><input type="number" id="detAdults" min="1" value="${adults}" onchange="recalcDetail()"></div>
             <div class="form-group"><label>Niños</label><input type="number" id="detChildren" min="0" value="${children}" onchange="recalcDetail()"></div>
           </div>
@@ -638,11 +667,15 @@ async function viewHotel(hotelId) {
 
 async function recalcDetail() {
   if (!currentDetail) return;
-  const checkIn = document.getElementById('detCheckIn').value;
-  const checkOut = document.getElementById('detCheckOut').value;
+  const travelDate = document.getElementById('detTravelDate').value;
+  if (!travelDate) return;
+  const checkIn = travelDate;
+  const checkOutDate = new Date(travelDate + 'T12:00:00');
+  checkOutDate.setDate(checkOutDate.getDate() + PACKAGE_NIGHTS);
+  const checkOut = checkOutDate.toISOString().split('T')[0];
   const adults = parseInt(document.getElementById('detAdults').value) || 2;
   const children = parseInt(document.getElementById('detChildren').value) || 0;
-  const nights = calcNights(checkIn, checkOut);
+  const nights = PACKAGE_NIGHTS;
 
   try {
     const pd = await (await fetch(`/api/hotels/${currentDetail.id}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
@@ -669,11 +702,14 @@ function openWhatsApp(hotelId) {
   const hotel = currentResults.find(h => h.id === hotelId) || currentDetail;
   if (!hotel) return;
 
-  const checkIn = document.getElementById('checkIn').value || document.getElementById('detCheckIn').value;
-  const checkOut = document.getElementById('checkOut').value || document.getElementById('detCheckOut').value;
+  const travelDate = document.getElementById('travelDate').value || document.getElementById('detTravelDate').value;
+  const checkIn = travelDate;
+  const checkOutDate = new Date(travelDate + 'T12:00:00');
+  checkOutDate.setDate(checkOutDate.getDate() + PACKAGE_NIGHTS);
+  const checkOut = checkOutDate.toISOString().split('T')[0];
   const adults = parseInt(document.getElementById('adults').value || document.getElementById('detAdults').value) || 2;
   const children = parseInt(document.getElementById('children').value || document.getElementById('detChildren').value) || 0;
-  const nights = calcNights(checkIn, checkOut);
+  const nights = PACKAGE_NIGHTS;
 
   const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
   const d1 = new Date(checkIn + 'T12:00:00').toLocaleDateString('es-ES', fOpts);
