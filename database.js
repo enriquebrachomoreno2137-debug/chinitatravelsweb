@@ -481,12 +481,14 @@ function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
     const dateStr = d.toISOString().split('T')[0];
     const rate = findRateForDate(hotelId, dateStr);
     if (!rate) return { error: `Sin tarifa disponible para ${dateStr}` };
-    const nightCost = (adults <= 1 ? rate.rate_sgl : rate.rate_dbl * adults) + rate.rate_chd * children;
+    const roomRate = adults <= 1 ? rate.rate_sgl : rate.rate_dbl;
+    const nightCost = roomRate * (adults <= 1 ? 1 : adults) + rate.rate_chd * children;
     total += nightCost;
-    breakdown.push({ date: dateStr, rateName: rate.season_name, rateDbl: rate.rate_dbl, rateChd: rate.rate_chd, nightCost });
+    breakdown.push({ date: dateStr, rateName: rate.season_name, rateSgl: rate.rate_sgl, rateDbl: rate.rate_dbl, rateChd: rate.rate_chd, nightCost });
+    if (i === 0) { var firstSgl = rate.rate_sgl; var firstDbl = rate.rate_dbl; var firstChd = rate.rate_chd; }
   }
 
-  return { hotel, nights, adults, children, total, breakdown };
+  return { hotel, nights, adults, children, total, breakdown, rateSgl: firstSgl, rateDbl: firstDbl, rateChd: firstChd };
 }
 
 // ── FLIGHT PRICES CRUD ──

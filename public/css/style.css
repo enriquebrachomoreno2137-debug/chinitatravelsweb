@@ -513,6 +513,7 @@ footer {
   padding: 0.15rem 0;
 }
 .price-line.total { font-weight: 700; border-top: 1px solid #ddd; margin-top: 0.3rem; padding-top: 0.3rem; }
+.price-sub { font-size: 0.8rem; color: #777; padding-left: 1rem; }
 .hotel-card-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
 .hotel-card-actions .btn-secondary { flex: 1; }
 .hotel-card-actions .btn-whatsapp { flex: 1; }

@@ -530,11 +530,12 @@ async function loadHotels() {
     const hotels = await (await fetch('/api/hotels?destination=Margarita')).json();
     const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
     const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
+    const flightPriceChd = flightPrices.length > 0 ? (flightPrices[0].price_chd || flightPrice * 0.68) : 0;
 
     const pricedHotels = [];
     for (const hotel of hotels) {
       const priceData = await (await fetch(`/api/hotels/${hotel.id}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
-      pricedHotels.push({ ...hotel, priceData, flightPrice, checkIn, checkOut, adults, children });
+      pricedHotels.push({ ...hotel, priceData, flightPrice, flightPriceChd, checkIn, checkOut, adults, children });
     }
 
     currentResults = pricedHotels;
@@ -560,7 +561,9 @@ function renderResults(hotels, nights) {
     const pd = h.priceData;
     const hasError = pd && pd.error;
     const totalHotel = pd && !hasError ? pd.total : 0;
-    const totalFlight = h.flightPrice * (h.adults || 1);
+    const totalFlight = h.flightPrice * (h.adults || 1) + (h.flightPriceChd || 0) * (h.children || 0);
+    const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
+    const rateChd = pd && pd.rateChd ? pd.rateChd : 0;
 
     return `
       <div class="hotel-card">
@@ -578,7 +581,11 @@ function renderResults(hotels, nights) {
           ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
           <div class="hotel-price-breakdown">
             <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
-            <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+            <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${(ratePp * EUR_TO_USD).toFixed(2)}/noche</span></div>
+            ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(rateChd * EUR_TO_USD).toFixed(2)}/noche</span></div>` : ''}
+            <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+            <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${h.flightPrice.toFixed(2)}</span></div>
+            ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(h.flightPriceChd || 0).toFixed(2)}</span></div>` : ''}
             <div class="price-line total"><span>Total:</span> <span>$${(totalHotel * EUR_TO_USD + totalFlight).toFixed(2)}</span></div>
           </div>`}
           <div class="hotel-card-actions">
@@ -607,8 +614,11 @@ async function viewHotel(hotelId) {
     const hasError = pd && pd.error;
     const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
     const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
-    const totalFlight = flightPrice * adults;
+    const flightPriceChd = flightPrices.length > 0 ? (flightPrices[0].price_chd || flightPrice * 0.68) : 0;
+    const totalFlight = flightPrice * adults + flightPriceChd * children;
     const totalHotel = pd && !hasError ? pd.total : 0;
+    const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
+    const rateChdPp = pd && pd.rateChd ? pd.rateChd : 0;
 
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('detailSection').style.display = 'block';
@@ -659,7 +669,11 @@ async function viewHotel(hotelId) {
             ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
             <div class="hotel-price-breakdown">
               <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
-              <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+              <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp * EUR_TO_USD).toFixed(2)}/noche</span></div>
+              ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp * EUR_TO_USD).toFixed(2)}/noche</span></div>` : ''}
+              <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+              <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
+              ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
               <div class="price-line total"><span>Total:</span> <span>$${(totalHotel * EUR_TO_USD + totalFlight).toFixed(2)}</span></div>
             </div>`}
           </div>
@@ -704,14 +718,21 @@ async function recalcDetail() {
     const hasError = pd && pd.error;
     const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
     const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
-    const totalFlight = flightPrice * adults;
+    const flightPriceChd = flightPrices.length > 0 ? (flightPrices[0].price_chd || flightPrice * 0.68) : 0;
+    const totalFlight = flightPrice * adults + flightPriceChd * children;
     const totalHotel = pd && !hasError ? pd.total : 0;
+    const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
+    const rateChdPp = pd && pd.rateChd ? pd.rateChd : 0;
 
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
           <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
-          <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+          <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp * EUR_TO_USD).toFixed(2)}/noche</span></div>
+          ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp * EUR_TO_USD).toFixed(2)}/noche</span></div>` : ''}
+          <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
+          <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
+          ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
           <div class="price-line total"><span>Total:</span> <span>$${(totalHotel * EUR_TO_USD + totalFlight).toFixed(2)}</span></div>
         </div>`;
   } catch (err) {
@@ -735,14 +756,15 @@ function openWhatsApp(hotelId) {
 
   fetch('/api/flight-prices?destination=Margarita').then(r => r.json()).then(fp => {
     const flightPrice = fp.length > 0 ? fp[0].price : 0;
+    const flightPriceChd = fp.length > 0 ? (fp[0].price_chd || flightPrice * 0.68) : 0;
     const msg = `Hola, quiero cotizar este paquete:
 
 🏨 Hotel: ${hotel.name}
 📅 Entrada: ${d1}
 📅 Salida: ${d2} (${nights} noche${nights !== 1 ? 's' : ''})
-👤 Adultos: ${adults}
-${children > 0 ? `👶 Niños: ${children}` : ''}
-✈️ Vuelo + traslado: $${flightPrice.toFixed(2)} pp
+👤 Adultos: ${adults} × $${flightPrice.toFixed(2)}
+${children > 0 ? `👶 Niños: ${children} × $${flightPriceChd.toFixed(2)}` : ''}
+✈️ Vuelo + traslado: $${(flightPrice * adults + flightPriceChd * children).toFixed(2)}
 
 Quedo atento a disponibilidad y precio final. Gracias!`;
     window.open(`https://wa.me/584246390281?text=${encodeURIComponent(msg)}`, '_blank');

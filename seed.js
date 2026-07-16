@@ -795,7 +795,7 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
   db.addHotelReview(ldId, 'Carlos M.', 4, 'Muy buena ubicación, frente a Playa El Agua. Habitaciones cómodas, el servicio de comida aceptable.');
   db.addHotelReview(ldId, 'Ana R.', 4, 'Buen hotel para descansar. La piscina y el acceso a la playa son lo mejor. Relación calidad-precio justa.');
 
-  db.addFlightPrice('Margarita', 'Valencia', 250, 200, 'Vuelo ida y vuelta + traslado aeropuerto-hotel');
+  db.addFlightPrice('Margarita', 'Valencia', 250, 170, 'Vuelo ida y vuelta + traslado aeropuerto-hotel');
 }
 
 module.exports = { seedDatabase };
