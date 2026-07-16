@@ -539,7 +539,7 @@ async function loadHotels() {
     }
 
     currentResults = pricedHotels;
-    renderResults(pricedHotels);
+    renderResults(pricedHotels, nights);
     document.getElementById('resultsSection').style.display = 'block';
     document.getElementById('detailSection').style.display = 'none';
   } catch (err) {
@@ -552,7 +552,7 @@ function calcNights(checkIn, checkOut) {
   return Math.max(0, Math.floor((new Date(checkOut + 'T12:00:00') - new Date(checkIn + 'T12:00:00')) / (1000 * 60 * 60 * 24)));
 }
 
-function renderResults(hotels) {
+function renderResults(hotels, nights) {
   if (!hotels.length) {
     document.getElementById('hotelResults').innerHTML = '<div class="empty-msg">No hay hoteles disponibles.</div>';
     return;
