@@ -769,19 +769,18 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
       'importante', '2026-07-15 16:00:00');
 
   // ── HOTEL SEED DATA ──
-  db.addHotel('LD Palm Beach', 'Margarita', '3 estrellas', 'Todo incluido',
-    'Hotel ubicado en el corazón de Playa El Agua, una de las más hermosas de la isla. Cuenta con 126 habitaciones con aire acondicionado, TV por cable, minibar, caja fuerte y baño privado. Piscina para adultos y niños, jacuzzi, restaurante, bar, snack, wifi en áreas comunes, estacionamiento privado y acceso directo a la playa.',
+  db.addHotel('LD Palm Beach', 'Margarita', 'Superior', 'Todo incluido',
+    'Hotel de categoría Superior, régimen TODO INCLUIDO, con amplias y cómodas habitaciones, ideal para el disfrute en familia. Ofrece desayunos, almuerzos y cenas tipo Buffet, bebidas nacionales alcohólicas y no alcohólicas, snack de media tarde, animación y recreación, piscina, bar en la playa, toldos y sillas. Se sitúa al norte de la Isla de Margarita, a escasos minutos de Playa el Agua y a 45 minutos del Aeropuerto Internacional Santiago Mariño.',
     4.2, 128, null, 'Playa El Agua, Isla de Margarita', null,
     'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/BEACH-01-dbd6fd0d-640w.jpg', null);
   const hotels = db.getHotels('Margarita');
   const ld = hotels[hotels.length - 1];
   const ldId = ld.id;
-  db.addHotelRate(ldId, 'Alta', '2026-07-01', '2026-09-15', 410, 480, 120, 0, 2);
-  db.addHotelRate(ldId, 'Alta', '2026-12-15', '2027-01-15', 410, 480, 120, 0, 2);
-  db.addHotelRate(ldId, 'Alta', '2027-04-01', '2027-04-15', 410, 480, 120, 0, 2);
-  db.addHotelRate(ldId, 'Baja', '2026-09-16', '2026-12-14', 280, 340, 80, 0, 1);
-  db.addHotelRate(ldId, 'Baja', '2027-01-16', '2027-03-31', 280, 340, 80, 0, 1);
-  db.addHotelRate(ldId, 'Baja', '2027-04-16', '2027-06-30', 280, 340, 80, 0, 1);
+  db.addHotelRate(ldId, 'Pre-temporada', '2026-05-27', '2026-05-31', 68.74, 54.79, 27.90, 0, 2);
+  db.addHotelRate(ldId, 'Inicio temporada', '2026-06-01', '2026-06-30', 79.70, 64.76, 32.88, 0, 2);
+  db.addHotelRate(ldId, 'Alta (Hot Sale 10%)', '2026-07-01', '2026-07-31', 84.68, 69.74, 34.87, 0, 2);
+  db.addHotelRate(ldId, 'Alta', '2026-08-01', '2026-09-15', 94.15, 76.21, 38.56, 0, 2);
+  db.addHotelRate(ldId, 'Baja', '2026-09-16', '2026-12-20', 84.68, 69.74, 34.87, 0, 2);
 
   db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/BEACH-01-dbd6fd0d-640w.jpg', 1);
   db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/ldpalmbeach-1684192448885.jpg', 0);

@@ -481,8 +481,7 @@ function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
     const dateStr = d.toISOString().split('T')[0];
     const rate = findRateForDate(hotelId, dateStr);
     if (!rate) return { error: `Sin tarifa disponible para ${dateStr}` };
-    const roomRate = adults <= 1 ? rate.rate_sgl : rate.rate_dbl;
-    const nightCost = roomRate + rate.rate_chd * children;
+    const nightCost = (adults <= 1 ? rate.rate_sgl : rate.rate_dbl * adults) + rate.rate_chd * children;
     total += nightCost;
     breakdown.push({ date: dateStr, rateName: rate.season_name, rateDbl: rate.rate_dbl, rateChd: rate.rate_chd, nightCost });
   }

@@ -453,6 +453,8 @@ let paquetesInitialized = false;
 let currentResults = [];
 let currentDetail = null;
 
+const EUR_TO_USD = 1.10;
+
 function updateDateRange() {
   const ci = document.getElementById('paqCheckIn');
   const co = document.getElementById('paqCheckOut');
@@ -548,7 +550,6 @@ function renderResults(hotels) {
     const hasError = pd && pd.error;
     const totalHotel = pd && !hasError ? pd.total : 0;
     const totalFlight = h.flightPrice * (h.adults || 1);
-    const grandTotal = totalHotel + totalFlight;
 
     return `
       <div class="hotel-card">
@@ -565,9 +566,9 @@ function renderResults(hotels) {
           <p class="hotel-desc">${h.description || ''}</p>
           ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
           <div class="hotel-price-breakdown">
-            <div class="price-line"><span>Alojamiento:</span> <span>$${totalHotel.toFixed(2)}</span></div>
+            <div class="price-line"><span>Alojamiento:</span> <span>€${totalHotel.toFixed(2)} / $${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
             <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
-            <div class="price-line total"><span>Total:</span> <span>$${grandTotal.toFixed(2)}</span></div>
+            <div class="price-line total"><span>Total:</span> <span>€${totalHotel.toFixed(2)} + $${totalFlight.toFixed(2)}</span></div>
           </div>`}
           <div class="hotel-card-actions">
             <button class="btn-secondary" onclick="viewHotel(${h.id})">Visualizar</button>
@@ -595,7 +596,6 @@ async function viewHotel(hotelId) {
     const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
     const totalFlight = flightPrice * adults;
     const totalHotel = pd && !hasError ? pd.total : 0;
-    const grandTotal = totalHotel + totalFlight;
 
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('detailSection').style.display = 'block';
@@ -645,9 +645,9 @@ async function viewHotel(hotelId) {
           <div id="detailPrice">
             ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
             <div class="hotel-price-breakdown">
-              <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${totalHotel.toFixed(2)}</span></div>
+              <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>€${totalHotel.toFixed(2)} / $${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
               <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
-              <div class="price-line total"><span>Total:</span> <span>$${grandTotal.toFixed(2)}</span></div>
+              <div class="price-line total"><span>Total:</span> <span>€${totalHotel.toFixed(2)} + $${totalFlight.toFixed(2)}</span></div>
             </div>`}
           </div>
           <button class="btn-whatsapp" onclick="openWhatsApp(${hotelId})">Cotizar por WhatsApp</button>
@@ -682,14 +682,13 @@ async function recalcDetail() {
     const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
     const totalFlight = flightPrice * adults;
     const totalHotel = pd && !hasError ? pd.total : 0;
-    const grandTotal = totalHotel + totalFlight;
 
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
-          <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${totalHotel.toFixed(2)}</span></div>
+          <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>€${totalHotel.toFixed(2)} / $${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
           <div class="price-line"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
-          <div class="price-line total"><span>Total:</span> <span>$${grandTotal.toFixed(2)}</span></div>
+          <div class="price-line total"><span>Total:</span> <span>€${totalHotel.toFixed(2)} + $${totalFlight.toFixed(2)}</span></div>
         </div>`;
   } catch (err) {
     document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
