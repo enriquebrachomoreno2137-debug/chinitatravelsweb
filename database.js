@@ -468,8 +468,8 @@ function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
   const hotel = query('SELECT * FROM hotels WHERE id = ?', [hotelId])[0];
   if (!hotel) return null;
 
-  const checkInDate = new Date(checkIn);
-  const checkOutDate = new Date(checkOut);
+  const checkInDate = new Date(checkIn + 'T12:00:00');
+  const checkOutDate = new Date(checkOut + 'T12:00:00');
   const nights = Math.max(0, Math.floor((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)));
 
   let total = 0;
@@ -481,7 +481,8 @@ function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
     const dateStr = d.toISOString().split('T')[0];
     const rate = findRateForDate(hotelId, dateStr);
     if (!rate) return { error: `Sin tarifa disponible para ${dateStr}` };
-    const nightCost = rate.rate_dbl * adults + rate.rate_chd * children;
+    const roomRate = adults <= 1 ? rate.rate_sgl : rate.rate_dbl;
+    const nightCost = roomRate + rate.rate_chd * children;
     total += nightCost;
     breakdown.push({ date: dateStr, rateName: rate.season_name, rateDbl: rate.rate_dbl, rateChd: rate.rate_chd, nightCost });
   }

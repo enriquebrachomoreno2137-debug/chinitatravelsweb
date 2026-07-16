@@ -784,16 +784,19 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
   db.addHotelRate(ldId, 'Baja', '2027-04-16', '2027-06-30', 280, 340, 80, 0, 1);
 
   db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/BEACH-01-dbd6fd0d-640w.jpg', 1);
-  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/POOL-01-640w.jpg', 0);
-  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/AREAS-5-15d0c7d1-640w.jpg', 0);
-  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/FOOD-DRINK-03-bc698a63-640w.jpg', 0);
-  db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/AREAS-6-1ec38875-640w.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/ldpalmbeach-1684192448885.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/ldpalmbeach-1684192511436.jpg', 0);
+  db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/palm-beach-15-min.jpeg', 0);
+  db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/palm-beach-11-min.jpeg', 0);
+  db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/palm-beach-8-min.jpeg', 0);
+  db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/palm-beach-7-min.jpeg', 0);
+  db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/palm-beach-2-min.jpeg', 0);
 
   db.addHotelReview(ldId, 'María G.', 5, 'Excelente hotel, la playa es espectacular. La comida muy buena y el personal muy amable. Volvería sin dudas.');
   db.addHotelReview(ldId, 'Carlos M.', 4, 'Muy buena ubicación, frente a Playa El Agua. Habitaciones cómodas, el servicio de comida aceptable.');
   db.addHotelReview(ldId, 'Ana R.', 4, 'Buen hotel para descansar. La piscina y el acceso a la playa son lo mejor. Relación calidad-precio justa.');
 
-  db.addFlightPrice('Margarita', 'Valencia', 120, 90, 'Vuelo ida y vuelta + traslado aeropuerto-hotel');
+  db.addFlightPrice('Margarita', 'Valencia', 250, 200, 'Vuelo ida y vuelta + traslado aeropuerto-hotel');
 }
 
 module.exports = { seedDatabase };

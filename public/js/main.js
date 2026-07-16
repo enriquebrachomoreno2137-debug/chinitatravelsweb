@@ -13,19 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage('noticias');
   });
 
-  document.getElementById('navMargarita').addEventListener('click', (e) => {
+  document.getElementById('navPaquetes').addEventListener('click', (e) => {
     e.preventDefault();
-    showPage('margarita');
+    showPage('paquetes');
   });
 
   document.getElementById('swapBtn').addEventListener('click', () => {
     const o = document.getElementById('origin');
     const d = document.getElementById('destination');
     const tmp = o.value; o.value = d.value; d.value = tmp;
-  });
-
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 60);
   });
 
   function normalizeStr(str) {
@@ -254,13 +250,31 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showPage(page) {
-  document.querySelectorAll('#pageInicio, #pageNoticias, #pageMargarita').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('#pageInicio, #pageNoticias, #pagePaquetes').forEach(el => el.classList.add('hidden'));
   document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1)).classList.remove('hidden');
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
   document.getElementById('nav' + page.charAt(0).toUpperCase() + page.slice(1)).classList.add('active');
   scrollTo(0, 0);
-  if (page === 'margarita') initMargarita();
+  if (page === 'paquetes') initPaquetes();
 }
+
+function openLightbox(url) {
+  document.getElementById('lightboxImg').src = url;
+  document.getElementById('lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(event) {
+  if (event && event.target !== event.currentTarget && event.target.className !== 'lightbox-close') return;
+  document.getElementById('lightbox').style.display = 'none';
+  document.getElementById('lightboxImg').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const lb = document.getElementById('lightbox');
+    if (lb.style.display === 'flex') { lb.style.display = 'none'; document.getElementById('lightboxImg').src = ''; document.body.style.overflow = ''; }
+  }
+});
 
 function sendWhatsApp() {
   const msg = document.getElementById('whatsappMessage').value.trim();
@@ -434,14 +448,14 @@ async function loadNews() {
   }
 }
 
-// ── MARGARITA HOTELS ──
-let margaritaInitialized = false;
+// ── PAQUETES HOTELS ──
+let paquetesInitialized = false;
 let currentResults = [];
 let currentDetail = null;
 
-function initMargarita() {
-  if (margaritaInitialized) return;
-  margaritaInitialized = true;
+function initPaquetes() {
+  if (paquetesInitialized) return;
+  paquetesInitialized = true;
 
   const today = new Date();
   const tomorrow = new Date(today);
@@ -480,7 +494,7 @@ async function loadHotels() {
     const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById('resultsTitle').textContent = 'Hoteles en Margarita';
     document.getElementById('resultsSubtitle').textContent =
-      `${new Date(checkIn).toLocaleDateString('es-ES', fOpts)} → ${new Date(checkOut).toLocaleDateString('es-ES', fOpts)} (${nights} noche${nights !== 1 ? 's' : ''}) · ${adults} adulto${adults !== 1 ? 's' : ''}${children > 0 ? ` · ${children} niño${children !== 1 ? 's' : ''}` : ''}`;
+      `${new Date(checkIn + 'T12:00:00').toLocaleDateString('es-ES', fOpts)} → ${new Date(checkOut + 'T12:00:00').toLocaleDateString('es-ES', fOpts)} (${nights} noche${nights !== 1 ? 's' : ''}) · ${adults} adulto${adults !== 1 ? 's' : ''}${children > 0 ? ` · ${children} niño${children !== 1 ? 's' : ''}` : ''}`;
 
     const hotels = await (await fetch('/api/hotels?destination=Margarita')).json();
     const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
@@ -503,7 +517,7 @@ async function loadHotels() {
 }
 
 function calcNights(checkIn, checkOut) {
-  return Math.max(0, Math.floor((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)));
+  return Math.max(0, Math.floor((new Date(checkOut + 'T12:00:00') - new Date(checkIn + 'T12:00:00')) / (1000 * 60 * 60 * 24)));
 }
 
 function renderResults(hotels) {
@@ -575,7 +589,7 @@ async function viewHotel(hotelId) {
       </div>
       ${hotel.photos && hotel.photos.length ? `
       <div class="hotel-gallery">
-        ${hotel.photos.map(p => `<img src="${p.photo_url}" alt="${hotel.name}" loading="lazy">`).join('')}
+        ${hotel.photos.map(p => `<img src="${p.photo_url}" alt="${hotel.name}" loading="lazy" onclick="openLightbox('${p.photo_url}')">`).join('')}
       </div>` : `
       <div class="hotel-gallery-single"><img src="${hotel.main_photo || ''}" alt="${hotel.name}"></div>`}
       <div class="hotel-detail-body">
@@ -662,8 +676,8 @@ function openWhatsApp(hotelId) {
   const nights = calcNights(checkIn, checkOut);
 
   const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
-  const d1 = new Date(checkIn).toLocaleDateString('es-ES', fOpts);
-  const d2 = new Date(checkOut).toLocaleDateString('es-ES', fOpts);
+  const d1 = new Date(checkIn + 'T12:00:00').toLocaleDateString('es-ES', fOpts);
+  const d2 = new Date(checkOut + 'T12:00:00').toLocaleDateString('es-ES', fOpts);
 
   fetch('/api/flight-prices?destination=Margarita').then(r => r.json()).then(fp => {
     const flightPrice = fp.length > 0 ? fp[0].price : 0;

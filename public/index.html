@@ -16,7 +16,7 @@
       <nav>
         <a href="#" id="navInicio" class="active">Inicio</a>
         <a href="#" id="navNoticias">Noticias</a>
-        <a href="#" id="navMargarita">Margarita</a>
+        <a href="#" id="navPaquetes">Paquetes</a>
       </nav>
     </div>
   </header>
@@ -74,10 +74,21 @@
       </section>
     </div>
 
-    <div id="pageMargarita" class="hidden">
+    <div id="pagePaquetes" class="hidden">
       <section class="hero">
-        <h2>Paquetes Margarita</h2>
+        <h2>Paquetes Vacacionales</h2>
         <p>Hoteles, precios y todo incluido — cotiza directo por WhatsApp</p>
+      </section>
+
+      <section class="destino-selector">
+        <div class="search-form" style="justify-content:center;">
+          <div class="form-group" style="max-width:300px;">
+            <label for="destinoSelect">Destino</label>
+            <select id="destinoSelect" class="form-select">
+              <option value="Margarita" selected>Margarita</option>
+            </select>
+          </div>
+        </div>
       </section>
 
       <section class="search-section">
@@ -129,6 +140,11 @@
       </section>
     </div>
   </main>
+
+  <div id="lightbox" class="lightbox" style="display:none;" onclick="closeLightbox(event)">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Foto ampliada">
+  </div>
 
   <div id="whatsappModal" class="modal" style="display:none;">
     <div class="modal-content">
