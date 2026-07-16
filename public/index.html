@@ -150,7 +150,10 @@
 
   <div id="lightbox" class="lightbox" style="display:none;" onclick="closeLightbox(event)">
     <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation();lightboxNav(-1)">&#10094;</button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="Foto ampliada">
+    <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation();lightboxNav(1)">&#10095;</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
   </div>
 
   <div id="whatsappModal" class="modal" style="display:none;">

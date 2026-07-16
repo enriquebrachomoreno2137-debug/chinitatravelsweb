@@ -258,33 +258,32 @@ function showPage(page) {
   if (page === 'paquetes') initPaquetes();
 }
 
-function openLightbox(url) {
-  document.getElementById('lightboxImg').src = url;
+function openLightbox(idx) {
+  if (!galleryPhotos.length) return;
+  lightboxIndex = idx;
+  document.getElementById('lightboxImg').src = galleryPhotos[lightboxIndex];
+  document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${galleryPhotos.length}`;
   document.getElementById('lightbox').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
 function closeLightbox(event) {
   if (event && event.target !== event.currentTarget && event.target.className !== 'lightbox-close') return;
   document.getElementById('lightbox').style.display = 'none';
-  document.getElementById('lightboxImg').src = '';
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    const lb = document.getElementById('lightbox');
-    if (lb.style.display === 'flex') { lb.style.display = 'none'; document.getElementById('lightboxImg').src = ''; document.body.style.overflow = ''; }
-  }
-});
-
-function gallerySet(idx) {
+function lightboxNav(dir) {
   if (!galleryPhotos.length) return;
-  galleryIndex = Math.max(0, Math.min(idx, galleryPhotos.length - 1));
-  document.getElementById('galleryMainImg').src = galleryPhotos[galleryIndex];
-  document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === galleryIndex));
+  lightboxIndex = (lightboxIndex + dir + galleryPhotos.length) % galleryPhotos.length;
+  document.getElementById('lightboxImg').src = galleryPhotos[lightboxIndex];
+  document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${galleryPhotos.length}`;
 }
-function galleryNav(dir) {
-  gallerySet(galleryIndex + dir);
-}
+document.addEventListener('keydown', (e) => {
+  const lb = document.getElementById('lightbox');
+  if (lb.style.display !== 'flex') return;
+  if (e.key === 'Escape') { lb.style.display = 'none'; document.body.style.overflow = ''; }
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+});
 
 function sendWhatsApp() {
   const msg = document.getElementById('whatsappMessage').value.trim();
@@ -463,7 +462,7 @@ let paquetesInitialized = false;
 let currentResults = [];
 let currentDetail = null;
 let galleryPhotos = [];
-let galleryIndex = 0;
+let lightboxIndex = 0;
 
 const EUR_TO_USD = 1.10;
 
@@ -625,15 +624,8 @@ async function viewHotel(hotelId) {
         ${hotel.rating ? `<span class="hotel-rating-lg">⭐ ${hotel.rating}${hotel.reviews_count ? ` (${hotel.reviews_count} reseñas)` : ''}</span>` : ''}
       </div>
       ${hotel.photos && hotel.photos.length ? `
-      <div class="hotel-gallery-slider">
-        <div class="gallery-main">
-          <button class="gallery-nav gallery-prev" onclick="galleryNav(-1)">&#10094;</button>
-          <img id="galleryMainImg" src="${hotel.photos[0].photo_url}" alt="${hotel.name}" onclick="openLightbox(document.getElementById('galleryMainImg').src)">
-          <button class="gallery-nav gallery-next" onclick="galleryNav(1)">&#10095;</button>
-        </div>
-        <div class="gallery-thumbs">
-          ${hotel.photos.map((p, i) => `<img src="${p.photo_url}" alt="" class="gallery-thumb${i === 0 ? ' active' : ''}" onclick="gallerySet(${i})">`).join('')}
-        </div>
+      <div class="hotel-gallery">
+        ${hotel.photos.map((p, i) => `<img src="${p.photo_url}" alt="${hotel.name}" loading="lazy" onclick="openLightbox(${i})">`).join('')}
       </div>` : `
       <div class="hotel-gallery-single"><img src="${hotel.main_photo || ''}" alt="${hotel.name}"></div>`}
       <div class="hotel-detail-body">
