@@ -564,7 +564,7 @@ function renderResults(hotels, nights) {
     const totalFlight = h.flightPrice * (h.adults || 1) + (h.flightPriceChd || 0) * (h.children || 0);
     const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
     const rateChd = pd && pd.rateChd ? pd.rateChd : 0;
-    const pp = (h.adults || 1) > 0 ? (totalHotel + totalFlight) / (h.adults || 1) : 0;
+    const pp = (h.adults || 1) > 0 ? (totalHotel + h.flightPrice * (h.adults || 1)) / (h.adults || 1) : 0;
 
     return `
       <div class="hotel-card">
@@ -670,7 +670,7 @@ async function viewHotel(hotelId) {
           </div>
           <div id="detailPrice">
             ${hasError ? `<div class="error-msg">${pd.error}</div>` : (() => {
-              const pp = adults > 0 ? (totalHotel + totalFlight) / adults : 0;
+              const pp = adults > 0 ? (totalHotel + flightPrice * adults) / adults : 0;
               return `
             <div class="hotel-price-breakdown">
               <div class="price-line total-pp"><span>Por persona:</span> <span>$${pp.toFixed(2)}</span></div>
@@ -751,7 +751,7 @@ async function recalcDetail() {
       : expiredPromo ? '<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>'
       : '';
 
-    const pp = adults > 0 ? (totalHotel + totalFlight) / adults : 0;
+    const pp = adults > 0 ? (totalHotel + flightPrice * adults) / adults : 0;
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
