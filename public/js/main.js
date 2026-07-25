@@ -564,6 +564,7 @@ function renderResults(hotels, nights) {
     const totalFlight = h.flightPrice * (h.adults || 1) + (h.flightPriceChd || 0) * (h.children || 0);
     const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
     const rateChd = pd && pd.rateChd ? pd.rateChd : 0;
+    const pp = (h.adults || 1) > 0 ? (totalHotel + totalFlight) / (h.adults || 1) : 0;
 
     return `
       <div class="hotel-card">
@@ -580,6 +581,8 @@ function renderResults(hotels, nights) {
           <p class="hotel-desc">${h.description || ''}</p>
           ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
           <div class="hotel-price-breakdown">
+            <div class="price-line total-pp"><span>Por persona:</span> <span>$${pp.toFixed(2)}</span></div>
+            <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
             <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
             <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
             ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(rateChd ).toFixed(2)}/noche</span></div>` : ''}
@@ -666,8 +669,12 @@ async function viewHotel(hotelId) {
             <div class="form-group"><label>Niños</label><input type="number" id="detChildren" min="0" value="${children}" onchange="recalcDetail()"></div>
           </div>
           <div id="detailPrice">
-            ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
+            ${hasError ? `<div class="error-msg">${pd.error}</div>` : (() => {
+              const pp = adults > 0 ? (totalHotel + totalFlight) / adults : 0;
+              return `
             <div class="hotel-price-breakdown">
+              <div class="price-line total-pp"><span>Por persona:</span> <span>$${pp.toFixed(2)}</span></div>
+              <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
               <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
               <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
               ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
@@ -675,7 +682,7 @@ async function viewHotel(hotelId) {
               <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
               ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
               <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
-            </div>`}
+            </div>`;})()}
             ${(() => {
               const now = new Date().toISOString().split('T')[0];
               const expiredPromo = hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until < now);
@@ -744,9 +751,12 @@ async function recalcDetail() {
       : expiredPromo ? '<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>'
       : '';
 
+    const pp = adults > 0 ? (totalHotel + totalFlight) / adults : 0;
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
+          <div class="price-line total-pp"><span>Por persona:</span> <span>$${pp.toFixed(2)}</span></div>
+          <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
           <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
           <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
           ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
