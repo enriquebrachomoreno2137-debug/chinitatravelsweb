@@ -464,7 +464,7 @@ let currentDetail = null;
 let galleryPhotos = [];
 let lightboxIndex = 0;
 
-const EUR_TO_USD = 1.10;
+
 
 function updateDateRange() {
   const ci = document.getElementById('paqCheckIn');
@@ -580,13 +580,13 @@ function renderResults(hotels, nights) {
           <p class="hotel-desc">${h.description || ''}</p>
           ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
           <div class="hotel-price-breakdown">
-            <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
-            <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${(ratePp * EUR_TO_USD).toFixed(2)}/noche</span></div>
-            ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(rateChd * EUR_TO_USD).toFixed(2)}/noche</span></div>` : ''}
+            <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
+            <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
+            ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(rateChd ).toFixed(2)}/noche</span></div>` : ''}
             <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
             <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${h.flightPrice.toFixed(2)}</span></div>
             ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(h.flightPriceChd || 0).toFixed(2)}</span></div>` : ''}
-            <div class="price-line total"><span>Total:</span> <span>$${(totalHotel * EUR_TO_USD + totalFlight).toFixed(2)}</span></div>
+            <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
           </div>`}
           <div class="hotel-card-actions">
             <button class="btn-secondary" onclick="viewHotel(${h.id})">Visualizar</button>
@@ -668,13 +668,13 @@ async function viewHotel(hotelId) {
           <div id="detailPrice">
             ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
             <div class="hotel-price-breakdown">
-              <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
-              <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp * EUR_TO_USD).toFixed(2)}/noche</span></div>
-              ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp * EUR_TO_USD).toFixed(2)}/noche</span></div>` : ''}
+              <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
+              <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
+              ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
               <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
               <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
               ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
-              <div class="price-line total"><span>Total:</span> <span>$${(totalHotel * EUR_TO_USD + totalFlight).toFixed(2)}</span></div>
+              <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
             </div>`}
           </div>
           <button class="btn-whatsapp" onclick="openWhatsApp(${hotelId})">Cotizar por WhatsApp</button>
@@ -684,7 +684,7 @@ async function viewHotel(hotelId) {
           <h4>Tarifas por temporada</h4>
           <table><thead><tr><th>Temporada</th><th>Desde</th><th>Hasta</th><th>1 Adulto</th><th>2+ Adultos c/u</th><th>Niño</th></tr></thead>
           <tbody>${hotel.rates.map(r => `
-            <tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>$${(r.rate_sgl * EUR_TO_USD).toFixed(2)}</td><td>$${(r.rate_dbl * EUR_TO_USD).toFixed(2)}</td><td>$${(r.rate_chd * EUR_TO_USD).toFixed(2)}</td></tr>`).join('')}
+            <tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td></tr>`).join('')}
           </tbody></table>
         </div>` : ''}
         ${hotel.address ? `
@@ -727,13 +727,13 @@ async function recalcDetail() {
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
-          <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel * EUR_TO_USD).toFixed(2)}</span></div>
-          <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp * EUR_TO_USD).toFixed(2)}/noche</span></div>
-          ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp * EUR_TO_USD).toFixed(2)}/noche</span></div>` : ''}
+          <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
+          <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
+          ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
           <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
           <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
           ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
-          <div class="price-line total"><span>Total:</span> <span>$${(totalHotel * EUR_TO_USD + totalFlight).toFixed(2)}</span></div>
+          <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
         </div>`;
   } catch (err) {
     document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
