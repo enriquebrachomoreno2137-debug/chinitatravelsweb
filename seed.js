@@ -339,7 +339,7 @@ function seedDatabase(db) {
   makeF('Madrid', 'Valencia', 'Estelar Latinoamérica', 'ES894', '14:40', '19:00', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
   makeF('Valencia', 'Madrid', 'Estelar Latinoamérica', 'ES895', '22:00', '13:15 (+1 día)', 'MIÉRCOLES - VIERNES', 'Plan de contingencia desde 1 julio.');
   // ── CONVIASA ITINERARIO COMPLETO Julio 2026 ──
-  const cvF = (o, d, num, dep, arr, freq) => makeF(o, d, 'Conviasa', num, dep, arr, freq, 'Itinerario julio 2026.');
+  const cvF = (o, d, num, dep, arr, freq, notes) => makeF(o, d, 'Conviasa', num, dep, arr, freq, notes || 'Itinerario julio 2026.');
   // Internacionales
   cvF('Porlamar','Bridgetown','V0 4934','10:40','11:30','MI');
   cvF('Bridgetown','Porlamar','V0 4935','12:30','13:20','MI');
@@ -442,24 +442,24 @@ function seedDatabase(db) {
   cvF('Maturín','Porlamar','V0 2313','15:10','15:55','LU, MA, JU, VI, SA, DO');
   cvF('Porlamar','Barcelona','V0 2278','11:00','11:35','LU, MA, JU, VI, SA, DO');
   cvF('Barcelona','Porlamar','V0 2279','12:25','12:55','LU, MA, JU, VI, SA, DO');
-  cvF('Maracay','Los Roques','V0 2458','08:30','09:40','LU, MA, MI, JU, VI, SA');
-  cvF('Los Roques','Maracay','V0 2459','10:40','11:50','LU, MA, MI, JU, VI, SA');
-  cvF('Maracay','Los Roques','V0 2460','13:20','14:30','LU, MA, MI, JU, VI, SA');
-  cvF('Los Roques','Maracay','V0 2461','15:30','16:40','LU, MA, MI, JU, VI, SA');
-  cvF('Maracay','Los Roques','V0 2464','09:55','11:05','DO');
-  cvF('Los Roques','Maracay','V0 2465','11:50','13:00','DO');
-  cvF('Maracay','Los Roques','V0 2466','14:10','15:20','DO');
-  cvF('Los Roques','Maracay','V0 2467','16:00','17:10','DO');
-  cvF('Maracay','Barcelona','V0 1110','07:00','07:50','LU');
-  cvF('Barcelona','Maracay','V0 1111','08:40','09:30','LU');
-  cvF('Maracay','Barcelona','V0 1112','16:20','17:10','VI');
-  cvF('Barcelona','Maracay','V0 1113','18:00','18:50','VI');
-  cvF('Maracay','Las Piedras','V0 2486','12:30','13:30','VI');
-  cvF('Las Piedras','Maracay','V0 2487','14:30','15:30','VI');
-  cvF('Maracay','Barquisimeto','V0 098','09:30','10:00','VI');
-  cvF('Barquisimeto','Maracay','V0 099','10:50','11:20','VI');
-  cvF('Maracay','Barinas','V0 2492','10:00','11:30','SA');
-  cvF('Barinas','Maracay','V0 2493','12:30','14:00','SA');
+  cvF('Maracay','Los Roques','V0 2458','08:30','09:40','LU, MA, MI, JU, VI, SA','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Los Roques','Maracay','V0 2459','10:40','11:50','LU, MA, MI, JU, VI, SA','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Los Roques','V0 2460','13:20','14:30','LU, MA, MI, JU, VI, SA','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Los Roques','Maracay','V0 2461','15:30','16:40','LU, MA, MI, JU, VI, SA','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Los Roques','V0 2464','09:55','11:05','DO','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Los Roques','Maracay','V0 2465','11:50','13:00','DO','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Los Roques','V0 2466','14:10','15:20','DO','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Los Roques','Maracay','V0 2467','16:00','17:10','DO','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Barcelona','V0 1110','07:00','07:50','LU','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Barcelona','Maracay','V0 1111','08:40','09:30','LU','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Barcelona','V0 1112','16:20','17:10','VI','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Barcelona','Maracay','V0 1113','18:00','18:50','VI','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Las Piedras','V0 2486','12:30','13:30','VI','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Las Piedras','Maracay','V0 2487','14:30','15:30','VI','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Barquisimeto','V0 098','09:30','10:00','VI','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Barquisimeto','Maracay','V0 099','10:50','11:20','VI','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Maracay','Barinas','V0 2492','10:00','11:30','SA','Aeropuerto Tacarigua (Base Sucre).');
+  cvF('Barinas','Maracay','V0 2493','12:30','14:00','SA','Aeropuerto Tacarigua (Base Sucre).');
   // ── RUTACA AIRLINES ITINERARIO COMPLETO JULIO 2026 ──
   // Barcelona ↔ Puerto Ordaz
   makeF('Barcelona', 'Puerto Ordaz', 'Rutaca Airlines', '', '19:20', '20:00', 'LUN-MIÉ-VIE-DOM', 'Itinerario julio 2026.');
@@ -474,8 +474,8 @@ function seedDatabase(db) {
   makeF('Valencia', 'Punta Cana', 'Rutaca Airlines', '', '10:00', '11:30', 'JUE-DOM (desde 9 JUL)', 'Itinerario internacional julio 2026.');
   makeF('Punta Cana', 'Valencia', 'Rutaca Airlines', '', '13:30', '15:00', 'JUE-DOM (desde 9 JUL)', 'Itinerario internacional julio 2026.');
   // Valencia ↔ Maracaibo
-  makeF('Valencia', 'Maracaibo', 'Rutaca Airlines', '', '19:00', '20:00', 'MAR-JUE-DOM', 'Itinerario julio 2026.');
-  makeF('Maracaibo', 'Valencia', 'Rutaca Airlines', '', '06:00', '07:00', 'LUN-MIÉ-VIE', 'Itinerario julio 2026.');
+  makeF('Valencia', 'Maracaibo', 'Rutaca Airlines', '', '19:00', '20:00', 'MAR-JUE-SÁB-DOM (desde 20 JUL)', 'Itinerario julio 2026.');
+  makeF('Maracaibo', 'Valencia', 'Rutaca Airlines', '', '06:00', '07:00', 'LUN-MIÉ-VIE-DOM (desde 20 JUL)', 'Itinerario julio 2026.');
   // Valencia ↔ Maturín
   makeF('Valencia', 'Maturín', 'Rutaca Airlines', '', '08:30', '09:30', 'MIÉ-VIE', 'Itinerario julio 2026.');
   makeF('Maturín', 'Valencia', 'Rutaca Airlines', '', '10:30', '11:30', 'MIÉ-VIE', 'Itinerario julio 2026.');
@@ -520,18 +520,18 @@ function seedDatabase(db) {
   makeF('Panamá', 'Barquisimeto', 'Estelar Latinoamérica', 'ES8403', '12:00', '15:00', '3, 7 y 10 JUL', 'Plan de contingencia.');
   // ── AVIOR AIRLINES ITINERARIO ACTUALIZADO ──
   // Nacional: BLA↔BRM↔MAR↔BRM↔BLA
-  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'DIARIO', 'Itinerario 15 jul.');
-  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'DIARIO', 'Itinerario 15 jul.');
-  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'DIARIO', 'Itinerario 15 jul.');
-  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Barcelona', 'Barquisimeto', 'Avior Airlines', '', '07:00', '08:00', 'LUN-MIÉ-VIE-DOM', 'Itinerario actualizado 20 jul.');
+  makeF('Barquisimeto', 'Maracaibo', 'Avior Airlines', '', '09:00', '09:40', 'LUN-MIÉ-VIE-DOM', 'Itinerario actualizado 20 jul.');
+  makeF('Maracaibo', 'Barquisimeto', 'Avior Airlines', '', '11:00', '11:40', 'LUN-MIÉ-VIE-DOM', 'Itinerario actualizado 20 jul.');
+  makeF('Barquisimeto', 'Barcelona', 'Avior Airlines', '', '12:40', '13:40', 'LUN-MIÉ-VIE-DOM', 'Itinerario actualizado 20 jul.');
   // Nacional: BLA↔LSP↔MAR↔LSP↔BLA
-  makeF('Barcelona', 'Las Piedras', 'Avior Airlines', '', '07:00', '08:00', 'DIARIO', 'Itinerario 15 jul.');
-  makeF('Las Piedras', 'Maracaibo', 'Avior Airlines', '', '09:00', '10:00', 'DIARIO', 'Itinerario 15 jul.');
-  makeF('Maracaibo', 'Las Piedras', 'Avior Airlines', '', '11:00', '12:00', 'DIARIO', 'Itinerario 15 jul.');
-  makeF('Las Piedras', 'Barcelona', 'Avior Airlines', '', '13:00', '14:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Barcelona', 'Las Piedras', 'Avior Airlines', '', '07:00', '08:00', 'MAR-JUE', 'Itinerario actualizado 20 jul.');
+  makeF('Las Piedras', 'Maracaibo', 'Avior Airlines', '', '09:00', '10:00', 'MAR-JUE', 'Itinerario actualizado 20 jul.');
+  makeF('Maracaibo', 'Las Piedras', 'Avior Airlines', '', '11:00', '12:00', 'MAR-JUE', 'Itinerario actualizado 20 jul.');
+  makeF('Las Piedras', 'Barcelona', 'Avior Airlines', '', '13:00', '14:00', 'MAR-JUE', 'Itinerario actualizado 20 jul.');
   // Nacional: BLA↔VIG
-  makeF('Barcelona', 'El Vigía', 'Avior Airlines', '', '09:00', '10:30', 'DIARIO', 'Itinerario 15 jul.');
-  makeF('El Vigía', 'Barcelona', 'Avior Airlines', '', '11:30', '13:00', 'DIARIO', 'Itinerario 15 jul.');
+  makeF('Barcelona', 'El Vigía', 'Avior Airlines', '', '09:00', '10:30', 'MIÉRCOLES', 'Itinerario actualizado 20 jul.');
+  makeF('El Vigía', 'Barcelona', 'Avior Airlines', '', '11:30', '13:00', 'MIÉRCOLES', 'Itinerario actualizado 20 jul.');
   // Internacional: BLA↔BOG
   makeF('Barcelona', 'Bogotá', 'Avior Airlines', '', '17:00', '18:10', 'DIARIO', 'Itinerario 15 jul.');
   makeF('Bogotá', 'Barcelona', 'Avior Airlines', '', '19:30', '22:40', 'DIARIO', 'Itinerario 15 jul.');
@@ -564,23 +564,44 @@ function seedDatabase(db) {
 
   // ── LASER AIRLINES Vuelos nacionales desde Maracay (17 JUL) ──
   // Maracay ↔ Maracaibo
-  makeF('Maracay', 'Maracaibo', 'LASER Airlines', 'QL942', '10:45', '11:55', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Maracaibo', 'Maracay', 'LASER Airlines', 'QL943', '12:55', '14:05', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracay', 'Maracaibo', 'LASER Airlines', 'QL942', '10:45', '11:55', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Maracaibo', 'Maracay', 'LASER Airlines', 'QL943', '12:55', '14:05', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
   // Maracay ↔ El Vigía
-  makeF('Maracay', 'El Vigía', 'LASER Airlines', 'QL920', '10:00', '11:10', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('El Vigía', 'Maracay', 'LASER Airlines', 'QL921', '12:10', '13:20', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracay', 'El Vigía', 'LASER Airlines', 'QL920', '10:00', '11:10', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('El Vigía', 'Maracay', 'LASER Airlines', 'QL921', '12:10', '13:20', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
   // Maracay ↔ Barcelona (3 frecuencias diarias)
-  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL970', '06:30', '07:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL971', '08:45', '09:45', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL972', '09:30', '10:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL973', '13:00', '14:00', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL974', '16:30', '17:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL975', '18:30', '19:30', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL970', '06:30', '07:30', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL971', '08:45', '09:45', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL972', '09:30', '10:30', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL973', '13:00', '14:00', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Maracay', 'Barcelona', 'LASER Airlines', 'QL974', '16:30', '17:30', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Barcelona', 'Maracay', 'LASER Airlines', 'QL975', '18:30', '19:30', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
   // Maracay ↔ Porlamar
-  makeF('Porlamar', 'Maracay', 'LASER Airlines', 'QL907', '07:30', '08:40', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Maracay', 'Porlamar', 'LASER Airlines', 'QL904', '15:30', '16:40', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Porlamar', 'Maracay', 'LASER Airlines', 'QL905', '17:40', '18:50', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
-  makeF('Maracay', 'Porlamar', 'LASER Airlines', 'QL906', '19:50', '21:00', 'DIARIO (desde 17 JUL)', 'Protocolo contingencia nacional.');
+  makeF('Porlamar', 'Maracay', 'LASER Airlines', 'QL907', '07:30', '08:40', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Maracay', 'Porlamar', 'LASER Airlines', 'QL904', '15:30', '16:40', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Porlamar', 'Maracay', 'LASER Airlines', 'QL905', '17:40', '18:50', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+  makeF('Maracay', 'Porlamar', 'LASER Airlines', 'QL906', '19:50', '21:00', 'DIARIO (desde 17 JUL)', 'Aeropuerto Libertador (Palo Negro). Protocolo contingencia nacional.');
+
+  // ── VENEZOLANA VUELOS NACIONALES DESDE MARACAY (20 JUL) ──
+  r('Maracay', 'Maracaibo', 'Ruta Venezolana.');
+  r('Maracaibo', 'Maracay', 'Ruta Venezolana.');
+  r('Maracay', 'Porlamar', 'Ruta Venezolana.');
+  r('Porlamar', 'Maracay', 'Ruta Venezolana.');
+  // MAR↔MYC
+  makeF('Maracaibo', 'Maracay', 'Venezolana', '1101', '06:00', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracaibo', 'Maracay', 'Venezolana', '1101', '08:00', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracaibo', 'Maracay', 'Venezolana', '1103', '16:00', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracaibo', 'Maracay', 'Venezolana', '1103', '16:45', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracay', 'Maracaibo', 'Venezolana', '1102', '09:00', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracay', 'Maracaibo', 'Venezolana', '1102', '14:00', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracay', 'Maracaibo', 'Venezolana', '1104', '17:00', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracay', 'Maracaibo', 'Venezolana', '1104', '18:30', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracay', 'Maracaibo', 'Venezolana', '1104', '19:00', '', 'DIARIO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  // MYC↔PMV
+  makeF('Maracay', 'Porlamar', 'Venezolana', '1131', '09:00', '09:45', 'LUNES - VIERNES (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Maracay', 'Porlamar', 'Venezolana', '1131', '10:30', '11:15', 'JUEVES - DOMINGO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Porlamar', 'Maracay', 'Venezolana', '1132', '10:45', '11:30', 'LUNES - VIERNES (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
+  makeF('Porlamar', 'Maracay', 'Venezolana', '1132', '16:00', '16:45', 'JUEVES - DOMINGO (desde 20 JUL)', 'Aeropuerto Libertador (Palo Negro). Vuelo nacional contingencia.');
 
   // ── TURPIAL AIRLINES Valencia ↔ Punta Cana (julio-septiembre 2026) ──
   makeF('Valencia', 'Punta Cana', 'Turpial Airlines', '8608', '14:00', '15:30', 'JUEVES (16 jul - 24 sep)', 'Ruta temporal.');
@@ -633,8 +654,8 @@ function seedDatabase(db) {
   makeF('El Vigía', 'Porlamar', 'Turpial Airlines', '', '14:30', '16:00', 'JUEVES (16 JUL - 28 SEP)', 'Ruta estacional.');
 
   // ── SASCA AIRLINES MARACAY-LOS ROQUES (DESDE 17 JUL) ──
-  makeF('Maracay', 'Los Roques', 'Sasca Airlines', '', '08:00', '09:10', 'DIARIO (desde 17 JUL)', 'Plan de contingencia. Bus gratis Caracas (Torre Onix 04:30) → Maracay.');
-  makeF('Los Roques', 'Maracay', 'Sasca Airlines', '', '16:00', '17:10', 'DIARIO (desde 17 JUL)', 'Plan de contingencia. Bus gratis Maracay → Caracas.');
+  makeF('Maracay', 'Los Roques', 'Sasca Airlines', '', '08:00', '09:10', 'DIARIO (desde 17 JUL)', 'Aeropuerto Tacarigua (Base Sucre). Plan de contingencia. Bus gratis Caracas (Torre Onix 04:30) → Maracay.');
+  makeF('Los Roques', 'Maracay', 'Sasca Airlines', '', '16:00', '17:10', 'DIARIO (desde 17 JUL)', 'Aeropuerto Tacarigua (Base Sucre). Plan de contingencia. Bus gratis Maracay → Caracas.');
 
   // ── Comunicados 7 de julio ──
   n('LASER Airlines - Nueva ruta Madrid vía Barcelona (BLA) desde 8 de julio',
@@ -767,6 +788,18 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
   n('LASER Airlines - Protocolo contingencia vuelos nacionales desde Maracay (15 julio)',
       'LASER Airlines habilita operaciones nacionales desde el Aeropuerto Libertador de Maracay (MYC) a partir del 17 de julio de 2026.\n\nITINERARIOS DIARIOS:\n\nMARACAY ↔ MARACAIBO:\nQL942 MYC→MAR 10:45-11:55\nQL943 MAR→MYC 12:55-14:05\n\nMARACAY ↔ EL VIGÍA:\nQL920 MYC→VIG 10:00-11:10\nQL921 VIG→MYC 12:10-13:20\n\nMARACAY ↔ BARCELONA (3 frecuencias):\nQL970 MYC→BLA 06:30-07:30 / QL971 BLA→MYC 08:45-09:45\nQL972 MYC→BLA 09:30-10:30 / QL973 BLA→MYC 13:00-14:00\nQL974 MYC→BLA 16:30-17:30 / QL975 BLA→MYC 18:30-19:30\n\nMARACAY ↔ PORLAMAR:\nQL907 PMV→MYC 07:30-08:40\nQL904 MYC→PMV 15:30-16:40\nQL905 PMV→MYC 17:40-18:50\nQL906 MYC→PMV 19:50-21:00\n\nFranquicia equipaje:\nTurista: 1 maleta 30 kg + mano 8 kg\nEjecutiva: 2 maletas 30 kg + mano 8 kg\n\nContacto: 0412.266.26.37 / 0501 LASER 00',
       'importante', '2026-07-15 16:00:00');
+  n('Venezolana - Vuelos nacionales de contingencia desde Maracay (20 julio)',
+      'Venezolana activa vuelos nacionales de contingencia desde el Aeropuerto Libertador de Maracay (MYC) a partir del 20 de julio de 2026.\n\nMARACAIBO ↔ MARACAY (DIARIO):\nV1101 MAR→MYC 06:00 y 08:00\nV1103 MAR→MYC 16:00 y 16:45\nV1102 MYC→MAR 09:00 y 14:00\nV1104 MYC→MAR 17:00, 18:30 y 19:00\n\nMARACAY ↔ PORLAMAR:\nV1131 MYC→PMV 09:00-09:45 (LUN-VIE)\nV1131 MYC→PMV 10:30-11:15 (JUE-DOM)\nV1132 PMV→MYC 10:45-11:30 (LUN-VIE)\nV1132 PMV→MYC 16:00-16:45 (JUE-DOM)\n\nAeropuerto: SVBL - Aeropuerto Libertador (Palo Negro, Maracay)\n\nContacto: +58 424 639 02 81 / callcenter@venezolana.aero',
+      'importante', '2026-07-20 10:00:00');
+  n('Rutaca Airlines - Itinerario actualizado Valencia-Maracaibo (20 julio)',
+      'Rutaca Airlines actualiza su itinerario Valencia - Maracaibo - Valencia desde el 20 de julio de 2026.\n\nMAR - JUE - SÁB - DOM:\nValencia → Maracaibo: 19:00 - 20:00\n\nLUN - MIÉ - VIE - DOM:\nMaracaibo → Valencia: 06:00 - 07:00\n\nReservas: www.flyrutaca.com\nContacto: 0500-RUTACA-1 / 0500-788222-1',
+      'importante', '2026-07-20 10:00:00');
+  n('Estelar Latinoamérica - Itinerario contingencia Maracaibo desde Valencia (20 julio)',
+      'Estelar Latinoamérica mantiene su itinerario de contingencia para Maracaibo desde el Aeropuerto Arturo Michelena de Valencia.\n\nLUNES Y MIÉRCOLES:\nValencia → Maracaibo: 17:00-18:00\n\nMARTES:\nMaracaibo → Valencia: 07:30-08:30\n\nJUEVES:\nMaracaibo → Valencia: 06:30-07:30\n\nVIERNES:\nValencia → Maracaibo: 20:30-21:30\n\nSÁBADO:\nMaracaibo → Valencia: 09:30-10:30\n\nReservas: 0414-3783527 / 0424-2364555 / flyestelar.com / 0501-3783527',
+      'importante', '2026-07-20 10:00:00');
+  n('Aeropostal - Itinerario Valencia-Porlamar (20 julio)',
+      'Aeropostal Alas de Venezuela confirma su itinerario Valencia - Porlamar - Valencia.\n\nLU - MA - JU - VI:\nValencia → Porlamar: 12:00 - 13:00\nPorlamar → Valencia: 14:00 - 15:00\n\nDOMINGO:\nValencia → Porlamar: 14:00 - 15:00\nPorlamar → Valencia: 16:00 - 17:00\n\nContacto: +58 422-715-39-13 / @aeropostal_ve',
+      'importante', '2026-07-20 10:00:00');
 
   // ── HOTEL SEED DATA ──
   db.addHotel('LD Palm Beach', 'Margarita', 'Superior', 'Todo incluido',
@@ -776,11 +809,10 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
   const hotels = db.getHotels('Margarita');
   const ld = hotels[hotels.length - 1];
   const ldId = ld.id;
-  db.addHotelRate(ldId, 'Pre-temporada', '2026-05-27', '2026-05-31', 68.74, 54.79, 27.90, 0, 2);
-  db.addHotelRate(ldId, 'Inicio temporada', '2026-06-01', '2026-06-30', 79.70, 64.76, 32.88, 0, 2);
-  db.addHotelRate(ldId, 'Alta (Hot Sale 10%)', '2026-07-01', '2026-07-31', 84.68, 69.74, 34.87, 0, 2);
-  db.addHotelRate(ldId, 'Alta', '2026-08-01', '2026-09-15', 94.15, 76.21, 38.56, 0, 2);
-  db.addHotelRate(ldId, 'Baja', '2026-09-16', '2026-12-20', 84.68, 69.74, 34.87, 0, 2);
+  db.addHotelRate(ldId, 'Promo Hot Sale 10%', '2026-07-01', '2026-07-25', 76.50, 63.00, 31.50, 0, 2);
+  db.addHotelRate(ldId, 'Temporada Media', '2026-07-26', '2026-07-31', 85.00, 70.00, 35.00, 0, 2);
+  db.addHotelRate(ldId, 'Promo Hot Sale Verano 10%', '2026-08-01', '2026-09-15', 94.50, 76.50, 38.70, 0, 2);
+  db.addHotelRate(ldId, 'Temporada Baja', '2026-09-16', '2026-12-20', 85.00, 70.00, 35.00, 0, 2);
 
   db.addHotelPhoto(ldId, 'https://lirp.cdn-website.com/a109d03d/dms3rep/multi/opt/BEACH-01-dbd6fd0d-640w.jpg', 1);
   db.addHotelPhoto(ldId, 'https://viajes-indigo.com/public/uploads/0000/8/2023/05/15/ldpalmbeach-1684192448885.jpg', 0);
