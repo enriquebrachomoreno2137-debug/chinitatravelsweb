@@ -676,15 +676,27 @@ async function viewHotel(hotelId) {
               ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
               <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
             </div>`}
+            ${(() => {
+              const now = new Date().toISOString().split('T')[0];
+              const expiredPromo = hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until < now);
+              const activePromo = hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until >= now);
+              if (activePromo) return `<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado</div>`;
+              if (expiredPromo) return `<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>`;
+              return '';
+            })()}
           </div>
           <button class="btn-whatsapp" onclick="openWhatsApp(${hotelId})">Cotizar por WhatsApp</button>
         </div>
         ${hotel.rates && hotel.rates.length ? `
         <div class="hotel-rates-table">
           <h4>Tarifas por temporada</h4>
-          <table><thead><tr><th>Temporada</th><th>Desde</th><th>Hasta</th><th>1 Adulto</th><th>2+ Adultos c/u</th><th>Niño</th></tr></thead>
-          <tbody>${hotel.rates.map(r => `
-            <tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td></tr>`).join('')}
+          <table><thead><tr><th>Temporada</th><th>Desde</th><th>Hasta</th><th>1 Adulto</th><th>2+ Adultos c/u</th><th>Niño</th><th>Promo</th></tr></thead>
+          <tbody>${hotel.rates.map(r => {
+            const now = new Date().toISOString().split('T')[0];
+            const isExpired = r.sale_until && r.sale_until < now;
+            const badge = !r.sale_until ? '—' : isExpired ? '<span class="promo-expired">Expirada</span>' : '<span class="promo-active">Vigente</span>';
+            return `<tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td><td>${badge}</td></tr>`;
+          }).join('')}
           </tbody></table>
         </div>` : ''}
         ${hotel.address ? `
@@ -724,6 +736,14 @@ async function recalcDetail() {
     const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
     const rateChdPp = pd && pd.rateChd ? pd.rateChd : 0;
 
+    const hotel = currentDetail;
+    const now = new Date().toISOString().split('T')[0];
+    const expiredPromo = hotel && hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until < now);
+    const activePromo = hotel && hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until >= now);
+    const promoNote = activePromo ? '<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado</div>'
+      : expiredPromo ? '<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>'
+      : '';
+
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
@@ -734,7 +754,7 @@ async function recalcDetail() {
           <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
           ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
           <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
-        </div>`;
+        </div>${promoNote}`;
   } catch (err) {
     document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
   }

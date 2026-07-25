@@ -304,7 +304,7 @@ app.delete('/api/admin/hotel-reviews/:id', (req, res) => {
 app.post('/api/admin/hotels/:id/rates', (req, res) => {
   try {
     const r = req.body;
-    db.addHotelRate(req.params.id, r.season_name, r.date_from, r.date_to, r.rate_sgl, r.rate_dbl, r.rate_chd, r.rate_chd2, r.min_nights);
+    db.addHotelRate(req.params.id, r.season_name, r.date_from, r.date_to, r.rate_sgl, r.rate_dbl, r.rate_chd, r.rate_chd2, r.min_nights, r.sale_until);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -314,7 +314,7 @@ app.post('/api/admin/hotels/:id/rates', (req, res) => {
 app.put('/api/admin/hotel-rates/:id', (req, res) => {
   try {
     const r = req.body;
-    db.updateHotelRate(req.params.id, r.season_name, r.date_from, r.date_to, r.rate_sgl, r.rate_dbl, r.rate_chd, r.rate_chd2, r.min_nights);
+    db.updateHotelRate(req.params.id, r.season_name, r.date_from, r.date_to, r.rate_sgl, r.rate_dbl, r.rate_chd, r.rate_chd2, r.min_nights, r.sale_until);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });

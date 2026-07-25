@@ -135,6 +135,7 @@ async function initDatabase() {
       rate_chd REAL,
       rate_chd2 REAL,
       min_nights INTEGER DEFAULT 1,
+      sale_until TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (hotel_id) REFERENCES hotels(id) ON DELETE CASCADE
     )
@@ -444,14 +445,14 @@ function deleteHotelReview(id) {
   return query('DELETE FROM hotel_reviews WHERE id = ?', [id]);
 }
 
-function addHotelRate(hotelId, seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights) {
-  return query('INSERT INTO hotel_rates (hotel_id, season_name, date_from, date_to, rate_sgl, rate_dbl, rate_chd, rate_chd2, min_nights) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [hotelId, seasonName || null, dateFrom, dateTo, rateSgl || 0, rateDbl || 0, rateChd || 0, rateChd2 || 0, minNights || 1]);
+function addHotelRate(hotelId, seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights, saleUntil) {
+  return query('INSERT INTO hotel_rates (hotel_id, season_name, date_from, date_to, rate_sgl, rate_dbl, rate_chd, rate_chd2, min_nights, sale_until) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [hotelId, seasonName || null, dateFrom, dateTo, rateSgl || 0, rateDbl || 0, rateChd || 0, rateChd2 || 0, minNights || 1, saleUntil || null]);
 }
 
-function updateHotelRate(id, seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights) {
-  return query('UPDATE hotel_rates SET season_name = ?, date_from = ?, date_to = ?, rate_sgl = ?, rate_dbl = ?, rate_chd = ?, rate_chd2 = ?, min_nights = ? WHERE id = ?',
-    [seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights, id]);
+function updateHotelRate(id, seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights, saleUntil) {
+  return query('UPDATE hotel_rates SET season_name = ?, date_from = ?, date_to = ?, rate_sgl = ?, rate_dbl = ?, rate_chd = ?, rate_chd2 = ?, min_nights = ?, sale_until = ? WHERE id = ?',
+    [seasonName, dateFrom, dateTo, rateSgl, rateDbl, rateChd, rateChd2, minNights, saleUntil, id]);
 }
 
 function deleteHotelRate(id) {
@@ -459,9 +460,11 @@ function deleteHotelRate(id) {
 }
 
 function findRateForDate(hotelId, dateStr) {
-  const date = new Date(dateStr);
+  const today = new Date().toISOString().split('T')[0];
   const rates = query(`SELECT * FROM hotel_rates WHERE hotel_id = ? AND date(date_from) <= date(?) AND date(date_to) >= date(?)`, [hotelId, dateStr, dateStr]);
-  return rates.length ? rates[0] : null;
+  if (!rates.length) return null;
+  const active = rates.filter(r => !r.sale_until || r.sale_until >= today);
+  return active.length ? active[0] : rates[0];
 }
 
 function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
