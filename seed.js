@@ -829,6 +829,59 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
   db.addHotelReview(ldId, 'Ana R.', 4, 'Buen hotel para descansar. La piscina y el acceso a la playa son lo mejor. Relación calidad-precio justa.');
 
   db.addFlightPrice('Margarita', 'Valencia', 220, 130, 'Vuelo ida y vuelta + traslado aeropuerto-hotel');
+
+  // ── AGENCY ITINERARIES ──
+  const a = (t, it, rt, itr, rtr, pa, pc) => db.addAgencyItinerary(t, it, rt, itr, rtr, pa, pc);
+  a('Ida directo / Vuelta directo',
+    'directo', 'directo',
+    [{origen:'Maracaibo',destino:'Porlamar',salida:'10:00',llegada:'11:30',aerolinea:'Conviasa'}],
+    [{origen:'Porlamar',destino:'Maracaibo',salida:'14:00',llegada:'15:30',aerolinea:'Conviasa'}],
+    220, 130);
+  a('Ida directo / Vuelta x Valencia',
+    'directo', 'via_valencia',
+    [{origen:'Maracaibo',destino:'Porlamar',salida:'10:00',llegada:'11:30',aerolinea:'Conviasa'}],
+    [{origen:'Porlamar',destino:'Valencia',salida:'13:00',llegada:'14:00',aerolinea:'Conviasa'},{origen:'Valencia',destino:'Maracaibo',salida:'16:00',llegada:'17:00',aerolinea:'Conviasa'}],
+    240, 140);
+  a('Ida directo / Vuelta x Maracay',
+    'directo', 'via_maracay',
+    [{origen:'Maracaibo',destino:'Porlamar',salida:'10:00',llegada:'11:30',aerolinea:'Conviasa'}],
+    [{origen:'Porlamar',destino:'Maracay',salida:'13:00',llegada:'14:00',aerolinea:'LASER'},{origen:'Maracay',destino:'Maracaibo',salida:'16:00',llegada:'17:00',aerolinea:'LASER'}],
+    240, 140);
+  a('Ida directo / Vuelta x Caracas',
+    'directo', 'via_caracas',
+    [{origen:'Maracaibo',destino:'Porlamar',salida:'10:00',llegada:'11:30',aerolinea:'Conviasa'}],
+    [{origen:'Porlamar',destino:'Caracas',salida:'12:00',llegada:'13:00',aerolinea:'Aeropostal'},{origen:'Caracas',destino:'Maracaibo',salida:'15:00',llegada:'16:00',aerolinea:'LASER'}],
+    250, 145);
+  a('Ida x Valencia / Vuelta directo',
+    'via_valencia', 'directo',
+    [{origen:'Maracaibo',destino:'Valencia',salida:'08:00',llegada:'09:00',aerolinea:'Conviasa'},{origen:'Valencia',destino:'Porlamar',salida:'11:00',llegada:'12:00',aerolinea:'Conviasa'}],
+    [{origen:'Porlamar',destino:'Maracaibo',salida:'14:00',llegada:'15:30',aerolinea:'Conviasa'}],
+    240, 140);
+  a('Ida x Valencia / Vuelta x Valencia',
+    'via_valencia', 'via_valencia',
+    [{origen:'Maracaibo',destino:'Valencia',salida:'08:00',llegada:'09:00',aerolinea:'Conviasa'},{origen:'Valencia',destino:'Porlamar',salida:'11:00',llegada:'12:00',aerolinea:'Conviasa'}],
+    [{origen:'Porlamar',destino:'Valencia',salida:'13:00',llegada:'14:00',aerolinea:'Conviasa'},{origen:'Valencia',destino:'Maracaibo',salida:'16:00',llegada:'17:00',aerolinea:'Conviasa'}],
+    260, 150);
+  a('Ida x Maracay / Vuelta directo',
+    'via_maracay', 'directo',
+    [{origen:'Maracaibo',destino:'Maracay',salida:'07:30',llegada:'08:30',aerolinea:'LASER'},{origen:'Maracay',destino:'Porlamar',salida:'10:00',llegada:'11:00',aerolinea:'LASER'}],
+    [{origen:'Porlamar',destino:'Maracaibo',salida:'14:00',llegada:'15:30',aerolinea:'Conviasa'}],
+    240, 140);
+  a('Ida x Maracay / Vuelta x Maracay',
+    'via_maracay', 'via_maracay',
+    [{origen:'Maracaibo',destino:'Maracay',salida:'07:30',llegada:'08:30',aerolinea:'LASER'},{origen:'Maracay',destino:'Porlamar',salida:'10:00',llegada:'11:00',aerolinea:'LASER'}],
+    [{origen:'Porlamar',destino:'Maracay',salida:'13:00',llegada:'14:00',aerolinea:'LASER'},{origen:'Maracay',destino:'Maracaibo',salida:'16:00',llegada:'17:00',aerolinea:'LASER'}],
+    260, 150);
+  a('Ida x Caracas / Vuelta directo',
+    'via_caracas', 'directo',
+    [{origen:'Maracaibo',destino:'Caracas',salida:'06:00',llegada:'07:00',aerolinea:'LASER'},{origen:'Caracas',destino:'Porlamar',salida:'09:00',llegada:'10:00',aerolinea:'Aeropostal'}],
+    [{origen:'Porlamar',destino:'Maracaibo',salida:'14:00',llegada:'15:30',aerolinea:'Conviasa'}],
+    250, 145);
+  a('Ida x Caracas / Vuelta x Caracas',
+    'via_caracas', 'via_caracas',
+    [{origen:'Maracaibo',destino:'Caracas',salida:'06:00',llegada:'07:00',aerolinea:'LASER'},{origen:'Caracas',destino:'Porlamar',salida:'09:00',llegada:'10:00',aerolinea:'Aeropostal'}],
+    [{origen:'Porlamar',destino:'Caracas',salida:'12:00',llegada:'13:00',aerolinea:'Aeropostal'},{origen:'Caracas',destino:'Maracaibo',salida:'15:00',llegada:'16:00',aerolinea:'LASER'}],
+    280, 155);
 }
 
 module.exports = { seedDatabase };

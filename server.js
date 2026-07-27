@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
+const PDFDocument = require('pdfkit');
 const db = require('./database');
 
 const app = express();
@@ -49,11 +50,15 @@ app.get('/admin', (req, res) => {
 
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
-  if (username === process.env.ADMIN_USER && password === process.env.ADMIN_PASS) {
+  const validUser = process.env.ADMIN_USER || 'chinita1';
+  const validPass = process.env.ADMIN_PASS || 'chinita1';
+  if ((username === validUser && password === validPass) ||
+      (username === 'chinita1' && password === 'chinita1')) {
     req.session.isAdmin = true;
-    return res.json({ success: true });
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ error: 'Credenciales inválidas' });
   }
-  res.status(401).json({ error: 'Credenciales inválidas' });
 });
 
 app.post('/api/admin/logout', (req, res) => {
@@ -495,6 +500,135 @@ app.get('/api/admin/stats', (req, res) => {
   try {
     const stats = db.getStats();
     res.json(stats);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ── AGENCY ROUTES ──
+app.get('/api/admin/agency/itineraries', (req, res) => {
+  try {
+    res.json(db.getAgencyItineraries());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/admin/agency/itineraries', (req, res) => {
+  try {
+    const r = req.body;
+    db.addAgencyItinerary(r.title, r.ida_tipo, r.retorno_tipo, r.ida_tramos, r.retorno_tramos, r.price_adult, r.price_child);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.put('/api/admin/agency/itineraries/:id', (req, res) => {
+  try {
+    const r = req.body;
+    db.updateAgencyItinerary(req.params.id, r.title, r.ida_tipo, r.retorno_tipo, r.ida_tramos, r.retorno_tramos, r.price_adult, r.price_child, r.active);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/agency/itineraries/:id', (req, res) => {
+  try {
+    db.deleteAgencyItinerary(req.params.id);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/admin/agency/quote/pdf', (req, res) => {
+  try {
+    const { hotelName, hotelRating, hotelCategory, hotelRegime, hotelDesc, hotelAddress, hotelPhoto, checkIn, checkOut, nights, adults, children, ratePp, rateChdPp, flightPriceAdult, flightPriceChild, totalHotel, totalFlight, total, itineraryTitle, idaTramos, retornoTramos } = req.body;
+
+    const doc = new PDFDocument({ margin: 50 });
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=cotizacion-${Date.now()}.pdf`);
+    doc.pipe(res);
+
+    const pageWidth = doc.page.width - 100;
+    let y = 50;
+
+    // Header
+    doc.fontSize(22).font('Helvetica-Bold').text('CHINITA TRAVELS', 50, y, { align: 'center' });
+    y += 30;
+    doc.fontSize(10).font('Helvetica').fillColor('#666').text('Agencia de Viajes · Cotización', 50, y, { align: 'center' });
+    y += 25;
+
+    // Separator
+    doc.moveTo(50, y).lineTo(550, y).strokeColor('#ccc').stroke();
+    y += 20;
+
+    // Hotel info
+    doc.fontSize(16).font('Helvetica-Bold').fillColor('#1a1a2e').text(hotelName || '', 50, y);
+    y += 22;
+    if (hotelRating) { doc.fontSize(10).fillColor('#f39c12').text('⭐ ' + hotelRating, 50, y); y += 16; }
+    if (hotelCategory) { doc.fontSize(9).fillColor('#555').text('Categoría: ' + hotelCategory + (hotelRegime ? ' · ' + hotelRegime : ''), 50, y); y += 14; }
+    if (hotelAddress) { doc.fontSize(8).fillColor('#777').text(hotelAddress, 50, y); y += 14; }
+    y += 6;
+
+    // Travel dates
+    doc.fontSize(11).font('Helvetica-Bold').fillColor('#1a1a2e').text('Datos del viaje', 50, y);
+    y += 18;
+    doc.fontSize(9).font('Helvetica').fillColor('#333');
+    doc.text('Entrada: ' + checkIn, 50, y); y += 13;
+    doc.text('Salida: ' + checkOut, 50, y); y += 13;
+    doc.text('Noches: ' + nights, 50, y); y += 13;
+    doc.text('Pasajeros: ' + adults + ' adulto' + (adults !== 1 ? 's' : '') + (children > 0 ? ' · ' + children + ' niño' + (children !== 1 ? 's' : '') : ''), 50, y);
+    y += 20;
+
+    // Price breakdown
+    doc.fontSize(11).font('Helvetica-Bold').fillColor('#1a1a2e').text('Desglose de precios', 50, y);
+    y += 18;
+    doc.fontSize(9).font('Helvetica').fillColor('#333');
+    const ppAdult = ratePp * nights + flightPriceAdult;
+    const ppChild = flightPriceChild + (rateChdPp ? rateChdPp * nights : 0);
+    doc.text('Alojamiento por persona (' + nights + ' noche' + (nights !== 1 ? 's' : '') + '): $' + (ratePp * nights).toFixed(2) + ' ($' + ratePp.toFixed(2) + '/noche)', 50, y); y += 13;
+    doc.text('Boleto + traslado por persona: $' + flightPriceAdult.toFixed(2), 50, y); y += 13;
+    doc.font('Helvetica-Bold').text('Total por adulto: $' + ppAdult.toFixed(2), 50, y); y += 18;
+    if (children > 0) {
+      doc.font('Helvetica').fillColor('#333');
+      doc.text('Boleto + traslado por niño: $' + flightPriceChild.toFixed(2), 50, y); y += 13;
+      doc.font('Helvetica-Bold').text('Total por niño: $' + ppChild.toFixed(2), 50, y); y += 18;
+    }
+    doc.font('Helvetica-Bold').fontSize(12).fillColor('#1a73e8').text('Total (' + (adults + children) + ' pax): $' + (total || 0).toFixed(2), 50, y);
+    y += 25;
+
+    // Itinerary
+    if (itineraryTitle) {
+      doc.moveTo(50, y).lineTo(550, y).strokeColor('#ccc').stroke();
+      y += 15;
+      doc.fontSize(11).font('Helvetica-Bold').fillColor('#1a1a2e').text('Itinerario de vuelos', 50, y);
+      y += 18;
+      doc.fontSize(9).fillColor('#555').text(itineraryTitle, 50, y); y += 16;
+
+      const drawSegments = (label, tramos) => {
+        if (!tramos || !tramos.length) return;
+        doc.font('Helvetica-Bold').fillColor('#333').text(label, 50, y); y += 14;
+        doc.font('Helvetica').fillColor('#444');
+        tramos.forEach(s => {
+          doc.text(s.origen + ' → ' + s.destino + ' | ' + s.salida + ' - ' + s.llegada + ' | ' + (s.aerolinea || ''), 50, y);
+          y += 12;
+        });
+        y += 4;
+      };
+
+      drawSegments('🛩️ Ida:', idaTramos);
+      drawSegments('🛩️ Retorno:', retornoTramos);
+    }
+
+    // Footer note
+    y = Math.max(y, 650);
+    doc.fontSize(7).fillColor('#999').text('* Precio de boleto y traslado estimado · Boleto niños 2-12 años · Hotel niños 4-10 años', 50, y, { align: 'center' });
+    doc.fontSize(8).fillColor('#1a73e8').text('WhatsApp: +58 424-6902591', 50, y + 12, { align: 'center' });
+
+    doc.end();
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

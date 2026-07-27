@@ -152,6 +152,19 @@ async function initDatabase() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS agency_itineraries (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      ida_tipo TEXT NOT NULL,
+      retorno_tipo TEXT NOT NULL,
+      ida_tramos TEXT NOT NULL,
+      retorno_tramos TEXT NOT NULL,
+      price_adult REAL NOT NULL,
+      price_child REAL NOT NULL,
+      active INTEGER DEFAULT 1
+    )
+  `);
   saveDb();
   seedDatabase(module.exports);
 }
@@ -527,6 +540,21 @@ function deleteFlightPrice(id) {
   return query('UPDATE flight_prices SET active = 0 WHERE id = ?', [id]);
 }
 
+function getAgencyItineraries() {
+  return query('SELECT * FROM agency_itineraries WHERE active = 1 ORDER BY title');
+}
+function addAgencyItinerary(title, idaTipo, retornoTipo, idaTramos, retornoTramos, priceAdult, priceChild) {
+  return query('INSERT INTO agency_itineraries (title, ida_tipo, retorno_tipo, ida_tramos, retorno_tramos, price_adult, price_child) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [title, idaTipo, retornoTipo, JSON.stringify(idaTramos), JSON.stringify(retornoTramos), priceAdult, priceChild]);
+}
+function updateAgencyItinerary(id, title, idaTipo, retornoTipo, idaTramos, retornoTramos, priceAdult, priceChild, active) {
+  return query('UPDATE agency_itineraries SET title=?, ida_tipo=?, retorno_tipo=?, ida_tramos=?, retorno_tramos=?, price_adult=?, price_child=?, active=? WHERE id=?',
+    [title, idaTipo, retornoTipo, JSON.stringify(idaTramos), JSON.stringify(retornoTramos), priceAdult, priceChild, active, id]);
+}
+function deleteAgencyItinerary(id) {
+  return query('UPDATE agency_itineraries SET active = 0 WHERE id = ?', [id]);
+}
+
 module.exports = {
   initDatabase,
   getAllRoutes,
@@ -573,5 +601,9 @@ module.exports = {
   getFlightPrices,
   addFlightPrice,
   updateFlightPrice,
-  deleteFlightPrice
+  deleteFlightPrice,
+  getAgencyItineraries,
+  addAgencyItinerary,
+  updateAgencyItinerary,
+  deleteAgencyItinerary
 };

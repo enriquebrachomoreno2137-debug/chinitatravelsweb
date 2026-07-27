@@ -13,9 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage('noticias');
   });
 
+  let paqClickCount = 0, paqClickTimer = null;
   document.getElementById('navPaquetes').addEventListener('click', (e) => {
     e.preventDefault();
-    showPage('paquetes');
+    paqClickCount++;
+    if (paqClickCount === 1) {
+      paqClickTimer = setTimeout(() => {
+        paqClickCount = 0;
+        showPage('paquetes');
+      }, 350);
+    } else {
+      clearTimeout(paqClickTimer);
+      paqClickCount = 0;
+      showAgencyLogin();
+    }
   });
 
   document.getElementById('swapBtn').addEventListener('click', () => {
@@ -255,7 +266,21 @@ function showPage(page) {
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
   document.getElementById('nav' + page.charAt(0).toUpperCase() + page.slice(1)).classList.add('active');
   scrollTo(0, 0);
-  if (page === 'paquetes') initPaquetes();
+  if (page === 'paquetes') {
+    initPaquetes();
+    const bar = document.getElementById('agencyBar');
+    if (agencyMode) {
+      if (!bar) {
+        const div = document.createElement('div');
+        div.id = 'agencyBar';
+        div.style.cssText = 'background:#e3f2fd;padding:0.3rem 1rem;font-size:0.8rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #90caf9;';
+        div.innerHTML = '<span style="color:#1565c0;font-weight:600;">🔧 Modo Agencia</span><span onclick="agencyLogout()" style="cursor:pointer;color:#c62828;font-weight:500;">Cerrar sesión</span>';
+        document.getElementById('pagePaquetes').insertBefore(div, document.getElementById('pagePaquetes').firstChild);
+      }
+    } else {
+      if (bar) bar.remove();
+    }
+  }
 }
 
 function openLightbox(idx) {
@@ -464,7 +489,191 @@ let currentDetail = null;
 let galleryPhotos = [];
 let lightboxIndex = 0;
 
+// ── AGENCY MODE ──
+let agencyMode = false;
+let agencyItineraries = [];
 
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'none';
+}
+function showAgencyLogin() {
+  const modal = document.getElementById('agencyLoginModal');
+  if (!modal) {
+    const div = document.createElement('div');
+    div.id = 'agencyLoginModal';
+    div.className = 'modal';
+    div.innerHTML = `<div class="modal-content" style="max-width:320px;text-align:center;">
+      <h3 style="margin-bottom:1rem;">Acceso Agencia</h3>
+      <input type="text" id="agencyUser" value="chinita1" style="width:100%;padding:0.5rem;margin-bottom:0.5rem;border:1px solid #ccc;border-radius:4px;text-align:center;">
+      <input type="password" id="agencyPass" placeholder="Contraseña" style="width:100%;padding:0.5rem;margin-bottom:0.5rem;border:1px solid #ccc;border-radius:4px;text-align:center;">
+      <div id="agencyLoginError" style="color:#e74c3c;font-size:0.85rem;margin-bottom:0.5rem;display:none;"></div>
+      <button onclick="doAgencyLogin()" class="btn-primary" style="width:100%;margin-bottom:0.3rem;">Ingresar</button>
+      <button onclick="closeModal('agencyLoginModal')" class="btn-secondary" style="width:100%;">Cancelar</button>
+    </div>`;
+    document.body.appendChild(div);
+  }
+  document.getElementById('agencyLoginModal').style.display = 'flex';
+  document.getElementById('agencyLoginModal').onclick = (e) => { if (e.target === e.currentTarget) closeModal('agencyLoginModal'); };
+  document.getElementById('agencyLoginError').style.display = 'none';
+  setTimeout(() => document.getElementById('agencyPass').focus(), 100);
+}
+async function doAgencyLogin() {
+  const user = document.getElementById('agencyUser').value.trim();
+  const pass = document.getElementById('agencyPass').value;
+  try {
+    const r = await fetch('/api/admin/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: user, password: pass })
+    });
+    const data = await r.json();
+    if (data.success) {
+      agencyMode = true;
+      document.getElementById('agencyLoginModal').style.display = 'none';
+      loadAgencyItineraries();
+      showPage('paquetes');
+      if (currentResults.length) renderResults(currentResults, currentResults[0] ? (currentResults[0].priceData ? currentResults[0].priceData.nights : 0) : 0);
+    } else {
+      document.getElementById('agencyLoginError').textContent = 'Usuario incorrecto';
+      document.getElementById('agencyLoginError').style.display = 'block';
+    }
+  } catch (e) {
+    document.getElementById('agencyLoginError').textContent = 'Error de conexión';
+    document.getElementById('agencyLoginError').style.display = 'block';
+  }
+}
+async function loadAgencyItineraries() {
+  try {
+    const r = await fetch('/api/admin/agency/itineraries');
+    agencyItineraries = await r.json();
+  } catch (e) { agencyItineraries = []; }
+}
+function getItinTitle(idaTipo, retornoTipo) {
+  const found = agencyItineraries.find(i => i.ida_tipo === idaTipo && i.retorno_tipo === retornoTipo);
+  return found ? found.title : (idaTipo + ' / ' + retornoTipo);
+}
+function getItinPrice(idaTipo, retornoTipo) {
+  const found = agencyItineraries.find(i => i.ida_tipo === idaTipo && i.retorno_tipo === retornoTipo);
+  return found ? { adult: found.price_adult, child: found.price_child, ida: found.ida_tramos, retorno: found.retorno_tramos } : null;
+}
+function agencyLogout() {
+  fetch('/api/admin/logout', { method: 'POST' }).catch(() => {});
+  agencyMode = false;
+  if (currentResults.length) renderResults(currentResults, currentResults[0] ? (currentResults[0].priceData ? currentResults[0].priceData.nights : 0) : 0);
+}
+function updateAgencyItin(hotelId) {
+  const ida = document.getElementById('aida-' + hotelId).value;
+  const ret = document.getElementById('aret-' + hotelId).value;
+  const info = document.getElementById('aitin-' + hotelId);
+  const title = getItinTitle(ida, ret);
+  const price = getItinPrice(ida, ret);
+  if (price) {
+    document.getElementById('afp-' + hotelId).value = price.adult;
+    document.getElementById('afpc-' + hotelId).value = price.child;
+  }
+  info.innerHTML = `<span style="font-size:0.8rem;color:#555;">✈️ ${title} · $${(price ? price.adult : 0).toFixed(2)} / $${(price ? price.child : 0).toFixed(2)}</span>`;
+}
+function getAgencyData(hotelId) {
+  const h = currentResults.find(x => x.id === hotelId);
+  if (!h) return null;
+  const ida = document.getElementById('aida-' + hotelId).value;
+  const ret = document.getElementById('aret-' + hotelId).value;
+  const fp = parseFloat(document.getElementById('afp-' + hotelId).value) || h.flightPrice;
+  const fpc = parseFloat(document.getElementById('afpc-' + hotelId).value) || (h.flightPriceChd || h.flightPrice * 0.68);
+  const price = getItinPrice(ida, ret);
+  return { h, ida, ret, fp, fpc, price, title: getItinTitle(ida, ret) };
+}
+async function agencyPreview(hotelId) {
+  const d = getAgencyData(hotelId);
+  if (!d) return;
+  const h = d.h;
+  const pd = h.priceData;
+  const nights = pd ? pd.nights : calcNights(document.getElementById('paqCheckIn').value, document.getElementById('paqCheckOut').value);
+  const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
+  const rateChdPp = pd && pd.rateChd ? pd.rateChd : 0;
+  const totalHotel = pd && !pd.error ? pd.total : 0;
+  const totalFlight = d.fp * (h.adults || 1) + d.fpc * (h.children || 0);
+  const ppAdult = ratePp * nights + d.fp;
+  const ppChild = d.fpc + (rateChdPp * nights);
+
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.style.cssText = 'display:flex;z-index:2000;';
+  modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+  modal.innerHTML = `<div class="modal-content" style="max-width:500px;text-align:left;padding:1.5rem;">
+    <div style="text-align:center;margin-bottom:1rem;">
+      <img src="/images/logo.png" alt="Chinita Travels" style="height:40px;">
+      <h3 style="margin:0.5rem 0 0;">Cotización · ${h.name}</h3>
+    </div>
+    <div class="preview-section">
+      <p><strong>📅</strong> ${document.getElementById('paqCheckIn').value} → ${document.getElementById('paqCheckOut').value} · ${nights} noche${nights !== 1 ? 's' : ''}</p>
+      <p><strong>👤</strong> ${h.adults} adulto${h.adults !== 1 ? 's' : ''}${h.children > 0 ? ' · ' + h.children + ' niño' + (h.children !== 1 ? 's' : '') : ''}</p>
+      <hr>
+      <p><strong>Alojamiento:</strong> $${(ratePp * nights).toFixed(2)}/pers <span style="color:#888;font-size:0.8rem;">($${ratePp.toFixed(2)}/noche)</span></p>
+      <p><strong>Boleto+traslado:</strong> $${d.fp.toFixed(2)}/pers</p>
+      <p style="font-weight:700;color:#1a73e8;"><strong>Total por adulto:</strong> $${ppAdult.toFixed(2)}</p>
+      ${h.children > 0 ? `<p style="font-weight:700;color:#0d47a1;"><strong>Total por niño:</strong> $${ppChild.toFixed(2)}</p>` : ''}
+      <p style="font-weight:800;font-size:1.1rem;color:#1a73e8;border-top:2px solid #1a73e8;padding-top:0.3rem;"><strong>Total (×${h.adults + h.children} pax):</strong> $${(totalHotel + totalFlight).toFixed(2)}</p>
+      <hr>
+      <p><strong>🛩️ ${d.title}</strong></p>
+      <p style="font-size:0.8rem;color:#888;">* Precio de boleto y traslado estimado · Boleto niños 2-12 años · Hotel niños 4-10 años</p>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:0.5rem;justify-content:center;">
+      <button class="btn-pdf" onclick="this.closest('.modal').remove();agencyPDF(${hotelId})">📄 Generar PDF</button>
+      <button class="btn-secondary" onclick="this.closest('.modal').remove()">Cerrar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+}
+async function agencyPDF(hotelId) {
+  const d = getAgencyData(hotelId);
+  if (!d) return;
+  const h = d.h;
+  const pd = h.priceData;
+  const nights = pd ? pd.nights : calcNights(document.getElementById('paqCheckIn').value, document.getElementById('paqCheckOut').value);
+  const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
+  const rateChdPp = pd && pd.rateChd ? pd.rateChd : 0;
+  const totalHotel = pd && !pd.error ? pd.total : 0;
+  const totalFlight = d.fp * (h.adults || 1) + d.fpc * (h.children || 0);
+  const ppAdult = ratePp * nights + d.fp;
+  const ppChild = d.fpc + (rateChdPp * nights);
+
+  const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
+  const ci = document.getElementById('paqCheckIn').value;
+  const co = document.getElementById('paqCheckOut').value;
+  const ciFmt = ci ? new Date(ci + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
+  const coFmt = co ? new Date(co + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
+
+  let itinTitle = d.title || '';
+  let idaTramos = d.price && d.price.ida ? d.price.ida : [];
+  let retornoTramos = d.price && d.price.retorno ? d.price.retorno : [];
+
+  try {
+    const resp = await fetch('/api/admin/agency/quote/pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        hotelName: h.name, hotelRating: h.rating, hotelCategory: h.category,
+        hotelRegime: h.regime, hotelDesc: h.description, hotelAddress: h.address,
+        hotelPhoto: h.main_photo, checkIn: ciFmt, checkOut: coFmt,
+        nights, adults: h.adults, children: h.children,
+        ratePp, rateChdPp, flightPriceAdult: d.fp, flightPriceChild: d.fpc,
+        totalHotel, totalFlight, total: totalHotel + totalFlight,
+        itineraryTitle: itinTitle,
+        idaTramos, retornoTramos
+      })
+    });
+    if (!resp.ok) { alert('Error al generar PDF'); return; }
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'cotizacion-' + hotelId + '-' + Date.now() + '.pdf';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    alert('Error al generar PDF: ' + e.message);
+  }
+}
 
 function updateDateRange() {
   const ci = document.getElementById('paqCheckIn');
@@ -601,6 +810,37 @@ function renderResults(hotels, nights) {
             <button class="btn-secondary" onclick="viewHotel(${h.id})">Visualizar</button>
             <button class="btn-whatsapp" onclick="openWhatsApp(${h.id})">Cotizar</button>
           </div>
+          ${agencyMode ? `
+          <div class="agency-controls">
+            <div class="agency-title">✈️ Panel Agencia</div>
+            <div class="agency-row">
+              <label>Boleto+traslado $:</label>
+              <input type="number" class="agency-fp" id="afp-${h.id}" value="${h.flightPrice}" step="5" min="0" style="width:70px;">
+              <label style="margin-left:0.5rem;">Niño $:</label>
+              <input type="number" class="agency-fpc" id="afpc-${h.id}" value="${h.flightPriceChd || h.flightPrice * 0.68}" step="5" min="0" style="width:70px;">
+            </div>
+            <div class="agency-row">
+              <label>Ida:</label>
+              <select class="agency-ida" id="aida-${h.id}" onchange="updateAgencyItin(${h.id})">
+                <option value="directo">Directo MAR→PMV</option>
+                <option value="via_valencia">Escala Valencia</option>
+                <option value="via_maracay">Escala Maracay</option>
+                <option value="via_caracas">Escala Caracas</option>
+              </select>
+              <label style="margin-left:0.5rem;">Retorno:</label>
+              <select class="agency-ret" id="aret-${h.id}" onchange="updateAgencyItin(${h.id})">
+                <option value="directo">Directo PMV→MAR</option>
+                <option value="via_valencia">Escala Valencia</option>
+                <option value="via_maracay">Escala Maracay</option>
+                <option value="via_caracas">Escala Caracas</option>
+              </select>
+            </div>
+            <div class="agency-row agency-itin-info" id="aitin-${h.id}"></div>
+            <div class="agency-row">
+              <button class="btn-preview" onclick="agencyPreview(${h.id})">👁 Vista Previa</button>
+              <button class="btn-pdf" onclick="agencyPDF(${h.id})">📄 PDF</button>
+            </div>
+          </div>` : ''}
         </div>
       </div>`;
   }).join('');
