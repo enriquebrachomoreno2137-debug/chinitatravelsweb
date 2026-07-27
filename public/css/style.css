@@ -554,8 +554,17 @@ footer {
 .hotel-rate-calculator .form-row .form-group { min-width: 120px; }
 .hotel-rates-table { overflow-x: auto; }
 .hotel-rates-table table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.hotel-rates-table th, .hotel-rates-table td { padding: 0.5rem 0.7rem; text-align: left; border-bottom: 1px solid #eee; }
+.hotel-rates-table th, .hotel-rates-table td { padding: 0.5rem 0.7rem; text-align: left; border-bottom: 1px solid #eee; white-space: nowrap; }
 .hotel-rates-table th { background: #f8f9fa; font-weight: 600; }
+.hotel-rates-table td:first-child { white-space: normal; }
+.hotel-rates-table td:nth-child(2),
+.hotel-rates-table td:nth-child(3),
+.hotel-rates-table td:nth-child(7) {
+  background: #f0f7ff;
+  font-weight: 500;
+  color: #0d47a1;
+  border-left: 3px solid #1565c0;
+}
 
 /* Hotel map */
 .hotel-map { margin-top: 1rem; }

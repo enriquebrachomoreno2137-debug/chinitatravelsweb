@@ -705,7 +705,8 @@ async function viewHotel(hotelId) {
             const now = new Date().toISOString().split('T')[0];
             const isExpired = r.sale_until && r.sale_until < now;
             const badge = !r.sale_until ? '—' : isExpired ? '<span class="promo-expired">Expirada</span>' : '<span class="promo-active">Vigente</span>';
-            return `<tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td><td>${r.sale_until || '—'}</td><td>${badge}</td></tr>`;
+            const fmt = d => d ? new Date(d + 'T12:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+            return `<tr><td>${r.season_name || '—'}</td><td>${fmt(r.date_from)}</td><td>${fmt(r.date_to)}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td><td>${fmt(r.sale_until)}</td><td>${badge}</td></tr>`;
           }).join('')}
           </tbody></table>
         </div>` : ''}
