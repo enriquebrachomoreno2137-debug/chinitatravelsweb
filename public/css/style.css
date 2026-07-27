@@ -94,7 +94,7 @@ section { margin-bottom: 2rem; }
   outline: none;
   border-color: #1a1a2e;
 }
-input[type="date"] { font-family: inherit; min-width: 155px; padding-right: 0.5rem; }
+input[type="date"] { font-family: inherit; min-width: 170px; padding-right: 0.5rem; min-height: 44px; }
 
 .btn-primary {
   background: #1a1a2e;
