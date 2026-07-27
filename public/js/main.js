@@ -581,16 +581,14 @@ function renderResults(hotels, nights) {
           <p class="hotel-desc">${h.description || ''}</p>
           ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
           <div class="hotel-price-breakdown">
-            <div class="price-line total-pp"><span>Por persona:</span> <span>$${pp.toFixed(2)}</span></div>
-            <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
-            <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
-            <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
-            ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(rateChd ).toFixed(2)}/noche</span></div>` : ''}
-            ${pd && pd.isPromo && pd.freeChildren > 0 ? `<div class="price-line price-sub" style="color:#e67e22;font-size:0.8rem;"><span>🎁 1er niño GRATIS por promo</span></div>` : ''}
-            <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
-            <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${h.flightPrice.toFixed(2)}</span></div>
-            ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(h.flightPriceChd || 0).toFixed(2)}</span></div>` : ''}
-            <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
+            ${makePriceHTML({
+              nights, adults: h.adults, children: h.children,
+              ratePp, rateChdPp: rateChd,
+              flightPrice: h.flightPrice, flightPriceChd: h.flightPriceChd || 0,
+              totalHotel, totalFlight, pd,
+              promoNote: '',
+              id: 'r' + h.id
+            })}
           </div>`}
           <div class="hotel-card-actions">
             <button class="btn-secondary" onclick="viewHotel(${h.id})">Visualizar</button>
@@ -671,29 +669,24 @@ async function viewHotel(hotelId) {
           </div>
           <div id="detailPrice">
             ${hasError ? `<div class="error-msg">${pd.error}</div>` : (() => {
-              const pp = adults > 0 ? (totalHotel + flightPrice * adults) / adults : 0;
-              return `
-            <div class="hotel-price-breakdown">
-              <div class="price-line total-pp"><span>Por persona:</span> <span>$${pp.toFixed(2)}</span></div>
-              <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
-              <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
-              <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
-              ${children > 0 ? `<div class="price-line price-sub"><span>${pd.paidChildren || children} niño${(pd.paidChildren || children) !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
-              ${pd && pd.isPromo && pd.freeChildren > 0 ? `<div class="price-line price-sub" style="color:#e67e22;font-size:0.8rem;"><span>🎁 1er niño GRATIS por promo</span></div>` : ''}
-              <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
-              <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
-              ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
-              <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
-            </div>`;})()}
-            ${(() => {
               const now = new Date().toISOString().split('T')[0];
               const expiredPromo = hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until < now);
               const activePromo = hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until >= now);
               const freeKids = pd && pd.isPromo && pd.freeChildren ? pd.freeChildren : 0;
-              if (activePromo) return `<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado${freeKids > 0 ? ' · 🎁 1er niño GRATIS' : ''}</div>`;
-              if (expiredPromo) return `<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>`;
-              return '';
-            })()}
+              const promoNote = activePromo ? `<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado${freeKids > 0 ? ' · 🎁 1er niño GRATIS' : ''}</div>`
+                : expiredPromo ? '<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>'
+                : '';
+              return `
+            <div class="hotel-price-breakdown">
+              ${makePriceHTML({
+                nights, adults, children,
+                ratePp, rateChdPp,
+                flightPrice, flightPriceChd,
+                totalHotel, totalFlight, pd,
+                promoNote,
+                id: 'det'
+              })}
+            </div>`;})()}
           </div>
           <button class="btn-whatsapp" onclick="openWhatsApp(${hotelId})">Cotizar por WhatsApp</button>
         </div>
@@ -757,21 +750,18 @@ async function recalcDetail() {
       : expiredPromo ? '<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>'
       : '';
 
-    const pp = adults > 0 ? (totalHotel + flightPrice * adults) / adults : 0;
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
-          <div class="price-line total-pp"><span>Por persona:</span> <span>$${pp.toFixed(2)}</span></div>
-          <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
-          <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
-          <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
-          ${children > 0 ? `<div class="price-line price-sub"><span>${pd.paidChildren || children} niño${(pd.paidChildren || children) !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
-          ${pd && pd.isPromo && pd.freeChildren > 0 ? `<div class="price-line price-sub" style="color:#e67e22;font-size:0.8rem;"><span>🎁 1er niño GRATIS por promo</span></div>` : ''}
-          <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
-          <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
-          ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
-          <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
-        </div>${promoNote}`;
+          ${makePriceHTML({
+            nights, adults, children,
+            ratePp, rateChdPp,
+            flightPrice, flightPriceChd,
+            totalHotel, totalFlight, pd,
+            promoNote,
+            id: 'det'
+          })}
+        </div>`;
     highlightActiveRates(checkIn, checkOut);
   } catch (err) {
     document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
@@ -792,6 +782,51 @@ function highlightActiveRates(checkIn, checkOut) {
       if (tr) tr.classList.add('rate-row-active');
     }
   });
+}
+
+function toggleBreakdown(id) {
+  const el = document.getElementById('bd-' + id);
+  const arr = document.getElementById('arr-' + id);
+  if (!el) return;
+  const open = el.classList.toggle('open');
+  arr.textContent = open ? '▼' : '▶';
+}
+
+function makePriceHTML(p) {
+  const { nights, adults, children, ratePp, rateChdPp, flightPrice, flightPriceChd, totalHotel, totalFlight, pd, promoNote, id } = p;
+  const paidChildren = (pd && pd.paidChildren) || 0;
+  const freeKids = (pd && pd.isPromo && pd.freeChildren) || 0;
+  const ppAdult = ratePp * nights + flightPrice;
+  const childHotel = freeKids > 0 ? 0 : rateChdPp * nights;
+  const ppChild = childHotel + flightPriceChd;
+  const total = (ratePp * nights + flightPrice) * adults + (childHotel + flightPriceChd) * paidChildren;
+
+  let html = `<div class="pp-row total-pp"><span>Por adulto:</span> <span>$${ppAdult.toFixed(2)}</span></div>`;
+  if (children > 0) {
+    html += `<div class="pp-row pp-child"><span>Por niño:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
+  }
+  html += `<div class="breakdown-toggle" onclick="toggleBreakdown('${id}')"><span id="arr-${id}">▶</span> Desglose</div>`;
+  html += `<div class="breakdown-detail" id="bd-${id}">`;
+  html += `<div class="bd-section-title">👤 Adulto (×${adults})</div>`;
+  html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(ratePp * nights * adults).toFixed(2)}</span></div>`;
+  html += `<div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${ratePp.toFixed(2)}/noche</span></div>`;
+  html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${(flightPrice * adults).toFixed(2)}</span></div>`;
+  html += `<div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>`;
+  if (children > 0) {
+    html += `<div class="bd-section-title">👶 Niño (×${paidChildren})</div>`;
+    if (freeKids > 0) {
+      html += `<div class="price-line" style="color:#e67e22;font-size:0.85rem;"><span>🎁 1er niño GRATIS - solo boleto</span></div>`;
+    } else {
+      html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(rateChdPp * nights * paidChildren).toFixed(2)}</span></div>`;
+      html += `<div class="price-line price-sub"><span>${paidChildren} niño${paidChildren !== 1 ? 's' : ''} × $${rateChdPp.toFixed(2)}/noche</span></div>`;
+    }
+    html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${(flightPriceChd * paidChildren).toFixed(2)}</span></div>`;
+    html += `<div class="price-line price-sub"><span>${paidChildren} niño${paidChildren !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>`;
+  }
+  html += `<div class="price-line total"><span>Total:</span> <span>$${total.toFixed(2)}</span></div>`;
+  html += `</div>`;
+  html += promoNote || '';
+  return html;
 }
 
 function openWhatsApp(hotelId) {
@@ -827,6 +862,6 @@ ${paidKids > 0 ? `👶 Niños: ${paidKids} × $${flightPriceChd.toFixed(2)}` : f
 ✈️ Vuelo + traslado: $${(flightPrice * adults + flightPriceChd * paidKids).toFixed(2)}
 ${freeKids > 0 ? `🎁 1er niño GRATIS por promo hot sale` : ''}
 Quedo atento a disponibilidad y precio final. Gracias!`;
-    window.open(`https://wa.me/584246390281?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/584246902591?text=${encodeURIComponent(msg)}`, '_blank');
   });
 }
