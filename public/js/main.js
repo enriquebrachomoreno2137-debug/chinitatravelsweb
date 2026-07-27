@@ -706,7 +706,7 @@ async function viewHotel(hotelId) {
             const isExpired = r.sale_until && r.sale_until < now;
             const badge = !r.sale_until ? '—' : isExpired ? '<span class="promo-expired">Expirada</span>' : '<span class="promo-active">Vigente</span>';
             const fmt = d => d ? new Date(d + 'T12:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
-            return `<tr><td>${r.season_name || '—'}</td><td>${fmt(r.date_from)}</td><td>${fmt(r.date_to)}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td><td>${fmt(r.sale_until)}</td><td>${badge}</td></tr>`;
+            return `<tr data-rate-id="${r.id}"><td>${r.season_name || '—'}</td><td>${fmt(r.date_from)}</td><td>${fmt(r.date_to)}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td><td>${fmt(r.sale_until)}</td><td>${badge}</td></tr>`;
           }).join('')}
           </tbody></table>
         </div>` : ''}
@@ -715,6 +715,7 @@ async function viewHotel(hotelId) {
           <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.address + ', ' + (hotel.location || 'Isla de Margarita'))}" target="_blank" rel="noopener" class="map-link">📍 Ver en Google Maps</a>
         </div>` : ''}
       </div>`;
+    highlightActiveRates(checkIn, checkOut);
   } catch (err) {
     document.getElementById('hotelDetail').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
   }
@@ -773,7 +774,28 @@ async function recalcDetail() {
         </div>${promoNote}`;
   } catch (err) {
     document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+      }
+    }
+    highlightActiveRates(checkIn, checkOut);
+  } catch (err) {
+    document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
   }
+}
+
+function highlightActiveRates(checkIn, checkOut) {
+  const hotel = currentDetail;
+  if (!hotel || !hotel.rates) return;
+  document.querySelectorAll('.hotel-rates-table tbody tr').forEach(tr => tr.classList.remove('rate-row-active'));
+  const ci = new Date(checkIn + 'T12:00:00');
+  const co = new Date(checkOut + 'T12:00:00');
+  hotel.rates.forEach(r => {
+    const from = new Date(r.date_from + 'T12:00:00');
+    const to = new Date(r.date_to + 'T12:00:00');
+    if (ci <= to && co > from) {
+      const tr = document.querySelector(`.hotel-rates-table tbody tr[data-rate-id="${r.id}"]`);
+      if (tr) tr.classList.add('rate-row-active');
+    }
+  });
 }
 
 function openWhatsApp(hotelId) {
