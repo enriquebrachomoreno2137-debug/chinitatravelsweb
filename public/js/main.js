@@ -697,12 +697,12 @@ async function viewHotel(hotelId) {
         ${hotel.rates && hotel.rates.length ? `
         <div class="hotel-rates-table">
           <h4>Tarifas por temporada</h4>
-          <table><thead><tr><th>Temporada</th><th>Desde</th><th>Hasta</th><th>1 Adulto</th><th>2+ Adultos c/u</th><th>Niño</th><th>Promo</th></tr></thead>
+          <table><thead><tr><th>Temporada</th><th>Desde</th><th>Hasta</th><th>1 Adulto</th><th>2+ Adultos c/u</th><th>Niño</th><th>Venta hasta</th><th>Promo</th></tr></thead>
           <tbody>${hotel.rates.map(r => {
             const now = new Date().toISOString().split('T')[0];
             const isExpired = r.sale_until && r.sale_until < now;
             const badge = !r.sale_until ? '—' : isExpired ? '<span class="promo-expired">Expirada</span>' : '<span class="promo-active">Vigente</span>';
-            return `<tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td><td>${badge}</td></tr>`;
+            return `<tr><td>${r.season_name || '—'}</td><td>${r.date_from}</td><td>${r.date_to}</td><td>$${(r.rate_sgl).toFixed(2)}</td><td>$${(r.rate_dbl).toFixed(2)}</td><td>$${(r.rate_chd).toFixed(2)}</td><td>${r.sale_until || '—'}</td><td>${badge}</td></tr>`;
           }).join('')}
           </tbody></table>
         </div>` : ''}
