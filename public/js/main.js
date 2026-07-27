@@ -273,8 +273,8 @@ function showPage(page) {
       if (!bar) {
         const div = document.createElement('div');
         div.id = 'agencyBar';
-        div.style.cssText = 'background:#e3f2fd;padding:0.3rem 1rem;font-size:0.8rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #90caf9;';
-        div.innerHTML = '<span style="color:#1565c0;font-weight:600;">🔧 Modo Agencia</span><span onclick="agencyLogout()" style="cursor:pointer;color:#c62828;font-weight:500;">Cerrar sesión</span>';
+        div.style.cssText = 'background:#f8f9fa;padding:0.2rem 1rem;font-size:0.75rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e0e0e0;color:#888;';
+        div.innerHTML = '<span>Modo Agencia</span><span onclick="agencyLogout()" style="cursor:pointer;color:#999;text-decoration:underline;">Cerrar sesión</span>';
         document.getElementById('pagePaquetes').insertBefore(div, document.getElementById('pagePaquetes').firstChild);
       }
     } else {
@@ -573,8 +573,72 @@ function updateAgencyItin(hotelId) {
   }
   info.innerHTML = `<span style="font-size:0.8rem;color:#555;">✈️ ${title} · $${(price ? price.adult : 0).toFixed(2)} / $${(price ? price.child : 0).toFixed(2)}</span>`;
 }
+function getEditorTramos(hotelId) {
+  const container = document.getElementById('det-itin-tramos-' + hotelId);
+  if (!container) return null;
+  const idaTramos = [], retornoTramos = [];
+  container.querySelectorAll('.agency-tramo').forEach(el => {
+    const tipo = el.dataset.tipo;
+    const tramo = {
+      origen: el.querySelector('.tramo-origen').value,
+      destino: el.querySelector('.tramo-destino').value,
+      salida: el.querySelector('.tramo-salida').value,
+      llegada: el.querySelector('.tramo-llegada').value
+    };
+    if (tipo === 'ida') idaTramos.push(tramo);
+    else retornoTramos.push(tramo);
+  });
+  return { ida: idaTramos, retorno: retornoTramos };
+}
+function updateDetailItin(hotelId) {
+  const ida = document.getElementById('aida-' + hotelId).value;
+  const ret = document.getElementById('aret-' + hotelId).value;
+  const price = getItinPrice(ida, ret);
+  if (price) {
+    document.getElementById('afp-' + hotelId).value = price.adult;
+    document.getElementById('afpc-' + hotelId).value = price.child;
+  }
+  const container = document.getElementById('det-itin-tramos-' + hotelId);
+  if (!container) return;
+  const title = getItinTitle(ida, ret);
+  let html = `<div style="font-weight:600;margin-bottom:0.3rem;">🛩️ ${title}</div>`;
+  if (price) {
+    let tramosIda = [];
+    try { tramosIda = typeof price.ida === 'string' ? JSON.parse(price.ida) : (price.ida || []); } catch (e) {}
+    html += `<div style="margin-top:0.3rem;"><strong>Ida:</strong></div>`;
+    tramosIda.forEach((t, i) => {
+      html += `<div class="agency-tramo" data-tipo="ida" data-idx="${i}">
+        <input class="tramo-origen" value="${t.origen || ''}" style="width:60px;">
+        <input class="tramo-destino" value="${t.destino || ''}" style="width:60px;">
+        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:60px;">
+        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:60px;">
+        <span style="font-size:0.75rem;color:#666;">${t.aerolinea || ''}</span>
+      </div>`;
+    });
+    let tramosRet = [];
+    try { tramosRet = typeof price.retorno === 'string' ? JSON.parse(price.retorno) : (price.retorno || []); } catch (e) {}
+    html += `<div style="margin-top:0.3rem;"><strong>Retorno:</strong></div>`;
+    tramosRet.forEach((t, i) => {
+      html += `<div class="agency-tramo" data-tipo="retorno" data-idx="${i}">
+        <input class="tramo-origen" value="${t.origen || ''}" style="width:60px;">
+        <input class="tramo-destino" value="${t.destino || ''}" style="width:60px;">
+        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:60px;">
+        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:60px;">
+        <span style="font-size:0.75rem;color:#666;">${t.aerolinea || ''}</span>
+      </div>`;
+    });
+    html += `<div style="margin-top:0.3rem;font-size:0.85rem;">💵 $${price.adult.toFixed(2)} / adulto · $${price.child.toFixed(2)} / niño</div>`;
+  }
+  container.innerHTML = html;
+}
 function getAgencyData(hotelId) {
-  const h = currentResults.find(x => x.id === hotelId);
+  let h = currentResults.find(x => x.id === hotelId);
+  if (!h && currentDetail && currentDetail.id === hotelId) {
+    h = Object.assign({}, currentDetail, {
+      adults: parseInt(document.getElementById('detAdults').value) || 2,
+      children: parseInt(document.getElementById('detChildren').value) || 0
+    });
+  }
   if (!h) return null;
   const ida = document.getElementById('aida-' + hotelId).value;
   const ret = document.getElementById('aret-' + hotelId).value;
@@ -588,7 +652,11 @@ async function agencyPreview(hotelId) {
   if (!d) return;
   const h = d.h;
   const pd = h.priceData;
-  const nights = pd ? pd.nights : calcNights(document.getElementById('paqCheckIn').value, document.getElementById('paqCheckOut').value);
+  const detCI = document.getElementById('detCheckIn') && document.getElementById('detCheckIn').value;
+  const detCO = document.getElementById('detCheckOut') && document.getElementById('detCheckOut').value;
+  const aCI = detCI || document.getElementById('paqCheckIn').value;
+  const aCO = detCO || document.getElementById('paqCheckOut').value;
+  const nights = pd ? pd.nights : calcNights(aCI, aCO);
   const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
   const rateChdPp = pd && pd.rateChd ? pd.rateChd : 0;
   const totalHotel = pd && !pd.error ? pd.total : 0;
@@ -606,7 +674,7 @@ async function agencyPreview(hotelId) {
       <h3 style="margin:0.5rem 0 0;">Cotización · ${h.name}</h3>
     </div>
     <div class="preview-section">
-      <p><strong>📅</strong> ${document.getElementById('paqCheckIn').value} → ${document.getElementById('paqCheckOut').value} · ${nights} noche${nights !== 1 ? 's' : ''}</p>
+      <p><strong>📅</strong> ${aCI} → ${aCO} · ${nights} noche${nights !== 1 ? 's' : ''}</p>
       <p><strong>👤</strong> ${h.adults} adulto${h.adults !== 1 ? 's' : ''}${h.children > 0 ? ' · ' + h.children + ' niño' + (h.children !== 1 ? 's' : '') : ''}</p>
       <hr>
       <p><strong>Alojamiento:</strong> $${(ratePp * nights).toFixed(2)}/pers <span style="color:#888;font-size:0.8rem;">($${ratePp.toFixed(2)}/noche)</span></p>
@@ -630,7 +698,11 @@ async function agencyPDF(hotelId) {
   if (!d) return;
   const h = d.h;
   const pd = h.priceData;
-  const nights = pd ? pd.nights : calcNights(document.getElementById('paqCheckIn').value, document.getElementById('paqCheckOut').value);
+  const detCI = document.getElementById('detCheckIn') && document.getElementById('detCheckIn').value;
+  const detCO = document.getElementById('detCheckOut') && document.getElementById('detCheckOut').value;
+  const aCI = detCI || document.getElementById('paqCheckIn').value;
+  const aCO = detCO || document.getElementById('paqCheckOut').value;
+  const nights = pd ? pd.nights : calcNights(aCI, aCO);
   const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
   const rateChdPp = pd && pd.rateChd ? pd.rateChd : 0;
   const totalHotel = pd && !pd.error ? pd.total : 0;
@@ -639,14 +711,14 @@ async function agencyPDF(hotelId) {
   const ppChild = d.fpc + (rateChdPp * nights);
 
   const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
-  const ci = document.getElementById('paqCheckIn').value;
-  const co = document.getElementById('paqCheckOut').value;
-  const ciFmt = ci ? new Date(ci + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
-  const coFmt = co ? new Date(co + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
+  const ciFmt = aCI ? new Date(aCI + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
+  const coFmt = aCO ? new Date(aCO + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
 
   let itinTitle = d.title || '';
   let idaTramos = d.price && d.price.ida ? d.price.ida : [];
   let retornoTramos = d.price && d.price.retorno ? d.price.retorno : [];
+  const editor = getEditorTramos(hotelId);
+  if (editor) { idaTramos = editor.ida; retornoTramos = editor.retorno; }
 
   try {
     const resp = await fetch('/api/admin/agency/quote/pdf', {
@@ -781,9 +853,10 @@ function renderResults(hotels, nights) {
     const totalFlight = h.flightPrice * (h.adults || 1) + (h.flightPriceChd || 0) * (h.children || 0);
     const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
     const rateChd = pd && pd.rateChd ? pd.rateChd : 0;
+    const pp = (h.adults || 1) > 0 ? (totalHotel + totalFlight) / (h.adults || 1) : 0;
 
     return `
-      <div class="hotel-card">
+      <div class="hotel-card" onclick="viewHotel(${h.id})" style="cursor:pointer;">
         <div class="hotel-card-img">
           ${h.main_photo ? `<img src="${h.main_photo}" alt="${h.name}" loading="lazy">` : '<div class="hotel-placeholder">🏖️</div>'}
         </div>
@@ -795,52 +868,11 @@ function renderResults(hotels, nights) {
           ${h.category ? `<span class="hotel-category">${h.category}</span>` : ''}
           ${h.regime ? `<span class="hotel-regime">${h.regime}</span>` : ''}
           <p class="hotel-desc">${h.description || ''}</p>
-          ${hasError ? `<div class="error-msg">${pd.error}</div>` : `
-          <div class="hotel-price-breakdown">
-            ${makePriceHTML({
-              nights, adults: h.adults, children: h.children,
-              ratePp, rateChdPp: rateChd,
-              flightPrice: h.flightPrice, flightPriceChd: h.flightPriceChd || 0,
-              totalHotel, totalFlight, pd,
-              promoNote: '',
-              id: 'r' + h.id
-            })}
-          </div>`}
-          <div class="hotel-card-actions">
-            <button class="btn-secondary" onclick="viewHotel(${h.id})">Visualizar</button>
-            <button class="btn-whatsapp" onclick="openWhatsApp(${h.id})">Cotizar</button>
+          <div class="hotel-card-price">
+            <span class="price-from">Desde</span>
+            <span class="price-value">$${pp.toFixed(2)}</span>
+            <span class="price-pp">por persona</span>
           </div>
-          ${agencyMode ? `
-          <div class="agency-controls">
-            <div class="agency-title">✈️ Panel Agencia</div>
-            <div class="agency-row">
-              <label>Boleto+traslado $:</label>
-              <input type="number" class="agency-fp" id="afp-${h.id}" value="${h.flightPrice}" step="5" min="0" style="width:70px;">
-              <label style="margin-left:0.5rem;">Niño $:</label>
-              <input type="number" class="agency-fpc" id="afpc-${h.id}" value="${h.flightPriceChd || h.flightPrice * 0.68}" step="5" min="0" style="width:70px;">
-            </div>
-            <div class="agency-row">
-              <label>Ida:</label>
-              <select class="agency-ida" id="aida-${h.id}" onchange="updateAgencyItin(${h.id})">
-                <option value="directo">Directo MAR→PMV</option>
-                <option value="via_valencia">Escala Valencia</option>
-                <option value="via_maracay">Escala Maracay</option>
-                <option value="via_caracas">Escala Caracas</option>
-              </select>
-              <label style="margin-left:0.5rem;">Retorno:</label>
-              <select class="agency-ret" id="aret-${h.id}" onchange="updateAgencyItin(${h.id})">
-                <option value="directo">Directo PMV→MAR</option>
-                <option value="via_valencia">Escala Valencia</option>
-                <option value="via_maracay">Escala Maracay</option>
-                <option value="via_caracas">Escala Caracas</option>
-              </select>
-            </div>
-            <div class="agency-row agency-itin-info" id="aitin-${h.id}"></div>
-            <div class="agency-row">
-              <button class="btn-preview" onclick="agencyPreview(${h.id})">👁 Vista Previa</button>
-              <button class="btn-pdf" onclick="agencyPDF(${h.id})">📄 PDF</button>
-            </div>
-          </div>` : ''}
         </div>
       </div>`;
   }).join('');
@@ -860,6 +892,7 @@ async function viewHotel(hotelId) {
     const children = parseInt(document.getElementById('children').value) || 0;
 
     const pd = await (await fetch(`/api/hotels/${hotelId}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
+    hotel.priceData = pd;
     const hasError = pd && pd.error;
     const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
     const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;
@@ -934,7 +967,39 @@ async function viewHotel(hotelId) {
             </div>`;})()}
           </div>
           <button class="btn-whatsapp" onclick="openWhatsApp(${hotelId})">Cotizar por WhatsApp</button>
+          <div class="desglose-nota" style="margin-top:0.3rem;">Incluye bolso de 5kg y equipaje de 23kg</div>
         </div>
+        ${agencyMode ? `
+        <div class="agency-controls-detail">
+          <h4>✈️ Panel Agencia</h4>
+          <div class="agency-row">
+            <label>Boleto+traslado $:</label>
+            <input type="number" class="agency-fp" id="afp-${hotelId}" value="${flightPrice}" step="5" min="0" style="width:70px;">
+            <label style="margin-left:0.5rem;">Niño $:</label>
+            <input type="number" class="agency-fpc" id="afpc-${hotelId}" value="${flightPriceChd}" step="5" min="0" style="width:70px;">
+          </div>
+          <div class="agency-row">
+            <label>Ida:</label>
+            <select class="agency-ida" id="aida-${hotelId}" onchange="updateDetailItin(${hotelId})">
+              <option value="directo">Directo MAR→PMV</option>
+              <option value="via_valencia">Escala Valencia</option>
+              <option value="via_maracay">Escala Maracay</option>
+              <option value="via_caracas">Escala Caracas</option>
+            </select>
+            <label style="margin-left:0.5rem;">Retorno:</label>
+            <select class="agency-ret" id="aret-${hotelId}" onchange="updateDetailItin(${hotelId})">
+              <option value="directo">Directo PMV→MAR</option>
+              <option value="via_valencia">Escala Valencia</option>
+              <option value="via_maracay">Escala Maracay</option>
+              <option value="via_caracas">Escala Caracas</option>
+            </select>
+          </div>
+          <div id="det-itin-tramos-${hotelId}" style="margin-top:0.5rem;font-size:0.85rem;"></div>
+          <div class="agency-row" style="margin-top:0.5rem;">
+            <button class="btn-pdf" onclick="agencyPDF(${hotelId})">📄 Descargar PDF</button>
+            <button class="btn-preview" onclick="agencyPreview(${hotelId})">👁 Vista Previa</button>
+          </div>
+        </div>` : ''}
         ${hotel.rates && hotel.rates.length ? `
         <div class="hotel-rates-table">
           <h4>Tarifas por temporada</h4>
@@ -954,6 +1019,7 @@ async function viewHotel(hotelId) {
         </div>` : ''}
       </div>`;
     highlightActiveRates(checkIn, checkOut);
+    if (agencyMode) updateDetailItin(hotelId);
   } catch (err) {
     document.getElementById('hotelDetail').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
   }
@@ -983,6 +1049,7 @@ async function recalcDetail() {
 
   try {
     const pd = await (await fetch(`/api/hotels/${currentDetail.id}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`)).json();
+    currentDetail.priceData = pd;
     const hasError = pd && pd.error;
     const flightPrices = await (await fetch('/api/flight-prices?destination=Margarita')).json();
     const flightPrice = flightPrices.length > 0 ? flightPrices[0].price : 0;

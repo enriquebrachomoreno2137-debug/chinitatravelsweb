@@ -520,9 +520,10 @@ footer {
 .price-line.total-pp { font-size: 1.3rem; font-weight: 800; color: #1a73e8; border: none; margin: 0; padding: 0.3rem 0; }
 .price-sub { font-size: 0.8rem; color: #777; padding-left: 1rem; }
 .price-sub-pp { font-size: 0.85rem; color: #555; padding-left: 0; margin-bottom: 0.3rem; }
-.hotel-card-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
-.hotel-card-actions .btn-secondary { flex: 1; }
-.hotel-card-actions .btn-whatsapp { flex: 1; }
+.hotel-card-price { text-align: center; padding: 0.5rem 0; margin-top: 0.3rem; border-top: 1px solid #eee; }
+.hotel-card-price .price-from { font-size: 0.75rem; color: #888; display: block; }
+.hotel-card-price .price-value { font-size: 1.5rem; font-weight: 800; color: #1a73e8; display: block; line-height: 1.2; }
+.hotel-card-price .price-pp { font-size: 0.75rem; color: #888; display: block; }
 
 /* Hotel detail */
 .hotel-detail-header { margin-bottom: 1rem; }
@@ -571,11 +572,15 @@ footer {
 
 /* Agency controls */
 .agency-controls { margin-top: 0.75rem; padding: 0.6rem; background: #f0f7ff; border: 1px solid #d0e3f7; border-radius: 6px; }
+.agency-controls-detail { margin-top: 1rem; padding: 0.8rem; background: #f0f7ff; border: 1px solid #d0e3f7; border-radius: 8px; }
+.agency-controls-detail h4 { margin: 0 0 0.5rem; font-size: 0.9rem; color: #1a73e8; }
 .agency-title { font-weight: 700; font-size: 0.8rem; color: #1a73e8; margin-bottom: 0.4rem; }
 .agency-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.3rem; }
 .agency-row label { font-size: 0.78rem; color: #444; white-space: nowrap; }
 .agency-row select { font-size: 0.78rem; padding: 0.2rem 0.3rem; border: 1px solid #ccc; border-radius: 3px; }
 .agency-itin-info { font-size: 0.8rem; color: #555; min-height: 1.2rem; }
+.agency-tramo { display: flex; align-items: center; gap: 0.2rem; margin-bottom: 0.2rem; }
+.agency-tramo input { font-size: 0.78rem; padding: 0.15rem 0.2rem; border: 1px solid #ccc; border-radius: 3px; }
 .btn-preview { padding: 0.35rem 0.8rem; font-size: 0.8rem; background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; border-radius: 4px; cursor: pointer; }
 .btn-preview:hover { background: #bbdefb; }
 .btn-pdf { padding: 0.35rem 0.8rem; font-size: 0.8rem; background: #1a73e8; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
