@@ -484,10 +484,13 @@ function initPaquetes() {
   paquetesInitialized = true;
 
   const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   document.getElementById('paqCheckIn').valueAsDate = today;
+  document.getElementById('paqCheckIn').setAttribute('min', todayStr);
   document.getElementById('paqCheckOut').valueAsDate = tomorrow;
+  document.getElementById('paqCheckOut').setAttribute('min', todayStr);
   updateDateRange();
 
   document.getElementById('paqCheckIn').addEventListener('change', updateDateRange);
@@ -518,6 +521,11 @@ async function loadHotels() {
     const checkIn = document.getElementById('paqCheckIn').value;
     const checkOut = document.getElementById('paqCheckOut').value;
     if (!checkIn || !checkOut) return;
+    const today = new Date().toISOString().split('T')[0];
+    if (checkIn < today) {
+      document.getElementById('hotelResults').innerHTML = '<div class="error-msg">La fecha de entrada no puede ser anterior a hoy.</div>';
+      return;
+    }
     const nights = calcNights(checkIn, checkOut);
     const adults = parseInt(document.getElementById('adults').value) || 2;
     const children = parseInt(document.getElementById('children').value) || 0;
