@@ -33,8 +33,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/admin', express.static(path.join(__dirname, 'admin')));
+const staticOpts = { maxAge: '1h', setHeaders: (res, filePath) => {
+  if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
+    res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+  }
+} };
+app.use(express.static(path.join(__dirname, 'public'), staticOpts));
+app.use('/admin', express.static(path.join(__dirname, 'admin'), staticOpts));
 
 function requireAdmin(req, res, next) {
   if (req.session && req.session.isAdmin) return next();
