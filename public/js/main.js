@@ -835,6 +835,7 @@ function makePriceHTML(p) {
     html += `<div class="price-line pp-persona-total"><span>Total por niño:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
   }
   html += `<div class="price-line total"><span>Total (×${adults + children} pax):</span> <span>$${total.toFixed(2)}</span></div>`;
+  html += `<div class="desglose-nota"><sup>*</sup> Precio de boleto y traslado estimado · Boleto niños 2-12 años · Hotel niños 4-10 años</div>`;
   html += `</div>`;
   html += promoNote || '';
   return html;
