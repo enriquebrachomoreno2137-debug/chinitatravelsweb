@@ -477,6 +477,11 @@ function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
 
   let total = 0;
   let breakdown = [];
+  let freeChildrenCount = 0;
+  let paidChildrenCount = children;
+
+  const isPromo = rate => rate.sale_until && adults >= 2;
+  const childFreeCount = rate => isPromo(rate) ? Math.min(children, 1) : 0;
 
   for (let i = 0; i < nights; i++) {
     const d = new Date(checkInDate);
@@ -484,14 +489,17 @@ function calculatePackagePrice(hotelId, checkIn, checkOut, adults, children) {
     const dateStr = d.toISOString().split('T')[0];
     const rate = findRateForDate(hotelId, dateStr);
     if (!rate) return { error: `Sin tarifa disponible para ${dateStr}` };
+    const freeKids = childFreeCount(rate);
+    const paidKids = children - freeKids;
+    if (i === 0) { freeChildrenCount = freeKids; paidChildrenCount = paidKids; }
     const roomRate = adults <= 1 ? rate.rate_sgl : rate.rate_dbl;
-    const nightCost = roomRate * (adults <= 1 ? 1 : adults) + rate.rate_chd * children;
+    const nightCost = roomRate * (adults <= 1 ? 1 : adults) + rate.rate_chd * paidKids;
     total += nightCost;
-    breakdown.push({ date: dateStr, rateName: rate.season_name, rateSgl: rate.rate_sgl, rateDbl: rate.rate_dbl, rateChd: rate.rate_chd, nightCost });
-    if (i === 0) { var firstSgl = rate.rate_sgl; var firstDbl = rate.rate_dbl; var firstChd = rate.rate_chd; }
+    breakdown.push({ date: dateStr, rateName: rate.season_name, rateSgl: rate.rate_sgl, rateDbl: rate.rate_dbl, rateChd: rate.rate_chd, nightCost, isPromo: !!rate.sale_until, freeKids });
+    if (i === 0) { var firstSgl = rate.rate_sgl; var firstDbl = rate.rate_dbl; var firstChd = rate.rate_chd; var firstIsPromo = !!rate.sale_until; var firstFreeKids = freeKids; }
   }
 
-  return { hotel, nights, adults, children, total, breakdown, rateSgl: firstSgl, rateDbl: firstDbl, rateChd: firstChd };
+  return { hotel, nights, adults, children, total, breakdown, rateSgl: firstSgl, rateDbl: firstDbl, rateChd: firstChd, isPromo: firstIsPromo, freeChildren: firstFreeKids, paidChildren: paidChildrenCount };
 }
 
 // ── FLIGHT PRICES CRUD ──

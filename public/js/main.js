@@ -586,6 +586,7 @@ function renderResults(hotels, nights) {
             <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
             <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
             ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(rateChd ).toFixed(2)}/noche</span></div>` : ''}
+            ${pd && pd.isPromo && pd.freeChildren > 0 ? `<div class="price-line price-sub" style="color:#e67e22;font-size:0.8rem;"><span>🎁 1er niño GRATIS por promo</span></div>` : ''}
             <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
             <div class="price-line price-sub"><span>${h.adults} adulto${h.adults !== 1 ? 's' : ''} × $${h.flightPrice.toFixed(2)}</span></div>
             ${h.children > 0 ? `<div class="price-line price-sub"><span>${h.children} niño${h.children !== 1 ? 's' : ''} × $${(h.flightPriceChd || 0).toFixed(2)}</span></div>` : ''}
@@ -677,7 +678,8 @@ async function viewHotel(hotelId) {
               <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
               <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
               <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
-              ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
+              ${children > 0 ? `<div class="price-line price-sub"><span>${pd.paidChildren || children} niño${(pd.paidChildren || children) !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
+              ${pd && pd.isPromo && pd.freeChildren > 0 ? `<div class="price-line price-sub" style="color:#e67e22;font-size:0.8rem;"><span>🎁 1er niño GRATIS por promo</span></div>` : ''}
               <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
               <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
               ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
@@ -687,7 +689,8 @@ async function viewHotel(hotelId) {
               const now = new Date().toISOString().split('T')[0];
               const expiredPromo = hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until < now);
               const activePromo = hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until >= now);
-              if (activePromo) return `<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado</div>`;
+              const freeKids = pd && pd.isPromo && pd.freeChildren ? pd.freeChildren : 0;
+              if (activePromo) return `<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado${freeKids > 0 ? ' · 🎁 1er niño GRATIS' : ''}</div>`;
               if (expiredPromo) return `<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>`;
               return '';
             })()}
@@ -747,7 +750,8 @@ async function recalcDetail() {
     const now = new Date().toISOString().split('T')[0];
     const expiredPromo = hotel && hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until < now);
     const activePromo = hotel && hotel.rates && hotel.rates.find(r => r.sale_until && r.sale_until >= now);
-    const promoNote = activePromo ? '<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado</div>'
+    const freeKids = pd && pd.isPromo && pd.freeChildren ? pd.freeChildren : 0;
+    const promoNote = activePromo ? `<div class="promo-note">🎉 Promoción activa — precio con descuento aplicado${freeKids > 0 ? ' · 🎁 1er niño GRATIS' : ''}</div>`
       : expiredPromo ? '<div class="promo-note">⚠️ La promoción ya expiró. El precio mostrado es tarifa regular. Pregúntanos si aún aplica la promo.</div>'
       : '';
 
@@ -759,7 +763,8 @@ async function recalcDetail() {
           <div class="price-sub-pp">Hotel + vuelo + traslado · ${nights} noche${nights !== 1 ? 's' : ''}</div>
           <div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(totalHotel ).toFixed(2)}</span></div>
           <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${(ratePp ).toFixed(2)}/noche</span></div>
-          ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
+          ${children > 0 ? `<div class="price-line price-sub"><span>${pd.paidChildren || children} niño${(pd.paidChildren || children) !== 1 ? 's' : ''} × $${(rateChdPp ).toFixed(2)}/noche</span></div>` : ''}
+          ${pd && pd.isPromo && pd.freeChildren > 0 ? `<div class="price-line price-sub" style="color:#e67e22;font-size:0.8rem;"><span>🎁 1er niño GRATIS por promo</span></div>` : ''}
           <div class="price-line" style="margin-top:4px;"><span>Vuelo + traslado:</span> <span>$${totalFlight.toFixed(2)}</span></div>
           <div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>
           ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
@@ -784,18 +789,24 @@ function openWhatsApp(hotelId) {
   const d1 = new Date(checkIn + 'T12:00:00').toLocaleDateString('es-ES', fOpts);
   const d2 = new Date(checkOut + 'T12:00:00').toLocaleDateString('es-ES', fOpts);
 
-  fetch('/api/flight-prices?destination=Margarita').then(r => r.json()).then(fp => {
+  const hotelIdNum = hotel.id || (currentResults.length ? currentResults[0].id : 0);
+  Promise.all([
+    fetch('/api/flight-prices?destination=Margarita').then(r => r.json()),
+    fetch(`/api/hotels/${hotelIdNum}/price?check_in=${checkIn}&check_out=${checkOut}&adults=${adults}&children=${children}`).then(r => r.json())
+  ]).then(([fp, pd]) => {
     const flightPrice = fp.length > 0 ? fp[0].price : 0;
     const flightPriceChd = fp.length > 0 ? (fp[0].price_chd || flightPrice * 0.68) : 0;
+    const freeKids = pd && pd.isPromo && pd.freeChildren ? pd.freeChildren : 0;
+    const paidKids = children - freeKids;
     const msg = `Hola, quiero cotizar este paquete:
 
 🏨 Hotel: ${hotel.name}
 📅 Entrada: ${d1}
 📅 Salida: ${d2} (${nights} noche${nights !== 1 ? 's' : ''})
 👤 Adultos: ${adults} × $${flightPrice.toFixed(2)}
-${children > 0 ? `👶 Niños: ${children} × $${flightPriceChd.toFixed(2)}` : ''}
-✈️ Vuelo + traslado: $${(flightPrice * adults + flightPriceChd * children).toFixed(2)}
-
+${paidKids > 0 ? `👶 Niños: ${paidKids} × $${flightPriceChd.toFixed(2)}` : freeKids > 0 ? `👶 1 niño GRATIS (promo)` : ''}
+✈️ Vuelo + traslado: $${(flightPrice * adults + flightPriceChd * paidKids).toFixed(2)}
+${freeKids > 0 ? `🎁 1er niño GRATIS por promo hot sale` : ''}
 Quedo atento a disponibilidad y precio final. Gracias!`;
     window.open(`https://wa.me/584246390281?text=${encodeURIComponent(msg)}`, '_blank');
   });
