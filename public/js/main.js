@@ -818,22 +818,23 @@ function makePriceHTML(p) {
   html += `<div class="breakdown-toggle" onclick="toggleBreakdown('${id}')"><span id="arr-${id}">▶</span> Desglose</div>`;
   html += `<div class="breakdown-detail" id="bd-${id}">`;
   html += `<div class="bd-section-title">👤 Adulto (×${adults})</div>`;
-  html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(ratePp * nights * adults).toFixed(2)}</span></div>`;
-  html += `<div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${ratePp.toFixed(2)}/noche</span></div>`;
-  html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${(flightPrice * adults).toFixed(2)}</span></div>`;
-  html += `<div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>`;
+  html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(ratePp * nights).toFixed(2)}</span></div>`;
+  html += `<div class="price-line price-sub"><span>$${ratePp.toFixed(2)}/noche</span></div>`;
+  html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${flightPrice.toFixed(2)}</span></div>`;
+  html += `<div class="price-line pp-persona-total"><span>Total por adulto:</span> <span>$${ppAdult.toFixed(2)}</span></div>`;
   if (children > 0) {
     html += `<div class="bd-section-title">👶 Niño (×${children})</div>`;
     if (freeKids > 0) {
       html += `<div class="price-line" style="color:#e67e22;font-size:0.85rem;"><span>🎁 1er niño GRATIS - hotel gratis, boleto paga</span></div>`;
+      html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${flightPriceChd.toFixed(2)}</span></div>`;
     } else {
-      html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(rateChdPp * nights * paidChildren).toFixed(2)}</span></div>`;
-      html += `<div class="price-line price-sub"><span>${paidChildren} niño${paidChildren !== 1 ? 's' : ''} × $${rateChdPp.toFixed(2)}/noche</span></div>`;
+      html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(rateChdPp * nights).toFixed(2)}</span></div>`;
+      html += `<div class="price-line price-sub"><span>$${rateChdPp.toFixed(2)}/noche</span></div>`;
+      html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${flightPriceChd.toFixed(2)}</span></div>`;
     }
-    html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${(flightPriceChd * children).toFixed(2)}</span></div>`;
-    html += `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>`;
+    html += `<div class="price-line pp-persona-total"><span>Total por niño:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
   }
-  html += `<div class="price-line total"><span>Total:</span> <span>$${total.toFixed(2)}</span></div>`;
+  html += `<div class="price-line total"><span>Total (×${adults + children} pax):</span> <span>$${total.toFixed(2)}</span></div>`;
   html += `</div>`;
   html += promoNote || '';
   return html;

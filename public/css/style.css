@@ -566,6 +566,7 @@ footer {
 .breakdown-detail { display: none; }
 .breakdown-detail.open { display: block; }
 .bd-section-title { font-weight: 600; font-size: 0.85rem; color: #555; padding: 0.4rem 0 0.1rem; border-top: 1px solid #eee; margin-top: 0.3rem; }
+.pp-persona-total { font-weight: 700; font-size: 0.9rem; color: #1a73e8; padding: 0.2rem 0; border-top: 1px dashed #ddd; margin-top: 0.2rem; }
 
 /* Hotel map */
 .hotel-map { margin-top: 1rem; }
