@@ -810,7 +810,7 @@ n('Aeropostal - Nuevo itinerario Valencia-Porlamar (10 julio)',
   const ld = hotels[hotels.length - 1];
   const ldId = ld.id;
   db.addHotelRate(ldId, 'Promo Hot Sale 10%', '2026-07-01', '2026-07-25', 76.50, 63.00, 31.50, 0, 2, '2026-07-31');
-  db.addHotelRate(ldId, 'Temporada Media', '2026-07-26', '2026-07-31', 76.50, 63.00, 31.50, 0, 2);
+  db.addHotelRate(ldId, 'Temporada Media', '2026-07-26', '2026-07-31', 85.00, 70.00, 35.00, 0, 2);
   db.addHotelRate(ldId, 'Promo Hot Sale Verano 10%', '2026-08-01', '2026-09-15', 94.50, 76.50, 38.70, 0, 2, '2026-08-31');
   db.addHotelRate(ldId, 'Verano', '2026-08-01', '2026-09-15', 105.00, 85.00, 43.00, 0, 2);
   db.addHotelRate(ldId, 'Temporada Baja', '2026-09-16', '2026-12-20', 85.00, 70.00, 35.00, 0, 2);
