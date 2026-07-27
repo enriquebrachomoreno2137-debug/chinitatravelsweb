@@ -665,11 +665,9 @@ async function viewHotel(hotelId) {
           <div class="form-row">
             <div class="form-group" style="flex:1;">
               <label>Entrada</label>
-              <input type="date" id="detCheckIn" value="${checkIn}" onchange="recalcDetail()">
-            </div>
-            <div class="form-group" style="flex:1;">
+              <input type="date" id="detCheckIn" value="${checkIn}" min="${new Date().toISOString().split('T')[0]}" onchange="recalcDetail()">
               <label>Salida</label>
-              <input type="date" id="detCheckOut" value="${checkOut}" onchange="recalcDetail()">
+              <input type="date" id="detCheckOut" value="${checkOut}" min="${new Date().toISOString().split('T')[0]}" onchange="recalcDetail()">
             </div>
             <div class="form-group"><label>Adultos</label><input type="number" id="detAdults" min="1" value="${adults}" onchange="recalcDetail()"></div>
             <div class="form-group"><label>Niños</label><input type="number" id="detChildren" min="0" value="${children}" onchange="recalcDetail()"></div>
@@ -726,6 +724,12 @@ async function recalcDetail() {
   const checkIn = document.getElementById('detCheckIn').value;
   const checkOut = document.getElementById('detCheckOut').value;
   if (!checkIn || !checkOut) return;
+  const today = new Date().toISOString().split('T')[0];
+  if (checkIn < today) {
+    document.getElementById('detailPrice').innerHTML = '<div class="error-msg">La fecha de entrada no puede ser anterior a hoy.</div>';
+    highlightActiveRates(null, null);
+    return;
+  }
   const nights = calcNights(checkIn, checkOut);
 
   const fOpts = { day: 'numeric', month: 'long', year: 'numeric' };
