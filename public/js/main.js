@@ -564,7 +564,6 @@ function renderResults(hotels, nights) {
     const totalFlight = h.flightPrice * (h.adults || 1) + (h.flightPriceChd || 0) * (h.children || 0);
     const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
     const rateChd = pd && pd.rateChd ? pd.rateChd : 0;
-    const pp = (h.adults || 1) > 0 ? (totalHotel + h.flightPrice * (h.adults || 1)) / (h.adults || 1) : 0;
 
     return `
       <div class="hotel-card">
@@ -797,9 +796,8 @@ function makePriceHTML(p) {
   const paidChildren = (pd && pd.paidChildren) || 0;
   const freeKids = (pd && pd.isPromo && pd.freeChildren) || 0;
   const ppAdult = ratePp * nights + flightPrice;
-  const childHotel = freeKids > 0 ? 0 : rateChdPp * nights;
-  const ppChild = childHotel + flightPriceChd;
-  const total = (ratePp * nights + flightPrice) * adults + (childHotel + flightPriceChd) * paidChildren;
+  const ppChild = flightPriceChd + (freeKids > 0 ? 0 : rateChdPp * nights);
+  const total = (totalHotel || 0) + (totalFlight || 0);
 
   let html = `<div class="pp-row total-pp"><span>Por adulto:</span> <span>$${ppAdult.toFixed(2)}</span></div>`;
   if (children > 0) {
@@ -813,15 +811,15 @@ function makePriceHTML(p) {
   html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${(flightPrice * adults).toFixed(2)}</span></div>`;
   html += `<div class="price-line price-sub"><span>${adults} adulto${adults !== 1 ? 's' : ''} × $${flightPrice.toFixed(2)}</span></div>`;
   if (children > 0) {
-    html += `<div class="bd-section-title">👶 Niño (×${paidChildren})</div>`;
+    html += `<div class="bd-section-title">👶 Niño (×${children})</div>`;
     if (freeKids > 0) {
-      html += `<div class="price-line" style="color:#e67e22;font-size:0.85rem;"><span>🎁 1er niño GRATIS - solo boleto</span></div>`;
+      html += `<div class="price-line" style="color:#e67e22;font-size:0.85rem;"><span>🎁 1er niño GRATIS - hotel gratis, boleto paga</span></div>`;
     } else {
       html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(rateChdPp * nights * paidChildren).toFixed(2)}</span></div>`;
       html += `<div class="price-line price-sub"><span>${paidChildren} niño${paidChildren !== 1 ? 's' : ''} × $${rateChdPp.toFixed(2)}/noche</span></div>`;
     }
-    html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${(flightPriceChd * paidChildren).toFixed(2)}</span></div>`;
-    html += `<div class="price-line price-sub"><span>${paidChildren} niño${paidChildren !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>`;
+    html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${(flightPriceChd * children).toFixed(2)}</span></div>`;
+    html += `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>`;
   }
   html += `<div class="price-line total"><span>Total:</span> <span>$${total.toFixed(2)}</span></div>`;
   html += `</div>`;
@@ -851,16 +849,15 @@ function openWhatsApp(hotelId) {
     const flightPrice = fp.length > 0 ? fp[0].price : 0;
     const flightPriceChd = fp.length > 0 ? (fp[0].price_chd || flightPrice * 0.68) : 0;
     const freeKids = pd && pd.isPromo && pd.freeChildren ? pd.freeChildren : 0;
-    const paidKids = children - freeKids;
     const msg = `Hola, quiero cotizar este paquete:
 
 🏨 Hotel: ${hotel.name}
 📅 Entrada: ${d1}
 📅 Salida: ${d2} (${nights} noche${nights !== 1 ? 's' : ''})
-👤 Adultos: ${adults} × $${flightPrice.toFixed(2)}
-${paidKids > 0 ? `👶 Niños: ${paidKids} × $${flightPriceChd.toFixed(2)}` : freeKids > 0 ? `👶 1 niño GRATIS (promo)` : ''}
-✈️ Vuelo + traslado: $${(flightPrice * adults + flightPriceChd * paidKids).toFixed(2)}
-${freeKids > 0 ? `🎁 1er niño GRATIS por promo hot sale` : ''}
+👤 Adultos: ${adults} × $${flightPrice.toFixed(2)} c/u
+${children > 0 ? `👶 Niños: ${children} × $${flightPriceChd.toFixed(2)} c/u` : ''}
+${freeKids > 0 ? `🎁 1er niño GRATIS (hotel gratis, boleto paga)` : ''}
+✈️ Vuelo + traslado: $${(flightPrice * adults + flightPriceChd * children).toFixed(2)}
 Quedo atento a disponibilidad y precio final. Gracias!`;
     window.open(`https://wa.me/584246902591?text=${encodeURIComponent(msg)}`, '_blank');
   });
