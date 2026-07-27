@@ -772,10 +772,6 @@ async function recalcDetail() {
           ${children > 0 ? `<div class="price-line price-sub"><span>${children} niño${children !== 1 ? 's' : ''} × $${flightPriceChd.toFixed(2)}</span></div>` : ''}
           <div class="price-line total"><span>Total:</span> <span>$${(totalHotel + totalFlight).toFixed(2)}</span></div>
         </div>${promoNote}`;
-  } catch (err) {
-    document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
-      }
-    }
     highlightActiveRates(checkIn, checkOut);
   } catch (err) {
     document.getElementById('detailPrice').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
