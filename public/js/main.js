@@ -579,11 +579,13 @@ function getEditorTramos(hotelId) {
   const idaTramos = [], retornoTramos = [];
   container.querySelectorAll('.agency-tramo').forEach(el => {
     const tipo = el.dataset.tipo;
+    const aerolineaInput = el.querySelector('.tramo-aerolinea');
     const tramo = {
       origen: el.querySelector('.tramo-origen').value,
       destino: el.querySelector('.tramo-destino').value,
       salida: el.querySelector('.tramo-salida').value,
-      llegada: el.querySelector('.tramo-llegada').value
+      llegada: el.querySelector('.tramo-llegada').value,
+      aerolinea: aerolineaInput ? aerolineaInput.value : ''
     };
     if (tipo === 'ida') idaTramos.push(tramo);
     else retornoTramos.push(tramo);
@@ -610,9 +612,9 @@ function updateDetailItin(hotelId) {
       html += `<div class="agency-tramo" data-tipo="ida" data-idx="${i}">
         <input class="tramo-origen" value="${t.origen || ''}" style="width:60px;">
         <input class="tramo-destino" value="${t.destino || ''}" style="width:60px;">
-        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:60px;">
-        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:60px;">
-        <span style="font-size:0.75rem;color:#666;">${t.aerolinea || ''}</span>
+        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:65px;">
+        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:65px;">
+        <input class="tramo-aerolinea" value="${t.aerolinea || ''}" style="width:70px;" placeholder="Aerolínea">
       </div>`;
     });
     let tramosRet = [];
@@ -622,9 +624,9 @@ function updateDetailItin(hotelId) {
       html += `<div class="agency-tramo" data-tipo="retorno" data-idx="${i}">
         <input class="tramo-origen" value="${t.origen || ''}" style="width:60px;">
         <input class="tramo-destino" value="${t.destino || ''}" style="width:60px;">
-        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:60px;">
-        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:60px;">
-        <span style="font-size:0.75rem;color:#666;">${t.aerolinea || ''}</span>
+        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:65px;">
+        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:65px;">
+        <input class="tramo-aerolinea" value="${t.aerolinea || ''}" style="width:70px;" placeholder="Aerolínea">
       </div>`;
     });
     html += `<div style="margin-top:0.3rem;font-size:0.85rem;">💵 $${price.adult.toFixed(2)} / adulto · $${price.child.toFixed(2)} / niño</div>`;
