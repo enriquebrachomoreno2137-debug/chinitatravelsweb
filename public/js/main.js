@@ -632,14 +632,15 @@ function updateDetailItin(hotelId) {
   container.innerHTML = html;
 }
 function getAgencyData(hotelId) {
+  const isDetail = currentDetail && currentDetail.id === hotelId;
   let h = currentResults.find(x => x.id === hotelId);
-  if (!h && currentDetail && currentDetail.id === hotelId) {
-    h = Object.assign({}, currentDetail, {
-      adults: parseInt(document.getElementById('detAdults').value) || 2,
-      children: parseInt(document.getElementById('detChildren').value) || 0
-    });
-  }
+  if (!h) h = isDetail ? Object.assign({}, currentDetail) : null;
   if (!h) return null;
+  if (isDetail) {
+    h.adults = parseInt(document.getElementById('detAdults').value) || 2;
+    h.children = parseInt(document.getElementById('detChildren').value) || 0;
+    if (!h.photos && currentDetail.photos) h.photos = currentDetail.photos;
+  }
   const ida = document.getElementById('aida-' + hotelId).value;
   const ret = document.getElementById('aret-' + hotelId).value;
   const fp = parseFloat(document.getElementById('afp-' + hotelId).value) || h.flightPrice;
@@ -727,7 +728,8 @@ async function agencyPDF(hotelId) {
       body: JSON.stringify({
         hotelName: h.name, hotelRating: h.rating, hotelCategory: h.category,
         hotelRegime: h.regime, hotelDesc: h.description, hotelAddress: h.address,
-        hotelPhoto: h.main_photo, checkIn: ciFmt, checkOut: coFmt,
+        hotelPhotos: h.photos ? h.photos.slice(0, 3).map(p => p.photo_url || p) : (h.main_photo ? [h.main_photo] : []),
+        checkIn: ciFmt, checkOut: coFmt,
         nights, adults: h.adults, children: h.children,
         ratePp, rateChdPp, flightPriceAdult: d.fp, flightPriceChild: d.fpc,
         totalHotel, totalFlight, total: totalHotel + totalFlight,
