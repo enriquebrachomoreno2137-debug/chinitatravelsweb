@@ -55,7 +55,7 @@ body {
 .hidden { display: none !important; }
 
 header {
-  background: linear-gradient(135deg, var(--azul-marino) 0%, var(--morado) 100%);
+  background: var(--azul-marino);
   color: var(--blanco);
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.25);
@@ -227,13 +227,13 @@ input[type="date"] { font-family: inherit; min-width: 150px; min-height: 44px; }
   border-color: #25D366;
 }
 .redirect-notice {
-  background: #fff3cd;
-  border: 1px solid #ffc107;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
   border-radius: 10px;
   padding: 1rem 1.2rem;
   margin-bottom: 1rem;
   font-weight: 500;
-  color: #856404;
+  color: var(--azul-marino);
 }
 .btn-whatsapp {
   background: #25D366;
@@ -538,8 +538,8 @@ footer {
   margin-right: 0.4rem;
   margin-bottom: 0.4rem;
 }
-.hotel-category { background: #e3f2fd; color: var(--azul-pacifico); }
-.hotel-regime { background: #e8f5e9; color: #2e7d32; }
+.hotel-category { background: #eef2ff; color: var(--azul-marino); }
+.hotel-regime { background: var(--celeste-niebla); color: var(--azul-pacifico); }
 .hotel-desc {
   font-size: 0.9rem;
   color: #555;
@@ -603,7 +603,7 @@ footer {
 .hotel-rates-table th, .hotel-rates-table td { padding: 0.5rem 0.7rem; text-align: left; border-bottom: 1px solid #eee; white-space: nowrap; }
 .hotel-rates-table th { background: var(--gris-platino); font-weight: 600; color: var(--azul-marino); }
 .hotel-rates-table td:first-child { white-space: normal; }
-.rate-row-active { background: #fff9c4 !important; outline: 2px solid #f9a825; outline-offset: -2px; }
+.rate-row-active { background: #eef2ff !important; outline: 2px solid var(--azul-marino); outline-offset: -2px; }
 .pp-row { display: flex; justify-content: space-between; align-items: center; padding: 0.15rem 0; }
 .pp-row.total-pp { font-size: 1.3rem; font-weight: 800; color: var(--azul-pacifico); }
 .pp-row.pp-child { font-size: 1rem; font-weight: 700; color: var(--azul-marino); }
@@ -640,12 +640,12 @@ footer {
 .map-link:hover { background: #e0e4ea; }
 
 /* Promo badges */
-.promo-active { display:inline-block; background:#e8f5e9; color:#2e7d32; font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; white-space:nowrap; }
-.promo-expired { display:inline-block; background:#fff3e0; color:#e65100; font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; white-space:nowrap; }
-.promo-note { background:#fff3e0; border:1px solid #ffe0b2; border-radius:8px; padding:0.6rem 1rem; margin:0.5rem 0; font-size:0.85rem; color:#e65100; }
+.promo-active { display:inline-block; background:#eef2ff; color:var(--azul-marino); font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; white-space:nowrap; }
+.promo-expired { display:inline-block; background:#f5f5f5; color:var(--gris-oscuro); font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; white-space:nowrap; }
+.promo-note { background:#eef2ff; border:1px solid #c7d2fe; border-radius:8px; padding:0.6rem 1rem; margin:0.5rem 0; font-size:0.85rem; color:var(--azul-marino); }
 
 /* Info box */
-.info-box { background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: #2e7d32; line-height: 1.5; max-width: 800px; margin-left: auto; margin-right: auto; }
+.info-box { background: var(--celeste-niebla); border: 1px solid var(--gris-claro); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--azul-pacifico); line-height: 1.5; max-width: 800px; margin-left: auto; margin-right: auto; }
 
 /* WhatsApp float */
 .whatsapp-float {
@@ -661,9 +661,9 @@ footer {
 .empty-msg { text-align: center; padding: 2rem; color: #666; }
 #resultsHeader { margin-bottom: 1rem; text-align: center; }
 #dateRangeDisplay {
-  background: #eef2ff; color: var(--azul-marino); padding: 0.2rem 0.7rem; border-radius: 4px;
+  background: var(--celeste-niebla); color: var(--azul-pacifico); padding: 0.2rem 0.7rem; border-radius: 4px;
   display: inline-block; font-weight: 500; font-size: 0.85rem; margin-top: 0.4rem;
-  border-left: 3px solid var(--azul-marino);
+  border-left: 3px solid var(--azul-pacifico);
 }
 
 /* Lightbox */
