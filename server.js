@@ -580,19 +580,26 @@ app.post('/api/admin/agency/quote/pdf', async (req, res) => {
     doc.pipe(res);
 
     const pw = doc.page.width - 72;
+    const cl = '#0E1B68'; const cm = '#662D91'; const cg = '#939598';
     let y = 28;
 
-    // ── Header ──
+    const ppAdult = ratePp * nights + flightPriceAdult;
+    const ppChild = (rateChdPp || 0) * nights + (flightPriceChild || 0);
+    const totalAdultos = ppAdult * adults;
+    const totalNinos = ppChild * children;
+    const granTotal = totalAdultos + totalNinos;
+
+    // ─── HEADER ───
     const logoPath = path.join(__dirname, 'public', 'images', 'logo.png');
     if (fs.existsSync(logoPath)) doc.image(logoPath, 36, y, { width: 38 });
-    doc.fontSize(12).font('Helvetica-Bold').fillColor('#0E1B68').text('CHINITA TRAVELS', 82, y + 4);
-    doc.fontSize(6).fillColor('#939598').text('Agencia de Viajes · RIF J-12345678-0', 82, y + 19);
-    y += 32;
-    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
-    y += 10;
+    doc.fontSize(12).font('Helvetica-Bold').fillColor(cl).text('CHINITA TRAVELS', 82, y + 3);
+    doc.fontSize(6).fillColor(cg).text('AGENCIA DE VIAJES & TURISMO  •  RIF J-12345678-0', 82, y + 18);
+    doc.fontSize(14).fillColor(cl).text('COTIZACIÓN CONFIRMADA', 36, y + 30, { align: 'right' });
+    y += 50;
 
-    // ── Photos row ──
+    // ─── PHOTOS ROW ───
     const photoUrls = (hotelPhotos || []).filter(Boolean).slice(0, 3);
+    const labels = ['Instalaciones & Playa', 'Área de Piscina', 'Habitación Superior'];
     if (photoUrls.length) {
       const pm = 4;
       const photoW = (pw - pm * (photoUrls.length - 1)) / photoUrls.length;
@@ -602,121 +609,133 @@ app.post('/api/admin/agency/quote/pdf', async (req, res) => {
           doc.image(buf, 36 + i * (photoW + pm), y, { width: photoW, height: 64 });
         } catch (e) { /* skip */ }
       }
-      y += 72;
+      y += 68;
+      for (let i = 0; i < photoUrls.length; i++) {
+        doc.fontSize(5.5).fillColor(cg).text(labels[i] || '', 36 + i * (photoW + pm), y, { width: photoW, align: 'center' });
+      }
+      y += 10;
     }
 
-    // ── Hotel name ──
-    doc.fontSize(11).font('Helvetica-Bold').fillColor('#0E1B68').text(hotelName || '', 36, y);
-    y += 14;
-    let tags = [];
-    if (hotelRating) tags.push('\u2b50 ' + hotelRating);
-    if (hotelCategory) tags.push(hotelCategory);
-    if (hotelRegime) tags.push(hotelRegime);
-    if (tags.length) { doc.fontSize(7).fillColor('#662D91').text(tags.join('  '), 36, y); y += 9; }
-    if (hotelAddress) { doc.fontSize(6).fillColor('#939598').text(hotelAddress, 36, y); y += 8; }
-    y += 2;
-
+    // ─── HOTEL INFO ───
+    doc.fontSize(10).font('Helvetica-Bold').fillColor(cl).text(hotelName || '', 36, y);
+    y += 13;
+    let hotelLine = hotelAddress || '';
+    if (hotelRegime) hotelLine += (hotelLine ? '  •  ' : '') + 'Régimen ' + hotelRegime;
+    if (hotelLine) { doc.fontSize(6.5).fillColor(cg).text(hotelLine, 36, y); y += 10; }
     if (hotelDesc) {
       doc.fontSize(6.5).font('Helvetica').fillColor('#555');
       const dh = doc.heightOfString(hotelDesc, { width: pw, lineGap: 1 });
-      doc.text(hotelDesc, 36, y, { width: pw, lineGap: 1 });
+      doc.text('Hotel de categoría ' + (hotelCategory || 'Superior') + ' ideal para el disfrute en familia. ' + hotelDesc, 36, y, { width: pw, lineGap: 1 });
       y += dh + 4;
     }
-
-    // ── Todo Incluido ──
-    doc.fontSize(7).font('Helvetica-Bold').fillColor('#0E1B68').text('INCLUYE', 36, y);
-    y += 9;
-    doc.fontSize(6).font('Helvetica').fillColor('#555');
-    const inclText = 'R\u00e9gimen Todo Incluido: Desayunos, almuerzos y cenas tipo Buffet, bebidas nacionales e internacionales, snack de media tarde, animaci\u00f3n diurna y nocturna, piscina, bar en la playa, toldos, sillas, deportes acu\u00e1ticos no motorizados y WiFi en zonas comunes. Traslados privados aeropuerto-hotel-aeropuerto incluidos.';
-    const ih = doc.heightOfString(inclText, { width: pw, lineGap: 1 });
-    doc.text(inclText, 36, y, { width: pw, lineGap: 1 });
-    y += ih + 5;
-
     doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
-    y += 7;
+    y += 8;
 
-    // ── Travel data ──
-    doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Datos del viaje', 36, y);
-    y += 10;
-    doc.fontSize(6.5).font('Helvetica').fillColor('#333');
-    doc.text(checkIn + '  \u2192  ' + checkOut + '  |  ' + nights + ' noche' + (nights !== 1 ? 's' : '') + '  |  ' + adults + ' adulto' + (adults !== 1 ? 's' : '') + (children > 0 ? ' + ' + children + ' ni\u00f1o' + (children !== 1 ? 's' : '') : ''), 36, y);
+    // ─── DATOS DE LA RESERVA ───
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor(cl).text('DATOS DE LA RESERVA', 36, y);
     y += 11;
-
-    // ── Package Price (global per person) ──
-    doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Precio del paquete', 36, y);
-    y += 10;
-
-    const ppAdult = ratePp * nights + flightPriceAdult;
-    const ppChild = (rateChdPp || 0) * nights + (flightPriceChild || 0);
-    const totalAdultos = ppAdult * adults;
-    const totalNinos = ppChild * children;
-    const granTotal = totalAdultos + totalNinos;
-
     doc.fontSize(6.5).font('Helvetica').fillColor('#333');
-    doc.text('Paquete Adulto (vuelo + hotel):', 36, y, { continued: true });
-    doc.text('  $' + ppAdult.toFixed(2), { align: 'right' }); y += 10;
-    if (children > 0) {
-      doc.text('Paquete Ni\u00f1o (vuelo + hotel):', 36, y, { continued: true });
-      doc.text('  $' + ppChild.toFixed(2), { align: 'right' }); y += 10;
-    }
-    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke(); y += 4;
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor('#0E1B68');
-    if (adults > 0) {
-      doc.text(adults + ' Adulto' + (adults !== 1 ? 's' : '') + ' \u00d7 ' + ppAdult.toFixed(2), 36, y, { continued: true });
-      doc.text('  $' + totalAdultos.toFixed(2), { align: 'right' }); y += 9;
-    }
-    if (children > 0) {
-      doc.text(children + ' Ni\u00f1o' + (children !== 1 ? 's' : '') + ' \u00d7 ' + ppChild.toFixed(2), 36, y, { continued: true });
-      doc.text('  $' + totalNinos.toFixed(2), { align: 'right' }); y += 9;
-    }
-    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#0E1B68').stroke(); y += 4;
-    doc.fontSize(8.5).fillColor('#0E1B68').text('Total (' + adults + ' adulto' + (adults !== 1 ? 's' : '') + (children > 0 ? ' + ' + children + ' ni\u00f1o' + (children !== 1 ? 's' : '') : '') + '):', 36, y, { continued: true });
-    doc.text('  $' + granTotal.toFixed(2), { align: 'right' }); y += 13;
+    doc.text('Fechas: ' + checkIn + ' al ' + checkOut, 36, y); y += 9;
+    doc.text('Duración: ' + nights + ' Noche' + (nights !== 1 ? 's' : '') + ' / ' + (nights + 1) + ' Día' + ((nights + 1) !== 1 ? 's' : ''), 36, y); y += 9;
+    doc.text('Pasajeros: ' + adults + ' Adulto' + (adults !== 1 ? 's' : '') + (children > 0 ? ' + ' + children + ' Niño' + (children !== 1 ? 's' : '') : ''), 36, y); y += 9;
+    doc.text('Alojamiento: Habitación Superior', 36, y); y += 9;
 
-    // ── Included Services ──
+    // ─── ITINERARIO AÉREO ───
     doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
-    y += 7;
-    doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Servicios incluidos', 36, y);
-    y += 10;
+    y += 8;
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor(cl).text('ITINERARIO AÉREO CONFIRMADO', 36, y);
+    y += 11;
+    if (itineraryTitle) {
+      doc.fontSize(6).fillColor(cg).text(itineraryTitle, 36, y); y += 8;
+    }
+    const drawSeg = (label, tramos) => {
+      if (!tramos || !tramos.length) return;
+      doc.font('Helvetica-Bold').fillColor('#333').fontSize(6.5).text(label + ':', 36, y); y += 8;
+      doc.font('Helvetica').fillColor('#555');
+      tramos.forEach(s => {
+        doc.text('  ' + s.origen + ' → ' + s.destino + '  |  ' + (s.salida || '') + ' - ' + (s.llegada || '') + '  |  ' + (s.aerolinea || ''), 36, y, { lineGap: 1 });
+        y += 7;
+      });
+    };
+    drawSeg('Ida', idaTramos);
+    drawSeg('Retorno', retornoTramos);
+    y += 2;
 
+    doc.fontSize(6.5).font('Helvetica').fillColor('#333').text('Equipaje: Bolso de mano (5kg) + Maleta (23kg)', 36, y); y += 10;
+
+    // ─── TU PAQUETE INCLUYE ───
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
+    y += 8;
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor(cl).text('TU PAQUETE INCLUYE', 36, y);
+    y += 11;
     doc.fontSize(6.5).font('Helvetica').fillColor('#333');
-    const svcLines = [
-      '\u2708\ufe0f  Boletos a\u00e9reos ' + (itineraryTitle || 'ida y retorno'),
-      '\u2022  Equipaje: bolso de 5kg y maleta de 23kg por persona',
-      '\u2022  Traslados privados aeropuerto \u2192 hotel \u2192 aeropuerto',
-      '\ud83c\udfe8  Alojamiento en ' + (hotelName || '') + ' (' + nights + ' noche' + (nights !== 1 ? 's' : '') + ')',
-      '\u2022  R\u00e9gimen ' + (hotelRegime || 'Todo Incluido') + ': alimentos, bebidas, snacks, animaci\u00f3n, piscina, playa y WiFi'
+    const incluye = [
+      '✓  Boletos aéreos ida y vuelta en la ruta seleccionada.',
+      '✓  Alojamiento por ' + nights + ' noche' + (nights !== 1 ? 's' : '') + ' en ' + (hotelName || '') + ' en Plan Todo Incluido.',
+      '✓  Traslados privados Aeropuerto ↔ Hotel ↔ Aeropuerto.',
+      '✓  Asistencia y atención personalizada durante toda tu estancia.'
     ];
-    svcLines.forEach(line => {
-      doc.text('  ' + line, 36, y, { lineGap: 1 }); y += 8;
-    });
+    incluye.forEach(line => { doc.text(line, 36, y, { lineGap: 1 }); y += 8; });
     y += 3;
 
-    // ── Itinerary ──
-    if (itineraryTitle && idaTramos && idaTramos.length) {
-      doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
-      y += 7;
-      doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Itinerario a\u00e9reo: ' + itineraryTitle, 36, y);
-      y += 10;
-      const drawSeg = (label, tramos) => {
-        if (!tramos || !tramos.length) return;
-        doc.font('Helvetica-Bold').fillColor('#662D91').fontSize(6.5).text(label, 36, y); y += 8;
-        doc.font('Helvetica').fillColor('#555');
-        tramos.forEach(s => {
-          doc.text(s.origen + ' \u2192 ' + s.destino + '   ' + (s.salida || '') + ' - ' + (s.llegada || '') + '   ' + (s.aerolinea || ''), 36, y, { lineGap: 1 });
-          y += 7;
-        });
-        y += 2;
-      };
-      drawSeg('Ida:', idaTramos);
-      drawSeg('Retorno:', retornoTramos);
+    // ─── PRICE TABLE ───
+    const col1 = 36, col2 = pw + 36 - 170, col3 = pw + 36 - 90, col4 = pw + 36 - 40;
+    const colW1 = col2 - col1 - 4, colW2 = 44, colW3 = 74, colW4 = 40;
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor(cl).text('DESCRIPCIÓN DEL SERVICIO', 36, y); y += 13;
+
+    // Table header
+    doc.fontSize(6).fillColor('#333');
+    doc.text('DESCRIPCIÓN DEL SERVICIO', col1, y);
+    doc.text('CANT.', col2, y, { width: colW2, align: 'center' });
+    doc.text('PRECIO PAQUETE / PAX', col3, y, { width: colW3, align: 'center' });
+    doc.text('SUBTOTAL', col4, y, { width: colW4, align: 'center' });
+    y += 8;
+
+    // Table header underline
+    doc.moveTo(col1, y).lineTo(col4 + colW4, y).strokeColor(cl).stroke(); y += 3;
+
+    // Adult row
+    doc.fontSize(6.5).font('Helvetica').fillColor('#333');
+    doc.text('Paquete Adulto (Vuelo + Traslados + Hotel Todo Incluido)', col1, y);
+    doc.text('' + adults, col2, y, { width: colW2, align: 'center' });
+    doc.text('$' + ppAdult.toFixed(2), col3, y, { width: colW3, align: 'center' });
+    doc.text('$' + totalAdultos.toFixed(2), col4, y, { width: colW4, align: 'center' });
+    y += 9;
+
+    // Child row
+    if (children > 0) {
+      doc.text('Paquete Niño (Vuelo + Traslados + Hotel Todo Incluido)', col1, y);
+      doc.text('' + children, col2, y, { width: colW2, align: 'center' });
+      doc.text('$' + ppChild.toFixed(2), col3, y, { width: colW3, align: 'center' });
+      doc.text('$' + totalNinos.toFixed(2), col4, y, { width: colW4, align: 'center' });
+      y += 9;
     }
 
-    // ── Footer ──
-    y = Math.max(y, doc.page.height - 55);
-    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke(); y += 4;
-    doc.fontSize(5.5).fillColor('#939598').text('* Precios en USD. Boleto a\u00e9reo sujeto a disponibilidad. Tarifas de hotel v\u00e1lidas para las fechas indicadas. Ni\u00f1os 2-12 a\u00f1os boleto a\u00e9reo, 4-10 a\u00f1os tarifa de hotel.', 36, y, { align: 'center', width: pw });
-    doc.fontSize(6.5).fillColor('#0E1B68').text('WhatsApp: +58 424-6902591', 36, y + 8, { align: 'center', width: pw });
+    // Total row
+    doc.moveTo(col1, y).lineTo(col4 + colW4, y).strokeColor(cl).stroke(); y += 3;
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor(cl).text('INVERSIÓN TOTAL PAQUETE COMPLETO', col1, y);
+    doc.fontSize(8).text('$' + granTotal.toFixed(2), col4, y, { width: colW4, align: 'center' });
+    y += 12;
+
+    // ─── DISCLAIMER ───
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
+    y += 6;
+    doc.fontSize(6).font('Helvetica').fillColor(cg);
+    const discText = 'NOTA IMPORTANTE SOBRE DISPONIBILIDAD Y TARIFAS\n' +
+      'Esta cotización ha sido calculada con los cupos aéreos y hoteleros disponibles al momento. ' +
+      'La tarifa aérea final y la reserva garantizada quedan reservadas únicamente tras la emisión de los boletos. ' +
+      'Le recomendamos confirmar con su asesor vía WhatsApp a la brevedad para asegurar estos costos.';
+    const discH = doc.heightOfString(discText, { width: pw, lineGap: 1 });
+    doc.text(discText, 36, y, { width: pw, lineGap: 1 });
+    y += discH + 6;
+
+    // ─── FOOTER ───
+    y = Math.max(y, doc.page.height - 48);
+    doc.fontSize(6.5).font('Helvetica-BoldItalic').fillColor(cl).text(
+      'Chinita Travels  •  Hacemos de tu viaje una experiencia inolvidable  •  Responde a este mensaje para emitir tus boletos',
+      36, y, { align: 'center', width: pw }
+    );
+    doc.fontSize(6).font('Helvetica').fillColor(cg).text('WhatsApp: +58 424-6902591', 36, y + 10, { align: 'center', width: pw });
 
     doc.end();
   } catch (e) {
