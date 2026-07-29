@@ -610,11 +610,11 @@ function updateDetailItin(hotelId) {
     html += `<div style="margin-top:0.3rem;"><strong>Ida:</strong></div>`;
     tramosIda.forEach((t, i) => {
       html += `<div class="agency-tramo" data-tipo="ida" data-idx="${i}">
-        <input class="tramo-origen" value="${t.origen || ''}" style="width:60px;">
-        <input class="tramo-destino" value="${t.destino || ''}" style="width:60px;">
-        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:65px;">
-        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:65px;">
-        <input class="tramo-aerolinea" value="${t.aerolinea || ''}" style="width:70px;" placeholder="Aerolínea">
+        <input class="tramo-origen" value="${t.origen || ''}" style="width:80px;" placeholder="Origen">
+        <input class="tramo-destino" value="${t.destino || ''}" style="width:80px;" placeholder="Destino">
+        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:75px;">
+        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:75px;">
+        <input class="tramo-aerolinea" value="${t.aerolinea || ''}" style="width:85px;" placeholder="Aerolínea">
       </div>`;
     });
     let tramosRet = [];
@@ -622,11 +622,11 @@ function updateDetailItin(hotelId) {
     html += `<div style="margin-top:0.3rem;"><strong>Retorno:</strong></div>`;
     tramosRet.forEach((t, i) => {
       html += `<div class="agency-tramo" data-tipo="retorno" data-idx="${i}">
-        <input class="tramo-origen" value="${t.origen || ''}" style="width:60px;">
-        <input class="tramo-destino" value="${t.destino || ''}" style="width:60px;">
-        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:65px;">
-        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:65px;">
-        <input class="tramo-aerolinea" value="${t.aerolinea || ''}" style="width:70px;" placeholder="Aerolínea">
+        <input class="tramo-origen" value="${t.origen || ''}" style="width:80px;" placeholder="Origen">
+        <input class="tramo-destino" value="${t.destino || ''}" style="width:80px;" placeholder="Destino">
+        <input class="tramo-salida" value="${t.salida || ''}" type="time" style="width:75px;">
+        <input class="tramo-llegada" value="${t.llegada || ''}" type="time" style="width:75px;">
+        <input class="tramo-aerolinea" value="${t.aerolinea || ''}" style="width:85px;" placeholder="Aerolínea">
       </div>`;
     });
     html += `<div style="margin-top:0.3rem;font-size:0.85rem;">💵 $${price.adult.toFixed(2)} / adulto · $${price.child.toFixed(2)} / niño</div>`;
@@ -665,36 +665,57 @@ async function agencyPreview(hotelId) {
   const totalHotel = pd && !pd.error ? pd.total : 0;
   const totalFlight = d.fp * (h.adults || 1) + d.fpc * (h.children || 0);
   const ppAdult = ratePp * nights + d.fp;
-  const ppChild = d.fpc + (rateChdPp * nights);
+  const ppChild = rateChdPp * nights + d.fpc;
 
-  const modal = document.createElement('div');
-  modal.className = 'modal';
-  modal.style.cssText = 'display:flex;z-index:2000;';
-  modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
-  modal.innerHTML = `<div class="modal-content" style="max-width:500px;text-align:left;padding:1.5rem;">
-    <div style="text-align:center;margin-bottom:1rem;">
-      <img src="/images/logo.png" alt="Chinita Travels" style="height:40px;">
-      <h3 style="margin:0.5rem 0 0;">Cotización · ${h.name}</h3>
-    </div>
-    <div class="preview-section">
-      <p><strong>📅</strong> ${aCI} → ${aCO} · ${nights} noche${nights !== 1 ? 's' : ''}</p>
-      <p><strong>👤</strong> ${h.adults} adulto${h.adults !== 1 ? 's' : ''}${h.children > 0 ? ' · ' + h.children + ' niño' + (h.children !== 1 ? 's' : '') : ''}</p>
-      <hr>
-      <p><strong>Alojamiento:</strong> $${(ratePp * nights).toFixed(2)}/pers <span style="color:#888;font-size:0.8rem;">($${ratePp.toFixed(2)}/noche)</span></p>
-      <p><strong>Boleto+traslado:</strong> $${d.fp.toFixed(2)}/pers</p>
-      <p style="font-weight:700;color:#1a73e8;"><strong>Total por adulto:</strong> $${ppAdult.toFixed(2)}</p>
-      ${h.children > 0 ? `<p style="font-weight:700;color:#0d47a1;"><strong>Total por niño:</strong> $${ppChild.toFixed(2)}</p>` : ''}
-      <p style="font-weight:800;font-size:1.1rem;color:#1a73e8;border-top:2px solid #1a73e8;padding-top:0.3rem;"><strong>Total (×${h.adults + h.children} pax):</strong> $${(totalHotel + totalFlight).toFixed(2)}</p>
-      <hr>
-      <p><strong>🛩️ ${d.title}</strong></p>
-      <p style="font-size:0.8rem;color:#888;">* Precio de boleto y traslado estimado · Boleto niños 2-12 años · Hotel niños 4-10 años</p>
-    </div>
-    <div style="margin-top:1rem;display:flex;gap:0.5rem;justify-content:center;">
-      <button class="btn-pdf" onclick="this.closest('.modal').remove();agencyPDF(${hotelId})">📄 Generar PDF</button>
-      <button class="btn-secondary" onclick="this.closest('.modal').remove()">Cerrar</button>
-    </div>
-  </div>`;
-  document.body.appendChild(modal);
+  const fOpts = { year: 'numeric', month: 'long', day: 'numeric' };
+  const ciFmt = aCI ? new Date(aCI + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
+  const coFmt = aCO ? new Date(aCO + 'T12:00:00').toLocaleDateString('es-ES', fOpts) : '';
+
+  let itinTitle = d.title || '';
+  let idaTramos = d.price && d.price.ida ? d.price.ida : [];
+  let retornoTramos = d.price && d.price.retorno ? d.price.retorno : [];
+  const editor = getEditorTramos(hotelId);
+  if (editor) { idaTramos = editor.ida; retornoTramos = editor.retorno; }
+
+  try {
+    const resp = await fetch('/api/admin/agency/quote/pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        hotelName: h.name, hotelRating: h.rating, hotelCategory: h.category,
+        hotelRegime: h.regime, hotelDesc: h.description, hotelAddress: h.address,
+        hotelPhotos: h.photos ? h.photos.slice(0, 3).map(p => p.photo_url || p) : (h.main_photo ? [h.main_photo] : []),
+        checkIn: ciFmt, checkOut: coFmt,
+        nights, adults: h.adults, children: h.children,
+        ratePp, rateChdPp, flightPriceAdult: d.fp, flightPriceChild: d.fpc,
+        totalHotel, totalFlight, total: totalHotel + totalFlight,
+        itineraryTitle: itinTitle,
+        idaTramos, retornoTramos,
+        preview: true
+      })
+    });
+    if (!resp.ok) { alert('Error al generar PDF'); return; }
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.cssText = 'display:flex;z-index:2000;';
+    modal.onclick = (e) => { if (e.target === modal) { modal.remove(); URL.revokeObjectURL(url); } };
+    modal.innerHTML = `<div class="modal-content" style="max-width:800px;width:95%;height:90vh;padding:0;overflow:hidden;border-radius:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 1rem;background:var(--azul-marino);color:#fff;">
+        <span style="font-weight:600;font-size:0.9rem;">Vista previa · ${h.name}</span>
+        <div style="display:flex;gap:0.5rem;">
+          <button class="btn-pdf" style="font-size:0.8rem;padding:0.3rem 0.8rem;" onclick="document.getElementById('pdf-frame-${hotelId}').src='';this.closest('.modal').remove();URL.revokeObjectURL('${url}');agencyPDF(${hotelId})">📄 Descargar</button>
+          <button class="btn-secondary" style="font-size:0.8rem;padding:0.3rem 0.8rem;background:rgba(255,255,255,0.2);color:#fff;" onclick="document.getElementById('pdf-frame-${hotelId}').src='';this.closest('.modal').remove();URL.revokeObjectURL('${url}')">Cerrar</button>
+        </div>
+      </div>
+      <iframe id="pdf-frame-${hotelId}" src="${url}" style="width:100%;height:calc(100% - 40px);border:none;"></iframe>
+    </div>`;
+    document.body.appendChild(modal);
+  } catch (e) {
+    alert('Error al generar vista previa: ' + e.message);
+  }
 }
 async function agencyPDF(hotelId) {
   const d = getAgencyData(hotelId);
@@ -857,7 +878,9 @@ function renderResults(hotels, nights) {
     const totalFlight = h.flightPrice * (h.adults || 1) + (h.flightPriceChd || 0) * (h.children || 0);
     const ratePp = pd && pd.rateDbl ? pd.rateDbl : 0;
     const rateChd = pd && pd.rateChd ? pd.rateChd : 0;
-    const pp = (h.adults || 1) > 0 ? (totalHotel + totalFlight) / (h.adults || 1) : 0;
+    const ppAdult = ratePp * nights + h.flightPrice;
+    const ppChild = rateChd * nights + (h.flightPriceChd || h.flightPrice * 0.68);
+    const desde = ppAdult;
 
     return `
       <div class="hotel-card" onclick="viewHotel(${h.id})" style="cursor:pointer;">
@@ -873,9 +896,9 @@ function renderResults(hotels, nights) {
           ${h.regime ? `<span class="hotel-regime">${h.regime}</span>` : ''}
           <p class="hotel-desc">${h.description || ''}</p>
           <div class="hotel-card-price">
-            <span class="price-from">Desde</span>
-            <span class="price-value">$${pp.toFixed(2)}</span>
-            <span class="price-pp">por persona</span>
+            <span class="price-from">Paquete Adulto desde</span>
+            <span class="price-value">$${desde.toFixed(2)}</span>
+            <span class="price-pp">por persona (vuelo + hotel)</span>
           </div>
         </div>
       </div>`;
@@ -960,7 +983,14 @@ async function viewHotel(hotelId) {
                 : '';
               return `
             <div class="hotel-price-breakdown">
-              ${makePriceHTML({
+              ${agencyMode ? makeAgencyPriceHTML({
+                nights, adults, children,
+                ratePp, rateChdPp,
+                flightPrice, flightPriceChd,
+                totalHotel, totalFlight, pd,
+                promoNote,
+                id: 'det'
+              }) : makePriceHTML({
                 nights, adults, children,
                 ratePp, rateChdPp,
                 flightPrice, flightPriceChd,
@@ -971,7 +1001,6 @@ async function viewHotel(hotelId) {
             </div>`;})()}
           </div>
           <button class="btn-whatsapp" onclick="openWhatsApp(${hotelId})">Cotizar por WhatsApp</button>
-          <div class="desglose-nota" style="margin-top:0.3rem;">Incluye bolso de 5kg y equipaje de 23kg</div>
         </div>
         ${agencyMode ? `
         <div class="agency-controls-detail">
@@ -1075,7 +1104,14 @@ async function recalcDetail() {
     document.getElementById('detailPrice').innerHTML = hasError
       ? `<div class="error-msg">${pd.error}</div>`
       : `<div class="hotel-price-breakdown">
-          ${makePriceHTML({
+          ${agencyMode ? makeAgencyPriceHTML({
+            nights, adults, children,
+            ratePp, rateChdPp,
+            flightPrice, flightPriceChd,
+            totalHotel, totalFlight, pd,
+            promoNote,
+            id: 'det'
+          }) : makePriceHTML({
             nights, adults, children,
             ratePp, rateChdPp,
             flightPrice, flightPriceChd,
@@ -1116,37 +1152,50 @@ function toggleBreakdown(id) {
 
 function makePriceHTML(p) {
   const { nights, adults, children, ratePp, rateChdPp, flightPrice, flightPriceChd, totalHotel, totalFlight, pd, promoNote, id } = p;
-  const paidChildren = (pd && pd.paidChildren) || 0;
   const freeKids = (pd && pd.isPromo && pd.freeChildren) || 0;
   const ppAdult = ratePp * nights + flightPrice;
-  const ppChild = flightPriceChd + (freeKids > 0 ? 0 : rateChdPp * nights);
+  const ppChild = rateChdPp * nights + flightPriceChd;
   const total = (totalHotel || 0) + (totalFlight || 0);
 
-  let html = `<div class="pp-row total-pp"><span>Por adulto:</span> <span>$${ppAdult.toFixed(2)}</span></div>`;
+  let html = `<div class="pp-row total-pp"><span>Paquete Adulto:</span> <span>$${ppAdult.toFixed(2)}</span></div>`;
   if (children > 0) {
-    html += `<div class="pp-row pp-child"><span>Por niño:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
+    html += `<div class="pp-row pp-child"><span>Paquete Niño:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
   }
-  html += `<div class="breakdown-toggle" onclick="toggleBreakdown('${id}')"><span id="arr-${id}">▶</span> Desglose</div>`;
+  html += `<div class="price-line total"><span>Total (${adults} adulto${adults !== 1 ? 's' : ''}${children > 0 ? ` + ${children} ni\u00f1o${children !== 1 ? 's' : ''}` : ''}):</span> <span>$${total.toFixed(2)}</span></div>`;
+  html += `<div class="desglose-nota" style="margin-top:0.4rem;">Incluye vuelo + traslados + hotel todo incluido</div>`;
+  html += `<div class="desglose-nota" style="margin-top:0.15rem;">🎒 Equipaje: bolso de 5kg y maleta de 23kg</div>`;
+  html += promoNote || '';
+  return html;
+}
+
+function makeAgencyPriceHTML(p) {
+  const { nights, adults, children, ratePp, rateChdPp, flightPrice, flightPriceChd, totalHotel, totalFlight, pd, promoNote, id } = p;
+  const freeKids = (pd && pd.isPromo && pd.freeChildren) || 0;
+  const ppAdult = ratePp * nights + flightPrice;
+  const ppChild = rateChdPp * nights + flightPriceChd;
+  const total = (totalHotel || 0) + (totalFlight || 0);
+
+  let html = `<div class="pp-row total-pp"><span>Paquete Adulto:</span> <span>$${ppAdult.toFixed(2)}</span></div>`;
+  if (children > 0) {
+    html += `<div class="pp-row pp-child"><span>Paquete Ni\u00f1o:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
+  }
+  html += `<div class="price-line total"><span>Total (${adults} adulto${adults !== 1 ? 's' : ''}${children > 0 ? ` + ${children} ni\u00f1o${children !== 1 ? 's' : ''}` : ''}):</span> <span>$${total.toFixed(2)}</span></div>`;
+  html += `<div class="breakdown-toggle" onclick="toggleBreakdown('${id}')"><span id="arr-${id}">\u25b6</span> Desglose</div>`;
   html += `<div class="breakdown-detail" id="bd-${id}">`;
-  html += `<div class="bd-section-title">👤 Adulto (×${adults})</div>`;
+  html += `<div class="bd-section-title">\ud83d\udc64 Adulto (\u00d7${adults})</div>`;
   html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(ratePp * nights).toFixed(2)}</span></div>`;
   html += `<div class="price-line price-sub"><span>$${ratePp.toFixed(2)}/noche</span></div>`;
   html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${flightPrice.toFixed(2)}</span></div>`;
   html += `<div class="price-line pp-persona-total"><span>Total por adulto:</span> <span>$${ppAdult.toFixed(2)}</span></div>`;
   if (children > 0) {
-    html += `<div class="bd-section-title">👶 Niño (×${children})</div>`;
-    if (freeKids > 0) {
-      html += `<div class="price-line" style="color:#e67e22;font-size:0.85rem;"><span>🎁 1er niño GRATIS - hotel gratis, boleto paga</span></div>`;
-      html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${flightPriceChd.toFixed(2)}</span></div>`;
-    } else {
-      html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(rateChdPp * nights).toFixed(2)}</span></div>`;
-      html += `<div class="price-line price-sub"><span>$${rateChdPp.toFixed(2)}/noche</span></div>`;
-      html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${flightPriceChd.toFixed(2)}</span></div>`;
-    }
-    html += `<div class="price-line pp-persona-total"><span>Total por niño:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
+    html += `<div class="bd-section-title">\ud83d\udc76 Ni\u00f1o (\u00d7${children})</div>`;
+    html += `<div class="price-line"><span>Alojamiento (${nights} noche${nights !== 1 ? 's' : ''}):</span> <span>$${(rateChdPp * nights).toFixed(2)}</span></div>`;
+    html += `<div class="price-line price-sub"><span>$${rateChdPp.toFixed(2)}/noche</span></div>`;
+    html += `<div class="price-line"><span>Vuelo + traslado:</span> <span>$${flightPriceChd.toFixed(2)}</span></div>`;
+    html += `<div class="price-line pp-persona-total"><span>Total por ni\u00f1o:</span> <span>$${ppChild.toFixed(2)}</span></div>`;
   }
-  html += `<div class="price-line total"><span>Total (×${adults + children} pax):</span> <span>$${total.toFixed(2)}</span></div>`;
-  html += `<div class="desglose-nota"><sup>*</sup> Precio de boleto y traslado estimado · Boleto niños 2-12 años · Hotel niños 4-10 años</div>`;
+  html += `<div class="price-line total"><span>Total:\u00a0</span> <span>$${total.toFixed(2)}</span></div>`;
+  html += `<div class="desglose-nota"><sup>*</sup> Precio de boleto y traslado estimado \u00b7 Boleto ni\u00f1os 2-12 a\u00f1os \u00b7 Hotel ni\u00f1os 4-10 a\u00f1os</div>`;
   html += `</div>`;
   html += promoNote || '';
   return html;

@@ -626,7 +626,9 @@ footer {
 .agency-itin-info { font-size: 0.8rem; color: #555; min-height: 1.2rem; }
 .agency-tramo { display: flex; align-items: center; gap: 0.2rem; margin-bottom: 0.2rem; }
 .agency-tramo input { font-size: 0.78rem; padding: 0.15rem 0.2rem; border: 1px solid var(--gris-claro); border-radius: 3px; }
-.agency-tramo .tramo-aerolinea { width: 72px; font-style: italic; }
+.agency-tramo input[type="time"] { width: 75px; }
+.agency-tramo .tramo-origen, .agency-tramo .tramo-destino { width: 80px; }
+.agency-tramo .tramo-aerolinea { width: 85px; font-style: italic; }
 .btn-preview { padding: 0.35rem 0.8rem; font-size: 0.8rem; background: #eef2ff; color: var(--azul-marino); border: 1px solid #c7d2fe; border-radius: 4px; cursor: pointer; }
 .btn-preview:hover { background: #dde4ff; }
 .btn-pdf { padding: 0.35rem 0.8rem; font-size: 0.8rem; background: var(--morado); color: var(--blanco); border: none; border-radius: 4px; cursor: pointer; }

@@ -569,11 +569,14 @@ async function fetchImgBuf(url) {
 
 app.post('/api/admin/agency/quote/pdf', async (req, res) => {
   try {
-    const { hotelName, hotelRating, hotelCategory, hotelRegime, hotelDesc, hotelAddress, hotelPhotos, checkIn, checkOut, nights, adults, children, ratePp, rateChdPp, flightPriceAdult, flightPriceChild, totalHotel, totalFlight, total, itineraryTitle, idaTramos, retornoTramos } = req.body;
+    const { hotelName, hotelRating, hotelCategory, hotelRegime, hotelDesc, hotelAddress, hotelPhotos, checkIn, checkOut, nights, adults, children, ratePp, rateChdPp, flightPriceAdult, flightPriceChild, totalHotel, totalFlight, total, itineraryTitle, idaTramos, retornoTramos, preview } = req.body;
 
     const doc = new PDFDocument({ margin: 36, size: 'A4' });
+    const isPreview = preview === true;
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=cotizacion-${Date.now()}.pdf`);
+    if (!isPreview) {
+      res.setHeader('Content-Disposition', `attachment; filename=cotizacion-${Date.now()}.pdf`);
+    }
     doc.pipe(res);
 
     const pw = doc.page.width - 72;
@@ -581,39 +584,37 @@ app.post('/api/admin/agency/quote/pdf', async (req, res) => {
 
     // ── Header ──
     const logoPath = path.join(__dirname, 'public', 'images', 'logo.png');
-    if (fs.existsSync(logoPath)) doc.image(logoPath, 36, y, { width: 40 });
-    doc.fontSize(13).font('Helvetica-Bold').fillColor('#1a1a2e').text('CHINITA TRAVELS', 84, y + 4);
-    doc.fontSize(6.5).fillColor('#999').text('Agencia de Viajes · RIF J-12345678-0', 84, y + 20);
-    y += 34;
-    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#ccc').stroke();
+    if (fs.existsSync(logoPath)) doc.image(logoPath, 36, y, { width: 38 });
+    doc.fontSize(12).font('Helvetica-Bold').fillColor('#0E1B68').text('CHINITA TRAVELS', 82, y + 4);
+    doc.fontSize(6).fillColor('#939598').text('Agencia de Viajes · RIF J-12345678-0', 82, y + 19);
+    y += 32;
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
     y += 10;
 
     // ── Photos row ──
     const photoUrls = (hotelPhotos || []).filter(Boolean).slice(0, 3);
     if (photoUrls.length) {
-      const photoMargin = 4;
-      const totalMargins = photoMargin * (photoUrls.length - 1);
-      const photoW = (pw - totalMargins) / photoUrls.length;
-      const photoH = 68;
+      const pm = 4;
+      const photoW = (pw - pm * (photoUrls.length - 1)) / photoUrls.length;
       for (let i = 0; i < photoUrls.length; i++) {
         try {
           const buf = await fetchImgBuf(photoUrls[i]);
-          doc.image(buf, 36 + i * (photoW + photoMargin), y, { width: photoW, height: photoH });
+          doc.image(buf, 36 + i * (photoW + pm), y, { width: photoW, height: 64 });
         } catch (e) { /* skip */ }
       }
-      y += photoH + 8;
+      y += 72;
     }
 
-    // ── Hotel info + description block ──
-    doc.fontSize(11).font('Helvetica-Bold').fillColor('#1a1a2e').text(hotelName || '', 36, y);
-    y += 16;
+    // ── Hotel name ──
+    doc.fontSize(11).font('Helvetica-Bold').fillColor('#0E1B68').text(hotelName || '', 36, y);
+    y += 14;
     let tags = [];
-    if (hotelRating) tags.push('⭐ ' + hotelRating);
+    if (hotelRating) tags.push('\u2b50 ' + hotelRating);
     if (hotelCategory) tags.push(hotelCategory);
     if (hotelRegime) tags.push(hotelRegime);
-    if (tags.length) { doc.fontSize(7).fillColor('#555').text(tags.join(' · '), 36, y); y += 10; }
-    if (hotelAddress) { doc.fontSize(6.5).fillColor('#aaa').text(hotelAddress, 36, y); y += 9; }
-    y += 3;
+    if (tags.length) { doc.fontSize(7).fillColor('#662D91').text(tags.join('  '), 36, y); y += 9; }
+    if (hotelAddress) { doc.fontSize(6).fillColor('#939598').text(hotelAddress, 36, y); y += 8; }
+    y += 2;
 
     if (hotelDesc) {
       doc.fontSize(6.5).font('Helvetica').fillColor('#555');
@@ -623,62 +624,83 @@ app.post('/api/admin/agency/quote/pdf', async (req, res) => {
     }
 
     // ── Todo Incluido ──
-    doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0d47a1').text('✦ TODO INCLUIDO', 36, y);
+    doc.fontSize(7).font('Helvetica-Bold').fillColor('#0E1B68').text('INCLUYE', 36, y);
     y += 9;
-    doc.fontSize(6.5).font('Helvetica').fillColor('#444');
-    const inclText = 'Desayunos, almuerzos y cenas tipo Buffet, bebidas nacionales e internacionales, snack de media tarde, animaci\u00f3n diurna y nocturna, piscina, bar en la playa, toldos, sillas, deportes acu\u00e1ticos no motorizados y WiFi en zonas comunes.';
+    doc.fontSize(6).font('Helvetica').fillColor('#555');
+    const inclText = 'R\u00e9gimen Todo Incluido: Desayunos, almuerzos y cenas tipo Buffet, bebidas nacionales e internacionales, snack de media tarde, animaci\u00f3n diurna y nocturna, piscina, bar en la playa, toldos, sillas, deportes acu\u00e1ticos no motorizados y WiFi en zonas comunes. Traslados privados aeropuerto-hotel-aeropuerto incluidos.';
     const ih = doc.heightOfString(inclText, { width: pw, lineGap: 1 });
     doc.text(inclText, 36, y, { width: pw, lineGap: 1 });
-    y += ih + 6;
+    y += ih + 5;
 
-    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#eee').stroke();
-    y += 8;
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
+    y += 7;
 
-    // ── Travel Data ──
-    doc.fontSize(8).font('Helvetica-Bold').fillColor('#1a1a2e').text('Datos del viaje', 36, y);
-    y += 11;
+    // ── Travel data ──
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Datos del viaje', 36, y);
+    y += 10;
     doc.fontSize(6.5).font('Helvetica').fillColor('#333');
     doc.text(checkIn + '  \u2192  ' + checkOut + '  |  ' + nights + ' noche' + (nights !== 1 ? 's' : '') + '  |  ' + adults + ' adulto' + (adults !== 1 ? 's' : '') + (children > 0 ? ' + ' + children + ' ni\u00f1o' + (children !== 1 ? 's' : '') : ''), 36, y);
-    y += 12;
-
-    // ── Price Breakdown ──
-    doc.fontSize(8).font('Helvetica-Bold').fillColor('#1a1a2e').text('Desglose de precios', 36, y);
     y += 11;
 
+    // ── Package Price (global per person) ──
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Precio del paquete', 36, y);
+    y += 10;
+
     const ppAdult = ratePp * nights + flightPriceAdult;
-    const ppChild = flightPriceChild + (rateChdPp ? rateChdPp * nights : 0);
+    const ppChild = (rateChdPp || 0) * nights + (flightPriceChild || 0);
+    const totalAdultos = ppAdult * adults;
+    const totalNinos = ppChild * children;
+    const granTotal = totalAdultos + totalNinos;
 
-    doc.fontSize(7).font('Helvetica').fillColor('#333');
-    doc.text('Alojamiento adulto (' + nights + ' noche' + (nights !== 1 ? 's' : '') + ')', 36, y, { continued: true });
-    doc.text('  $' + (ratePp * nights).toFixed(2), { align: 'right' }); y += 9;
-    doc.fontSize(6).fillColor('#888').text('  ($' + ratePp.toFixed(2) + ' por noche)', 36, y); y += 8;
-    doc.fontSize(7).fillColor('#333').text('Vuelo + traslado adulto', 36, y, { continued: true });
-    doc.text('  $' + flightPriceAdult.toFixed(2), { align: 'right' }); y += 9;
-    doc.font('Helvetica-Bold').text('Total por adulto', 36, y, { continued: true });
-    doc.text('  $' + ppAdult.toFixed(2), { align: 'right' }); y += 13;
-
+    doc.fontSize(6.5).font('Helvetica').fillColor('#333');
+    doc.text('Paquete Adulto (vuelo + hotel):', 36, y, { continued: true });
+    doc.text('  $' + ppAdult.toFixed(2), { align: 'right' }); y += 10;
     if (children > 0) {
-      doc.font('Helvetica').fillColor('#333').fontSize(7);
-      doc.text('Alojamiento ni\u00f1o (' + nights + ' noche' + (nights !== 1 ? 's' : '') + ')', 36, y, { continued: true });
-      doc.text('  $' + (rateChdPp * nights).toFixed(2), { align: 'right' }); y += 9;
-      doc.fontSize(6).fillColor('#888').text('  ($' + rateChdPp.toFixed(2) + ' por noche)', 36, y); y += 8;
-      doc.fontSize(7).fillColor('#333').text('Vuelo + traslado ni\u00f1o', 36, y, { continued: true });
-      doc.text('  $' + flightPriceChild.toFixed(2), { align: 'right' }); y += 9;
-      doc.font('Helvetica-Bold').text('Total por ni\u00f1o', 36, y, { continued: true });
-      doc.text('  $' + ppChild.toFixed(2), { align: 'right' }); y += 13;
+      doc.text('Paquete Ni\u00f1o (vuelo + hotel):', 36, y, { continued: true });
+      doc.text('  $' + ppChild.toFixed(2), { align: 'right' }); y += 10;
     }
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke(); y += 4;
+    doc.font('Helvetica-Bold').fontSize(7.5).fillColor('#0E1B68');
+    if (adults > 0) {
+      doc.text(adults + ' Adulto' + (adults !== 1 ? 's' : '') + ' \u00d7 ' + ppAdult.toFixed(2), 36, y, { continued: true });
+      doc.text('  $' + totalAdultos.toFixed(2), { align: 'right' }); y += 9;
+    }
+    if (children > 0) {
+      doc.text(children + ' Ni\u00f1o' + (children !== 1 ? 's' : '') + ' \u00d7 ' + ppChild.toFixed(2), 36, y, { continued: true });
+      doc.text('  $' + totalNinos.toFixed(2), { align: 'right' }); y += 9;
+    }
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#0E1B68').stroke(); y += 4;
+    doc.fontSize(8.5).fillColor('#0E1B68').text('Total (' + adults + ' adulto' + (adults !== 1 ? 's' : '') + (children > 0 ? ' + ' + children + ' ni\u00f1o' + (children !== 1 ? 's' : '') : '') + '):', 36, y, { continued: true });
+    doc.text('  $' + granTotal.toFixed(2), { align: 'right' }); y += 13;
 
-    doc.font('Helvetica-Bold').fontSize(8.5).fillColor('#0d47a1').text('Total (' + (adults + children) + ' pax)', 36, y, { continued: true });
-    doc.text('  $' + (total || 0).toFixed(2), { align: 'right' }); y += 14;
+    // ── Included Services ──
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
+    y += 7;
+    doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Servicios incluidos', 36, y);
+    y += 10;
+
+    doc.fontSize(6.5).font('Helvetica').fillColor('#333');
+    const svcLines = [
+      '\u2708\ufe0f  Boletos a\u00e9reos ' + (itineraryTitle || 'ida y retorno'),
+      '\u2022  Equipaje: bolso de 5kg y maleta de 23kg por persona',
+      '\u2022  Traslados privados aeropuerto \u2192 hotel \u2192 aeropuerto',
+      '\ud83c\udfe8  Alojamiento en ' + (hotelName || '') + ' (' + nights + ' noche' + (nights !== 1 ? 's' : '') + ')',
+      '\u2022  R\u00e9gimen ' + (hotelRegime || 'Todo Incluido') + ': alimentos, bebidas, snacks, animaci\u00f3n, piscina, playa y WiFi'
+    ];
+    svcLines.forEach(line => {
+      doc.text('  ' + line, 36, y, { lineGap: 1 }); y += 8;
+    });
+    y += 3;
 
     // ── Itinerary ──
     if (itineraryTitle && idaTramos && idaTramos.length) {
-      doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#eee').stroke();
-      y += 8;
-      doc.fontSize(8).font('Helvetica-Bold').fillColor('#1a1a2e').text('Itinerario: ' + itineraryTitle, 36, y); y += 10;
+      doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke();
+      y += 7;
+      doc.fontSize(7.5).font('Helvetica-Bold').fillColor('#0E1B68').text('Itinerario a\u00e9reo: ' + itineraryTitle, 36, y);
+      y += 10;
       const drawSeg = (label, tramos) => {
         if (!tramos || !tramos.length) return;
-        doc.font('Helvetica-Bold').fillColor('#333').fontSize(6.5).text(label, 36, y); y += 8;
+        doc.font('Helvetica-Bold').fillColor('#662D91').fontSize(6.5).text(label, 36, y); y += 8;
         doc.font('Helvetica').fillColor('#555');
         tramos.forEach(s => {
           doc.text(s.origen + ' \u2192 ' + s.destino + '   ' + (s.salida || '') + ' - ' + (s.llegada || '') + '   ' + (s.aerolinea || ''), 36, y, { lineGap: 1 });
@@ -691,10 +713,10 @@ app.post('/api/admin/agency/quote/pdf', async (req, res) => {
     }
 
     // ── Footer ──
-    y = Math.max(y, doc.page.height - 60);
-    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#ddd').stroke(); y += 4;
-    doc.fontSize(5.5).fillColor('#aaa').text('* Precio de boleto y traslado estimado · Boleto niños 2-12 años · Hotel niños 4-10 años', 36, y, { align: 'center', width: pw });
-    doc.fontSize(6.5).fillColor('#0d47a1').text('WhatsApp: +58 424-6902591', 36, y + 8, { align: 'center', width: pw });
+    y = Math.max(y, doc.page.height - 55);
+    doc.moveTo(36, y).lineTo(36 + pw, y).strokeColor('#D1D3D4').stroke(); y += 4;
+    doc.fontSize(5.5).fillColor('#939598').text('* Precios en USD. Boleto a\u00e9reo sujeto a disponibilidad. Tarifas de hotel v\u00e1lidas para las fechas indicadas. Ni\u00f1os 2-12 a\u00f1os boleto a\u00e9reo, 4-10 a\u00f1os tarifa de hotel.', 36, y, { align: 'center', width: pw });
+    doc.fontSize(6.5).fillColor('#0E1B68').text('WhatsApp: +58 424-6902591', 36, y + 8, { align: 'center', width: pw });
 
     doc.end();
   } catch (e) {
