@@ -3,16 +3,10 @@
   "version": "1.0.0",
   "description": "Sistema de consulta de vuelos e itinerarios",
   "main": "server.js",
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
     "postinstall": "node -e \"console.log('Deps installed')\""
-  },
-  "engines": {
-    "node": ">=18.0.0"
   },
   "dependencies": {
     "cors": "^2.8.5",
